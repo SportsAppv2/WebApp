@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .setupInput {
+        background-color: theme(colors.white.100);
+        border-radius: 4px;
+        padding: 5px 10px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .setupInput:focus {
+        outline: none;
+    }
+    .tagItem{
+        background-color: theme(colors.violet.10);
+        padding: 5px 10px
+    }
+    .suggestedTagItem {
+        background-color: theme(colors.gray.100);
+        padding: 1px 3px
+    }
+    .suggestedTagItem:hover{
+        background-color: theme(colors.gray.200);
+    }
+}

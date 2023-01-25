@@ -1,0 +1,23 @@
+.inputClass{
+    width: 100%;
+    padding-left: 32px;
+    background-color: transparent;
+    border-bottom: 2px solid theme('colors.gray.500');
+    outline: none;
+}
+.inputClass:focus {
+    /* border-bottom: 2px solid theme('colors.gray.600'); */
+    /* color: theme('colors.gray.600'); */
+  }
+.focused{
+    color: theme('colors.gray.600') !important;
+}
+.focused>.inputClass{
+    border-bottom: 3px solid theme('colors.gray.600');
+}
+.authLogo {
+    height: 35px;
+    width: auto;
+    cursor: pointer;
+    padding: 0 2px;
+}
