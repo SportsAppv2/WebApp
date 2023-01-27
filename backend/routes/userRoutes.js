@@ -1,16 +1,8 @@
 import express from "express";
 const router = express.Router();
+import { resendOtp, signupRoute, verifyOtp } from "../api/User.js";
 
-import {
-  authUser,
-  registerUser,
-  otpverifyfunc,
-  authorizeAccountSetup,
-  requestnewotp,
-  setuptags,
-  getUserProfile,
-} from "../controllers/userController.js";
-import protect from "../middleware/authMiddleware.js";
-
-router.route("/signup").post(registerUser);
+router.route("/signup").post(signupRoute);
+router.route("/verifyotp").post(verifyOtp);
+router.route("/resendotp").post(resendOtp);
 export default router;
