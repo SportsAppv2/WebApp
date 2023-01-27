@@ -1,8 +1,13 @@
 import React, { useRef } from 'react';
 import logo from "../../assets/iconLogo.svg";
 import './Otp.css';
+import { useDispatch, useSelector } from "react-redux";
 
 const Otp = () => {
+
+    const data = useSelector((state) => state.otp);
+    console.log(data);
+
     const otpboxes = useRef('');
     const removeClassname = (elem) => {
         Array.from(elem).forEach((div) => {
@@ -52,7 +57,7 @@ const Otp = () => {
                     <div className='digits flex text-[36px] mt-6' ref={otpboxes}>
                         <input type="text" 
                         autoFocus
-                        maxLength={1} 
+                        max={1} 
                         className="bg-[#000000] w-16 h-17 p-4 border-2 border-gray-600 ml-6"
                         onKeyUp={(e) => {clickEve(e,1)}}                        
                         />

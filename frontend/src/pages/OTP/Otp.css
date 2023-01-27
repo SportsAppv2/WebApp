@@ -1,4 +1,8 @@
 .activeInput {
-    border: 5px solid white;
-    background: green;
+    border: 2px solid white;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
