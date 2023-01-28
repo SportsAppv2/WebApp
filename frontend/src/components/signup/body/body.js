@@ -13,7 +13,7 @@ const Body = () => {
             </div>
           </div> */}
           <div className="bodyRight w-screen md:absolute place-content-center h-screen">
-            <div className="mt-[100px]">
+            <div className="mt-[20px]">
               <SignupBlock />
             </div>
           </div>
