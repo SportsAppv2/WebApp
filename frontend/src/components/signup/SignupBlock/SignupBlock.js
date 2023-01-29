@@ -8,6 +8,7 @@ import Date from "../DropdownBlocks/Date";
 import Month from "../DropdownBlocks/Month";
 import Year from "../DropdownBlocks/Year";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchSignup } from "../../../store/signupSlice";
 
 const SignupBlock = () => {
   const dispatch = useDispatch();
@@ -89,7 +90,12 @@ const SignupBlock = () => {
             <TextBox width="w-[100%]" for="Retype Password" type="password" />
           </div>
           <div className="btn pt-6">
-            <button className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl ml-10">
+            <button
+              className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl ml-10"
+              onClick={() => {
+                dispatch(fetchSignup());
+              }}
+            >
               Sign up
             </button>
           </div>

@@ -24,12 +24,19 @@ let transporter = nodemailer.createTransport({
 
 //signup
 export const signupRoute = asyncHandler(async (req, res) => {
-  let { name, email, password, dateOfBirth } = req.body;
-  name = name.trim();
+  let { firstName, lastName, email, password, dateOfBirth } = req.body;
+  firstName = firstName.trim();
+  lastName = lastName.trim();
   email = email.trim();
   password = password.trim();
   dateOfBirth = dateOfBirth.trim();
-  if (name == "" || email == "" || password == "" || dateOfBirth == "") {
+  if (
+    firstName == "" ||
+    lastName == "" ||
+    email == "" ||
+    password == "" ||
+    dateOfBirth == ""
+  ) {
     res.json({
       status: "FAILED",
       message: "Invalid input fields",
@@ -168,7 +175,7 @@ const sendOtpVerificationEmail = async ({ _id, email }, res) => {
   } catch (error) {
     console.log("error is ", error);
     res.json({
-      status: "FAILED RE",
+      status: "FAILED",
       message: error.message,
     });
   }
