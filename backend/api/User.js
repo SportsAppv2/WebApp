@@ -48,7 +48,8 @@ export const signupRoute = asyncHandler(async (req, res) => {
         const saltRounds = 10;
         bcrypt.hash(password, saltRounds).then((hashedPassword) => {
           const newUser = new User({
-            name,
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
             dateOfBirth,
