@@ -1,19 +1,53 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState} from 'react';
 import logo from "../../assets/iconLogo.svg";
 import './Otp.css';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router';
+import { otpActions } from '../../store/otpSlice';
+
 
 const Otp = () => {
-
     const data = useSelector((state) => state.otp);
     console.log(data);
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [seconds, setSeconds] = useState(5);
+    useEffect(() => {
+        const interval = setInterval(() => {
+          dispatch(otpActions.timeDecay());
+          if (seconds > 0) {
+            setSeconds(seconds - 1);
+          }
+      
+          if (seconds === 0) {
+            return clearInterval(interval);
+          }
+        }, 1000);
+      
+        return () => {
+          clearInterval(interval);
+        };
+    }, [seconds]);
+    useEffect(() => {
+        if (data.authorized) {
+          console.log("Should Route to a new page now");
+          navigate("/setup");
+        }
+    }, [data.authorized]);
     const otpboxes = useRef('');
     const removeClassname = (elem) => {
         Array.from(elem).forEach((div) => {
             div.classList.remove('activeInput');
          })
     }
+    const finalOtp = (elem) => {
+        let finalotp = "";
+        Array.from(elem).forEach((div) => {
+            finalotp=finalotp+div.value;
+        })
+        return finalotp;
+    }
+    
     const  clickEve = (event, next) => {
         let curr = event.target;        
         if(curr.value.length){
@@ -57,7 +91,7 @@ const Otp = () => {
                     <div className='digits flex text-[36px] mt-6' ref={otpboxes}>
                         <input type="text" 
                         autoFocus
-                        max={1} 
+                        maxLength={1} 
                         className="bg-[#000000] w-16 h-17 p-4 border-2 border-gray-600 ml-6"
                         onKeyUp={(e) => {clickEve(e,1)}}                        
                         />
@@ -96,13 +130,18 @@ const Otp = () => {
                         onKeyDown={(e) => {backward(e,4)}}
                         />
                     </div>
-                    <div className='resend text-[16px] font-medium text-[#5D5FEF] mt-6 text-right cursor-pointer'>
-                        Resend code in 15 secs...
+                    <div className='resend text-[16px] font-medium text-[#5D5FEF] mt-6 text-right'>
+                        {(seconds > 0 ) ? <div>Resend code in {seconds} secs...</div> : 
+                        <div 
+                        onClick={()=>{setSeconds(5); dispatch(otpActions.timeReset());}}
+                        className='cursor-pointer hover:underline'>
+                                Resend code                                
+                        </div>}                        
                     </div>
                     <div className='btn pt-6 text-center'>
                         <button 
                         className='w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl'
-                         onClick={clickEve}>
+                        onClick={(e) => dispatch(otpActions.otpAdded(finalOtp(otpboxes.current.children)))}>
                             Confirm
                         </button>
                     </div>
