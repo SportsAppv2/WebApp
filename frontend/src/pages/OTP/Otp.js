@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import logo from "../../assets/iconLogo.svg";
 import "./Otp.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { otpActions } from "../../store/otpSlice";
 
 const Otp = () => {
   const data = useSelector((state) => state.otp);
@@ -23,17 +25,17 @@ const Otp = () => {
       otpboxes.current.children[next - 1].disabled = true;
     }
   };
-  const backward = (event, prev) => {
-    let curr = event.target;
-    if (!curr.value.length && event.keyCode == "8") {
-      otpboxes.current.children[prev].disabled = false;
-      removeClassname(otpboxes.current.children);
-      otpboxes.current.children[prev].classList.add("activeInput");
-      otpboxes.current.children[prev].focus();
-      otpboxes.current.children[prev].value = "";
-      otpboxes.current.children[prev + 1].disabled = true;
-    }
-  };
+};
+const backward = (event, prev) => {
+  let curr = event.target;
+  if (!curr.value.length && event.keyCode == "8") {
+    otpboxes.current.children[prev].disabled = false;
+    removeClassname(otpboxes.current.children);
+    otpboxes.current.children[prev].classList.add("activeInput");
+    otpboxes.current.children[prev].focus();
+    otpboxes.current.children[prev].value = "";
+    otpboxes.current.children[prev + 1].disabled = true;
+  }
   return (
     <div className="bg-[#1A1C20] h-screen flex items-center">
       <div className="bg-[#000000] w-[700px] h-[400px] rounded-lg drop-shadow-xl m-auto text-white-100 p-6">
@@ -57,7 +59,7 @@ const Otp = () => {
             <input
               type="text"
               autoFocus
-              maxLength={1}
+              max={1}
               className="bg-[#000000] w-16 h-17 p-4 border-2 border-gray-600 ml-6"
               onKeyUp={(e) => {
                 clickEve(e, 1);

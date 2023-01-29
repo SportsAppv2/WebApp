@@ -6,7 +6,8 @@ const otpSlice = createSlice({
         email: "",
         userId: "",
         otp: "",
-        timeLeft: "60"
+        timeLeft: "5",
+        authorized: false
     },
     reducers:{
         otpAdded(state,action){
@@ -14,6 +15,9 @@ const otpSlice = createSlice({
         },
         timeDecay(state){
             state.timeLeft = state.timeLeft-1;
+        },
+        timeReset(state){
+            state.timeLeft = "5";
         }
     }
 }
