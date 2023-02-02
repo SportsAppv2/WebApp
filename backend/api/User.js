@@ -1,6 +1,5 @@
 import express from "express";
 import nodemailer from "nodemailer";
-import { uuid as v4 } from "uuidv4";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
