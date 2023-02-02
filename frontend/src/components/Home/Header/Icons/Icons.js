@@ -9,7 +9,7 @@ const Icons = () => {
   return (
     <div className="flex">
       <div className="bookmark iconDiv">
-        <BsBookmarkFill className="icon text-[30px] mt-[5px]" />
+        <BsBookmarkFill className="icon text-[26px] mt-[5px]" />
       </div>
       <div className="mail iconDiv">
         <GrMail className="icon text-[32px]" />

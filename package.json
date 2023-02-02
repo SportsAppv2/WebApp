@@ -31,6 +31,7 @@
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.3",
     "nodemailer": "^6.9.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {

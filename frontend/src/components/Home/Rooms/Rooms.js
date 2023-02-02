@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Rooms = () => {
   return (
     <>
-      <div className="bg-gray-600 w-[110px]">
+      <div className="bg-[#8B8B8D]/50 w-[110px]">
         <div className="availableRooms mt-4">
           <Link to="/home/room">
             <RoomIcon

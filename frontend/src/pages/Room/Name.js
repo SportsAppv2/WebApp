@@ -4,8 +4,8 @@ const Name = (props) => {
   return (
     <>
       <div className="flex items-center">
-        <div className="text-[white] text-[32px] mr-5">{props.name}</div>
-        <GoVerified className="text-blue-80 text-[28px]" />
+        <div className="text-[white] text-[24px] mr-3">{props.name}</div>
+        <GoVerified className="text-blue-80 text-[22px]" />
       </div>
     </>
   );
