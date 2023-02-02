@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <div className="flex flex-col h-screen overflow-hidden">
         <Header />
-        <div className="flex flex-grow h-full">
+        <div className="flex flex-grow h-full bg-[#000000]">
           <Rooms />
           <Routes>
             <Route path="/room" element={<Room />} key="route-room-page" />

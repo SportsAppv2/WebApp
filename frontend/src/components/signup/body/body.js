@@ -12,10 +12,8 @@ const Body = () => {
               <img src="" className="block h-auto w-full" alt="Image" />
             </div>
           </div> */}
-          <div className="bodyRight w-screen md:absolute place-content-center h-screen">
-            <div className="mt-[20px]">
-              <SignupBlock />
-            </div>
+          <div className="bodyRight flex items-center w-screen md:absolute h-screen">            
+            <SignupBlock />
           </div>
         </div>
       </section>

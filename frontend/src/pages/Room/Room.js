@@ -37,14 +37,18 @@ const Room = () => {
         className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll"
         ref={scrollableDiv}
       >
-        <div className="content">
-          <div className="px-7 py-2">
+        <div className="content flex">
+          <div className="px-7 py-2 w-[85%]">
             <Name name="Manchester United" />
             <TopNews />
             <FeedHeader sticky={stickyFeed} />
             <Feed />
             <UploadPost />
             {modalState && <NewModal />}
+          </div>
+          <div className="h-100% bg-gray-600 w-[1px]"></div>
+          <div className="sidebar text-white-100 w-[15%] p-6">
+            xxx
           </div>
         </div>
       </div>

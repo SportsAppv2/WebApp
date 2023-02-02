@@ -7,9 +7,10 @@ const Searchbar = () => {
       <div className="h-[32px]">
         <input
           type="text"
-          className="bg-gray-200 w-[250px] px-9 py-1 outline-none rounded-md shadow-md"
+          placeholder="Search SportsHub"
+          className="bg-gray-200 w-[250px] px-9 py-1 outline-none rounded-2xl shadow-md"
         />
-        <AiOutlineSearch className="relative top-[-27px] left-[4px] text-[24px]" />
+        <AiOutlineSearch className="relative top-[-27px] left-[8px] text-[22px]" />
       </div>
     </div>
   );
