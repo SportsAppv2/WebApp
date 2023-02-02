@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { otpActions } from "./otpSlice";
 
 export const fetchSignup = createAsyncThunk(
   "signup",
@@ -18,21 +19,27 @@ export const fetchSignup = createAsyncThunk(
         state.signup.dateOfBirth.year +
         "-",
     };
-    console.log("Ready for signup", data);
     const response = await axios
       .post("http://localhost:5000/api/user/signup", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((data) => {
+      .then((res) => {
         console.log("Signing in");
-        return data.data;
+        return res.data;
       })
       .catch((error) => {
         console.log(error);
       });
     if (response.status == "PENDING") {
+      const resData = response.data;
+      dispatch(
+        otpActions.userDataAdded({
+          email: resData.email,
+          userId: resData.userId,
+        })
+      );
       dispatch(signupActions.authChanged(true));
     }
     return response.data;

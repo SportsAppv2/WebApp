@@ -3,21 +3,24 @@ import logo from "../../assets/iconLogo.svg";
 import "./Otp.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { otpActions } from "../../store/otpSlice";
+import {
+  fetchResendOtp,
+  fetchVerifyOtp,
+  otpActions,
+} from "../../store/otpSlice";
 
 const Otp = () => {
   const data = useSelector((state) => state.otp);
   console.log(data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [seconds, setSeconds] = useState(5);
+  let seconds = data.timeLeft;
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(otpActions.timeDecay());
+      console.log("Time left ", seconds);
       if (seconds > 0) {
-        setSeconds(seconds - 1);
+        dispatch(otpActions.timeDecay());
       }
-
       if (seconds === 0) {
         return clearInterval(interval);
       }
@@ -161,8 +164,7 @@ const Otp = () => {
             ) : (
               <div
                 onClick={() => {
-                  setSeconds(5);
-                  dispatch(otpActions.timeReset());
+                  dispatch(fetchResendOtp());
                 }}
                 className="cursor-pointer hover:underline"
               >
@@ -173,11 +175,12 @@ const Otp = () => {
           <div className="btn pt-6 text-center">
             <button
               className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl"
-              onClick={(e) =>
+              onClick={(e) => {
                 dispatch(
                   otpActions.otpAdded(finalOtp(otpboxes.current.children))
-                )
-              }
+                );
+                dispatch(fetchVerifyOtp());
+              }}
             >
               Confirm
             </button>
