@@ -11,10 +11,10 @@ const Header = () => {
   return (
     <>
       <RxCross1
-        className="absolute mx-3 mt-4 cursor-pointer right-0 text-[28px] text-blue-70 hover:text-white-30 transition-all duration-200"
+        className="absolute mx-4 mt-3 cursor-pointer right-0 text-[28px] text-[#5D5FEF] hover:text-blue-60 transition-all duration-200"
         onClick={toggle}
       />
-      <div className="writePostHeader text-left text-[28px] mx-3 py-2 text-blue-70">
+      <div className="writePostHeader text-left text-[24px] mx-5 py-2 text-[#5D5FEF]">
         Create a post
       </div>
     </>

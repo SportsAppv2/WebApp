@@ -1,6 +1,7 @@
 import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
 import { AiOutlinePlusCircle, AiOutlineSplitCells } from "react-icons/ai";
 import thunk from "redux-thunk";
+import createpostSlice from "./createpostSlice";
 import loginSlice from "./loginSlice";
 import otpSlice from "./otpSlice";
 import roomSlice from "./roomSlice";
@@ -15,6 +16,7 @@ const store = configureStore(
       room: roomSlice.reducer,
       otp: otpSlice.reducer,
       signup: signupSlice.reducer,
+      createpost: createpostSlice.reducer
     },
   },
   applyMiddleware(thunk)
