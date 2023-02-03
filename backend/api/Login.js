@@ -43,7 +43,6 @@ export const loginRoute = asyncHandler(async (req, res) => {
           });
         } else {
           const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-          localStorage.setItem("token", token);
           return res.json({
             status: "SUCCESS",
             message: "You logged in to Sports Hub. Congratulations!",
