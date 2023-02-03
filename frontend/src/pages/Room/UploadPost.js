@@ -11,7 +11,7 @@ const UploadPost = () => {
   return (
     <div className="absolute right-0 bottom-0 m-[20px]">
       <div
-        className="w-[70px] h-[70px] rounded-md cursor-pointer transition-all shadow-sm shadow-gray-400 bg-gray-400 hover:bg-gray-200 flex justify-center items-center"
+        className="w-[70px] h-[70px] rounded-full cursor-pointer transition-all shadow-sm shadow-gray-400 bg-blue-80 hover:bg-[#5D5FEF] flex justify-center items-center"
         onClick={toggle}
       >
         <BsPencilFill className="text-[32px]" />
