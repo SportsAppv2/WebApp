@@ -3,9 +3,9 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User.js";
+import { User } from "../../models/User.js";
 
-dotenv.config({ path: "../../.env" });
+dotenv.config({ path: "../../../.env" });
 
 const router = express.Router();
 
@@ -43,7 +43,6 @@ export const loginRoute = asyncHandler(async (req, res) => {
           });
         } else {
           const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-          localStorage.setItem("token", token);
           return res.json({
             status: "SUCCESS",
             message: "You logged in to Sports Hub. Congratulations!",

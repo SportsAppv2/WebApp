@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchData = createAsyncThunk(
   "login/check",
-  async (arg, { getState }) => {
+  async (arg, { getState, dispatch }) => {
     const state = getState();
     const data = {
       email: state.login.email,
@@ -11,14 +11,21 @@ export const fetchData = createAsyncThunk(
     };
     console.log(state);
     const response = await axios
-      .post("http://localhost:5000/api/users/login", JSON.stringify(data), {
+      .post("http://localhost:5000/api/user/login", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((data) => {
-        console.log("Logging in");
-        console.log(data);
+      .then((res) => {
+        console.log("Logging in", res.status);
+        if (res.data.status == "SUCCESS") {
+          localStorage.setItem("token", res.data.token);
+          console.log("Storing token in localStorage");
+          dispatch(loginActions.authChanged(true));
+        } else {
+          alert(res.data.message);
+        }
+        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -35,6 +42,9 @@ const loginSlice = createSlice({
     authorized: false,
   },
   reducers: {
+    authChanged(state, action) {
+      state.authorized = action.payload;
+    },
     emailAdded(state, action) {
       state.email = action.payload;
     },
@@ -53,7 +63,6 @@ const loginSlice = createSlice({
     });
     builder.addCase(fetchData.rejected, (state, action) => {
       state.isLoading = false;
-      state.authorized = true;
       console.log("Stopped loading. Failed");
     });
   },

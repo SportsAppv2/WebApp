@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(() => {
     if (data.authorized) {
       console.log("Should Route to a new page now");
-      navigate("/setup");
+      navigate("/home");
     }
   }, [data.authorized]);
   return (

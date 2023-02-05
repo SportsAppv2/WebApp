@@ -7,7 +7,7 @@ import GoogleLogo from "../../../assets/iconGoogle1.svg";
 import FbLogo from "../../../assets/iconFb1.svg";
 import { fetchData, loginActions } from "../../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { MdVisibilityOff } from "react-icons/md"
+import { MdVisibilityOff } from "react-icons/md";
 const LoginBlock = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.login);
@@ -85,32 +85,26 @@ const LoginBlock = () => {
         <div className="btn pt-12">
           <button
             className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl ml-10"
-            onClick={() =>
-              dispatch(
-                fetchData({ email: data.email, password: data.password })
-              )
-            }
+            onClick={() => dispatch(fetchData())}
           >
             Log in
           </button>
         </div>
         <div className="otherLoginup pt-5">
           <div className="flex items-center">
-            <hr className="w-36 h-[1px] bg-gray-600 border-none"/>
-            <div className="otherLoginTxt w-fit m-auto">
-              or
-            </div>
-            <hr className="w-36 h-[1px] bg-gray-600 border-none"/>
-          </div>  
+            <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+            <div className="otherLoginTxt w-fit m-auto">or</div>
+            <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+          </div>
           <div className="otherLoginLogos w-fit m-auto pt-2">
             <button className="flex items-center w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-sm rounded-3xl mb-4">
               <img src={GoogleLogo} className="authLogo m-1 mr-4" alt="" />
-              Sign in with Google              
+              Sign in with Google
             </button>
             <button className="flex items-center w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-sm rounded-3xl">
               <img src={FbLogo} className="authLogo m-1 mr-4" alt="" />
               Sign in with Facebook
-            </button>                        
+            </button>
           </div>
         </div>
         <div className="loginOptn pt-5">

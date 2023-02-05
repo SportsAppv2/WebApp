@@ -1,0 +1,20 @@
+import express from "express";
+import { testRoute } from "../api/auth/Test.js";
+const router = express.Router();
+import { resendOtp, signupRoute, verifyOtp } from "../api/auth/User.js";
+import { createPost } from "../api/post/CreatePost.js";
+import { dislikePost } from "../api/post/DislikePost.js";
+import { likePost } from "../api/post/LikePost.js";
+
+router.route("/test").post(testRoute);
+router.route("/create").post(createPost);
+// router.route("/:id").delete(deletePost);
+// router.route("/:id/comments").post(createComment);
+// router.route("/comments/:id").delete(deleteComment);
+router.route("/post/like").post(likePost);
+router.route("/post/dislike").post(dislikePost);
+// router.route("/like/:id").post(likePost);
+// router.route("/dislike/:id").post(dislikePost);
+// router.route("/like/comment/:id").post(likeComment);
+// router.route("/dislike/comment/:id").post(dislikeComment);
+export default router;

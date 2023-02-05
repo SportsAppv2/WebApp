@@ -1,8 +1,8 @@
 import express from "express";
-import { loginRoute } from "../api/Login.js";
-import { testRoute } from "../api/Test.js";
+import { loginRoute } from "../api/auth/Login.js";
+import { testRoute } from "../api/auth/Test.js";
 const router = express.Router();
-import { resendOtp, signupRoute, verifyOtp } from "../api/User.js";
+import { resendOtp, signupRoute, verifyOtp } from "../api/auth/User.js";
 
 router.route("/test").post(testRoute);
 router.route("/signup").post(signupRoute);
