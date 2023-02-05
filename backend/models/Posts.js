@@ -44,9 +44,9 @@ const postSchema = mongoose.Schema({
   },
   comments: {
     count: { type: Number, default: 0 },
-    comments: [
+    commentsList: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "Comments",
         default: null,
       },

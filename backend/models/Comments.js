@@ -1,74 +1,98 @@
 import mongoose from "mongoose";
 
 const commentSchema = mongoose.Schema({
-  commentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
-  parentCommentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: null,
-  },
-  creatorId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  creatorName: {
-    type: String,
-    required: true,
-  },
-  creatorUserName: {
-    type: String,
-    required: true,
-  },
-  textContent: {
-    type: String,
-  },
-  imageUrl: [
-    {
+  parentPostId: { type: String, required: true },
+  parentCommentId: { type: String, default: null },
+  creator: {
+    id: {
       type: String,
-    },
-  ],
-  videoUrl: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  upvoteCount: {
-    type: number,
-    default: 0,
-  },
-  upvotedBy: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
-  ],
-  downvoteCount: {
-    type: number,
-    default: 0,
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    userName: { type: String, required: true },
   },
-  downvotedBy: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  commentCount: {
-    type: number,
-    default: 0,
+  content: {
+    text: { type: String },
+    image: [{ type: String }],
+    video: { type: String },
   },
-  commentedBy: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
+  stats: {
+    upvotes: {
+      count: { type: Number, default: 0 },
+      users: [
+        {
+          type: String,
+          ref: "User",
+          default: null,
+        },
+      ],
     },
-  ],
+    downvotes: {
+      count: { type: Number, default: 0 },
+      users: [
+        {
+          type: String,
+          ref: "User",
+          default: null,
+        },
+      ],
+    },
+  },
+  comments: {
+    count: { type: Number, default: 0 },
+    commentsList: [
+      {
+        type: String,
+        ref: "Comments",
+        default: null,
+      },
+    ],
+  },
 });
 
-const Comments = mongoose.model("Comments", commentSchema);
+// {  "commentId": "",
+//     "parentCommentId": "",
+//     "creator":{
+//        "id":"",
+//        "firstName":"",
+//        "lastName":"",
+//        "userName":""
+//     },
+//     "content":{
+//        "text":"",
+//        "image":[
+//           "",
+//           ""
+//        ],
+//        "video":""
+//     },
+//     "stats":{
+//        "upvotes":{
+//           "count":"",
+//           "users":[
+//              "",
+//              ""
+//           ]
+//        },
+//        "downvotes":{
+//           "count":"",
+//           "users":[
+//              "",
+//              ""
+//           ]
+//        }
+//     },
+//     "comments":{
+//        "count":"",
+//        "list":[
+//           "",
+//           ""
+//        ]
+//     }
+//  }
 
-export default Comments;
+const Comment = mongoose.model("Comments", commentSchema);
+
+export default Comment;
