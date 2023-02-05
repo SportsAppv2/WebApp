@@ -1,37 +1,42 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import Post from "../../models/Posts.js";
+import Comment from "../../models/Comments.js";
 import User from "../../models/User.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-export const dislikePost = asyncHandler(async (req, res) => {
+export const dislikeComment = asyncHandler(async (req, res) => {
   try {
-    const { postId, userId } = req.body;
-    User.findOne({ _id: userId })
+    const { commentId, userId } = req.body;
+    User.findOne({ _id: mongoose.Types.ObjectId(userId) })
       .then((user) => {
-        // if (!user) {
-        //   return Promise.reject(new Error("User not found."));
-        // }
-        return Post.findOne({ _id: postId, "stats.downvotes.users": userId })
-          .then((post) => {
-            if (post) {
-              console.log(post);
+        if (!user) {
+          return Promise.reject(new Error("User not found."));
+        }
+        return Comment.findOne({
+          _id: mongoose.Types.ObjectId(commentId),
+          "stats.downvotes.users": userId,
+        })
+          .then((comment) => {
+            if (comment) {
+              console.log("Comment is ", comment);
               return Promise.reject(
-                new Error("User has already downvoted this post.")
+                new Error("User has already downvoted this comment.")
               );
             }
 
-            return Post.findOne({
-              _id: postId,
+            return Comment.findOne({
+              _id: mongoose.Types.ObjectId(commentId),
               "stats.upvotes.users": userId,
             });
           })
-          .then((post) => {
-            if (!post) {
-              //user has not upvoted the post
-              return Post.findOneAndUpdate(
-                { _id: postId },
+          .then((comment) => {
+            if (!comment) {
+              //user has not upvoted the comment
+              return Comment.findOneAndUpdate(
+                { _id: commentId },
                 {
                   $inc: { "stats.downvotes.count": 1 },
                   $push: { "stats.downvotes.users": userId },
@@ -39,9 +44,9 @@ export const dislikePost = asyncHandler(async (req, res) => {
                 { new: true }
               );
             }
-            //user has upvoted the post
-            return Post.findOneAndUpdate(
-              { _id: postId, "stats.upvotes.users": userId },
+            //user has upvoted the comment
+            return Comment.findOneAndUpdate(
+              { _id: commentId, "stats.upvotes.users": userId },
               {
                 $inc: { "stats.upvotes.count": -1, "stats.downvotes.count": 1 },
                 $pull: { "stats.upvotes.users": userId },
@@ -50,11 +55,11 @@ export const dislikePost = asyncHandler(async (req, res) => {
               { new: true }
             );
           })
-          .then((post) => {
-            console.log(post);
+          .then((comment) => {
+            console.log("Comment is ", comment);
             res.json({
               status: "SUCCESS",
-              message: "Successfully downvoted the post.",
+              message: "Successfully downvoted the comment.",
             });
           })
           .catch((error) => {

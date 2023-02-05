@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
 //mongoDB user modeldotenv
-import { User } from "../../models/User.js";
+import User from "../../models/User.js";
 //mongoDB user verification model
 import { UserOtpVerification } from "../../models/UserVerification.js";
 dotenv.config({ path: "../../../.env" });

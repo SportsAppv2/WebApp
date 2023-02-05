@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
-import { User } from "../../models/User.js";
+import User from "../../models/User.js";
 
 dotenv.config({ path: "../../../.env" });
 
