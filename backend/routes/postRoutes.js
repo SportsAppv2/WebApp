@@ -11,12 +11,13 @@ import { likeComment } from "../api/post/LikeComment.js";
 import { likePost } from "../api/post/LikePost.js";
 
 router.route("/test").post(testRoute);
-router.route("/create").post(createPost);
-router.route("/:id").delete(deletePost);
+router.route("/post/create").post(createPost);
+router.route("/post/:id").delete(deletePost);
 router.route("/post/like").post(likePost);
 router.route("/post/dislike").post(dislikePost);
 // router.route("/post/save").post(savePost);
 router.route("/comment/create").post(createComment);
 router.route("/comment/like").post(likeComment);
 router.route("/comment/dislike").post(dislikeComment);
+// router.route("/comment/:id").delete(deleteComment);
 export default router;
