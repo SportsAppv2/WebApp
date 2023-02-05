@@ -4,10 +4,18 @@ import Post from "../../models/Posts.js";
 
 const router = express.Router();
 
+const decodeJwt = (token) => {
+  /* 
+    Here instead of userId, we will receive the JWT. 
+    On decoding the JWT, we will receive the userId.
+    */
+};
 export const deletePost = asyncHandler(async (req, res) => {
   try {
-    // const userId = req.user._id;
-    const userId = req.headers.authorization.split(" ")[1];
+    // const jwtToken = req.headers.authorization.split(" ")[1];
+    // const userId = decodeJwt(jwtToken);
+    const userId = req.headers.authorization.split(" ")[1]; //use JWT, remove this
+
     const postId = req.params.id;
     console.log("User ID is ", userId);
     console.log("Post ID is ", postId);

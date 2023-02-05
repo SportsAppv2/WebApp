@@ -31,64 +31,20 @@ export const createComment = asyncHandler(async (req, res) => {
           console.log("User is ", user);
           if (!user) {
             console.log("Entered here");
-            throw new Error("User not found. Hehe");
+            throw new Error("User not found.");
           }
           //user present
           // Check if parentCommentId exists
           if (parentCommentId) {
             const parentComment = Comment.findById(parentCommentId)
-              .then((parentComment) => {
-                if (!parentComment) {
-                  throw new Error("Invalid parent comment ID");
+              .then((comment) => {
+                if (!comment) {
+                  //parentComment is not valid
+                  console.log("Comment is ", comment);
+                  throw new Error("Parent comment not found.");
                 }
-                //create the comment
-                const newComment = new Comment({
-                  parentPostId,
-                  parentCommentId,
-                  creator,
-                  content,
-                  stats,
-                  comments,
-                });
-                newComment
-                  .save()
-                  .then((comment) => {
-                    console.log("Comment saved");
-                    if (!parentCommentId) {
-                      // It is a parent comment, update the post
-                      const post = Post.findOneAndUpdate(
-                        { _id: parentPostId },
-                        {
-                          $inc: { "comments.count": 1 },
-                          $push: { "comments.commentsList": comment._id },
-                        },
-                        { new: true }
-                      )
-                        .then((post) => {
-                          console.log("Comment Added. Parent post updated");
-                        })
-                        .catch((error) => {
-                          throw new Error(error.message);
-                        });
-                    } else {
-                      // It is a child comment, update the parent comment
-                      const comment = Comment.findOneAndUpdate(
-                        { _id: parentCommentId },
-                        {
-                          $inc: { "comments.count": 1 },
-                          $push: { "comments.commentsList": comment._id },
-                        },
-                        { new: true }
-                      );
-                    }
-                  })
-                  .catch((error) => {
-                    res.json({
-                      status: "FAILED",
-                      message: error.message,
-                    });
-                  });
               })
+
               .catch((error) => {
                 res.json({
                   status: "FAILED",
@@ -96,13 +52,63 @@ export const createComment = asyncHandler(async (req, res) => {
                 });
               });
           }
+          //parentId is valid or empty
+          const newComment = new Comment({
+            parentPostId,
+            parentCommentId,
+            creator,
+            content,
+            stats,
+            comments,
+          });
+          newComment
+            .save()
+            .then((newComment) => {
+              console.log("Comment saved ", newComment);
+              if (!parentCommentId) {
+                // It is a parent comment, update the post
+                const post = Post.findOneAndUpdate(
+                  { _id: parentPostId },
+                  {
+                    $inc: { "comments.count": 1 },
+                    $push: { "comments.commentsList": newComment._id },
+                  },
+                  { new: true }
+                )
+                  .then((updatedPost) => {
+                    res.json({
+                      status: "SUCCESS",
+                      message: "Comment Added successfully",
+                    });
+                  })
+                  .catch();
+              } else {
+                // It is a child comment, update the parent comment
+                const updatedComment = Comment.findOneAndUpdate(
+                  { _id: parentCommentId },
+                  {
+                    $inc: { "comments.count": 1 },
+                    $push: { "comments.commentsList": newComment._id },
+                  },
+                  { new: true }
+                )
+                  .then((updatedComment) => {
+                    res.json({
+                      status: "SUCCESS",
+                      message: "Comment Added successfully",
+                    });
+                  })
+                  .catch();
+              }
+            })
+            .catch();
         })
-        .catch(
+        .catch((error) => {
           res.json({
             status: "FAILED",
-            message: error.message,
-          })
-        );
+            message: "2" + error.message,
+          });
+        });
     }
   } catch (error) {
     res.json({
