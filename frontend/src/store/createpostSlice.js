@@ -4,13 +4,27 @@ const createpostSlice = createSlice({
     name: "createpost",
     initialState: {
         text : "",
+        files : "",
+        pollShow: false
     },
     reducers: {
-        addHashtag(state,action){
+        addHashtag(state){
             state.text = state.text + ' #';
         },
         contentChanged(state, action) {
             state.text = action.payload;
+        },
+        filesAdded(state,action){
+            state.files = action.payload;
+        },
+        filesDeleted(state){
+            state.files = "";
+        },
+        emojiAdded(state,action){
+            state.text = state.text + action.payload;
+        },
+        pollModal(state){
+            state.pollShow = !state.pollShow
         }
     }
 }
