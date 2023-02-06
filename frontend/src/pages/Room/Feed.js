@@ -5,7 +5,7 @@ import SingleFeed from "./SingleFeed";
 const Feed = () => {
   const feedType = useSelector((data) => data.room.currentFeedType);
   return (
-    <div>
+    <div className="my-5">
       <SingleFeed id="" dp="" name="" userId="" time="" content="" image="" />
       <SingleFeed />
       <SingleFeed />
