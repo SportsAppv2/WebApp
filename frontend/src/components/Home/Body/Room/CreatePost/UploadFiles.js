@@ -59,7 +59,7 @@ const UploadFiles = () => {
           </div>
           <div className="singleIcon hover:bg-[#000000]">
             {/* <MdOutlinePoll className="mx-2 hover:text-blue-60" onClick={(e) => {dispatch(createpostActions.pollModal());}}/> */}
-            <Popup trigger={<button>X</button>} position="right center" className="relative">
+            <Popup trigger={<button>X</button>} position="right center" className="">
               <Poll />
             </Popup>
           </div>          

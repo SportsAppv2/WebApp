@@ -7,6 +7,7 @@ import Setup from "./pages/Setup/Setup.js";
 import Home from "./pages/Home/Home.js";
 import Room from "./pages/Room/Room.js";
 import Otp from "./pages/OTP/Otp.js";
+import Profile from "./pages/Profile/Profile.js"
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/setup" element={<Setup />} key="route-setup-page" />
         <Route path="/home/*" element={<Home />} key="route-home-page" />
         <Route path="/signup/otp" element={<Otp />} key="route-otp-page" />
+        <Route path="/profile" element={<Profile />} key="route-profile-page" />
         {/* <Route path="/home/room/" element={<Room />} key="route-room-page" /> */}
       </Routes>
     </BrowserRouter>
