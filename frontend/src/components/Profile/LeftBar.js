@@ -2,7 +2,7 @@ import React from 'react';
 import {BsCircleFill} from 'react-icons/bs';
 const LeftBar = () => {
     return (
-        <div className='w-[12%]'>
+        <div className='w-[12%] sticky'>
             <div className=''>
                 <div className='score flex items-center p-5'>
                     <BsCircleFill className='text-[#FFD700] text-[36px]'/>
