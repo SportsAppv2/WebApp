@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import postRoutes from "./routes/postRoutes.js";
 import connectDB from "./config/db.js";
 import cors from "cors";
+import postRoutes from "./routes/postRoutes.js";
 import UserRoutes from "./routes/userRoutes.js";
+import ProfileRoutes from "./routes/profileRoutes.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 //Routes
 app.use("/api/user", UserRoutes);
 app.use("/api/home", postRoutes);
+app.use("/api/profile", ProfileRoutes);
 
 //SERVER part
 const PORT = process.env.PORT || 5000;

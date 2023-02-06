@@ -20,7 +20,7 @@ export const fetchData = createAsyncThunk(
         console.log("Logging in", res.status);
         if (res.data.status == "SUCCESS") {
           localStorage.setItem("token", res.data.token);
-          console.log("Storing token in localStorage");
+          console.log("Checking out token ", localStorage.getItem("token"));
           dispatch(loginActions.authChanged(true));
         } else {
           alert(res.data.message);

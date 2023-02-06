@@ -20,6 +20,7 @@ const postSchema = mongoose.Schema({
     privacy: { type: String, required: true },
   },
   stats: {
+    createdAt: { type: Date, default: Date.now },
     views: { type: Number, default: 0 },
     upvotes: {
       count: { type: Number, default: 0 },
@@ -75,6 +76,7 @@ const postSchema = mongoose.Schema({
 //        "privacy":""
 //     },
 //     "stats":{
+//        "createdAt": "",
 //        "views":"",
 //        "upvotes":{
 //           "count":"",

@@ -19,6 +19,7 @@ const commentSchema = mongoose.Schema({
     video: { type: String },
   },
   stats: {
+    createdAt: { type: Date, default: Date.now },
     upvotes: {
       count: { type: Number, default: 0 },
       users: [
@@ -69,6 +70,7 @@ const commentSchema = mongoose.Schema({
 //        "video":""
 //     },
 //     "stats":{
+//        "createdAt": "",
 //        "upvotes":{
 //           "count":"",
 //           "users":[

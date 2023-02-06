@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const connectDB = (req, res) => {
+  console.log("MONGO URI is ", process.env.JWT_SECRET);
   const DB_URL = process.env.MONGO_URI;
   try {
     const conn = mongoose.connect(DB_URL, {
