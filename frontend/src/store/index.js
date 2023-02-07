@@ -7,6 +7,7 @@ import otpSlice from "./otpSlice";
 import roomSlice from "./roomSlice";
 import setupSlice from "./setupSlice";
 import signupSlice from "./signupSlice";
+import homeSlice from "./homeSlice";
 
 const store = configureStore(
   {
@@ -16,7 +17,8 @@ const store = configureStore(
       room: roomSlice.reducer,
       otp: otpSlice.reducer,
       signup: signupSlice.reducer,
-      createpost: createpostSlice.reducer
+      createpost: createpostSlice.reducer,
+      home: homeSlice.reducer
     },
   },
   applyMiddleware(thunk)

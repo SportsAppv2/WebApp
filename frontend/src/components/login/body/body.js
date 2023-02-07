@@ -12,8 +12,8 @@ const Body = () => {
               <img src={Image} className="block h-auto w-full" alt="Image" />
             </div>
           </div> */}
-          <div className="bodyRight w-screen md:absolute place-content-center h-screen">
-            <div className="m-[100px]">
+          <div className="bodyRight w-screen md:absolute flex justify-center items-center h-screen">
+            <div className="">
               <LoginBlock />
             </div>
           </div>

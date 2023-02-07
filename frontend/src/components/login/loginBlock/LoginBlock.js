@@ -60,7 +60,7 @@ const LoginBlock = () => {
             />
             <FaRegUser className="relative top-[-22px] left-[5px] h-[18px] w-auto" />
           </div>
-          <div className="passWord h-[50px]" ref={passwordRef}>
+          <div className="passWord relative h-[50px]" ref={passwordRef}>
             <input
               type="password"
               placeholder="Password"
@@ -74,27 +74,27 @@ const LoginBlock = () => {
               onBlur={handlePasswordBlur}
             />
             <RiLockPasswordLine className="relative top-[-22px] left-[5px] h-[18px] w-auto" />
-            <MdVisibilityOff className="relative top-[-42px] left-72 h-[18px] w-auto" />
+            <MdVisibilityOff className="absolute top-[-1px] right-[50px] h-[18px] w-auto" />
           </div>
         </div>
         <div className="forgotPw">
-          <div className="w-fit float-right font-medium text-[14px] text-[#5D5FEF] hover:cursor-pointer hover:underline">
+          <div className="text-right font-medium text-[14px] text-[#5D5FEF] hover:cursor-pointer hover:underline">
             Forgot password?
           </div>
         </div>
-        <div className="btn pt-12">
+        <div className="btn flex justify-center pt-12">
           <button
-            className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl ml-10"
+            className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl text-center"
             onClick={() => dispatch(fetchData())}
           >
             Log in
           </button>
         </div>
         <div className="otherLoginup pt-5">
-          <div className="flex items-center">
-            <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+          <div className="flex items-center justify-between">
+            <hr className="w-[42%] h-[1px] bg-gray-600 border-none" />
             <div className="otherLoginTxt w-fit m-auto">or</div>
-            <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+            <hr className="w-[42%] h-[1px] bg-gray-600 border-none" />
           </div>
           <div className="otherLoginLogos w-fit m-auto pt-2">
             <button className="flex items-center w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-sm rounded-3xl mb-4">

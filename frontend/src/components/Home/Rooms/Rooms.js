@@ -3,7 +3,17 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import "../Header/Icons/Icons.css";
 import RoomIcon from "./RoomIcon";
 import { Link } from "react-router-dom";
+import JoinRoom from "./JoinRoom/JoinRoom";
+import { useDispatch, useSelector } from "react-redux";
+import { homeActions } from "../../../store/homeSlice";
 const Rooms = () => {
+  const data = useSelector((state) => state.home)
+  const dispatch = useDispatch("")
+  const toggle = () => {
+    dispatch(homeActions.toggleJoinRoom());
+  }
+  const modalState = data.showJoinRoom;
+  console.log(data.showJoinRoom);
   return (
     <>
       <div className="bg-[#8B8B8D]/50 w-[110px]">
@@ -24,7 +34,8 @@ const Rooms = () => {
           />
         </div>
         <div className="addRoom my-4">
-          <IoIosAddCircleOutline className="icon text-[40px] m-auto" />
+          <IoIosAddCircleOutline className="icon text-[40px] m-auto" onClick={toggle}/>
+          {modalState && <JoinRoom />}
         </div>
       </div>
     </>
