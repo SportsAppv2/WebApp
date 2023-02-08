@@ -14,7 +14,7 @@ export const editProfile = asyncHandler(async (req, res) => {
 });
 
 // Middleware function to retrieve a profile by ID
-export const getProfile = async (req, res, next) => {
+export const verifyProfile = async (req, res, next) => {
   try {
     const jwtToken = req.headers.authorization.split(" ")[1];
     const userId = decodeJwt(jwtToken);
