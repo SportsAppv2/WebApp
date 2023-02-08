@@ -9,10 +9,12 @@ import Month from "../DropdownBlocks/Month";
 import Year from "../DropdownBlocks/Year";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSignup } from "../../../store/signupSlice";
+import { useNavigate } from "react-router-dom";
 
 const SignupBlock = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.signup);
+  const navigate = useNavigate();
   console.log(data);
   return (
     <div className="bg-[black] w-[80vw] h-[680px] md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
@@ -42,10 +44,10 @@ const SignupBlock = () => {
             Sign in with Facebook
           </button>
         </div>
-        <div className="flex items-center mt-2">
-          <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+        <div className="flex items-center justify-between mt-2">
+          <hr className="w-[42%] h-[1px] bg-gray-600 border-none" />
           <div className="otherLoginTxt w-fit m-auto">or</div>
-          <hr className="w-36 h-[1px] bg-gray-600 border-none" />
+          <hr className="w-[42%] h-[1px] bg-gray-600 border-none" />
         </div>
         <div className="fields">
           <div className="flex justify-between">
@@ -89,9 +91,9 @@ const SignupBlock = () => {
           <div className="">
             <TextBox width="w-[100%]" for="Retype Password" type="password" />
           </div>
-          <div className="btn pt-6">
+          <div className="btn flex justify-center pt-6">
             <button
-              className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl ml-10"
+              className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl text-center"
               onClick={() => {
                 dispatch(fetchSignup());
               }}
@@ -103,7 +105,9 @@ const SignupBlock = () => {
             <div className="">
               <div className="loginTxt w-fit m-auto">
                 <span className="text-gray-600">Already have an account?</span>
-                <span className="pl-1 font-medium cursor-pointer text-[#5D5FEF] hover:underline">
+                <span className="pl-1 font-medium cursor-pointer text-[#5D5FEF] hover:underline"
+                onClick={() => navigate("/login")}
+                >
                   Log in
                 </span>
               </div>

@@ -8,9 +8,11 @@ import FbLogo from "../../../assets/iconFb1.svg";
 import { fetchData, loginActions } from "../../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdVisibilityOff } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const LoginBlock = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.login);
+  const navigate = useNavigate();
   // console.log(data);
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
@@ -111,7 +113,9 @@ const LoginBlock = () => {
           <div className="">
             <div className="loginTxt w-fit m-auto">
               <span className="text-gray-600">Don't have an account yet?</span>
-              <span className="pl-1 font-medium cursor-pointer text-[#5D5FEF] hover:underline">
+              <span className="pl-1 font-medium cursor-pointer text-[#5D5FEF] hover:underline"
+              onClick={() => navigate("/signup")}
+              >
                 Sign Up
               </span>
             </div>
