@@ -43,6 +43,11 @@ export const fetchVerifyOtp = createAsyncThunk(
       .then((res) => {
         console.log(res);
         if (res.data.status == "VERIFIED") {
+          localStorage.setItem("token", res.data.token);
+          console.log(
+            "Token saved after signup ",
+            localStorage.getItem("token")
+          );
           dispatch(otpActions.authChanged(true));
         }
         return res.data;

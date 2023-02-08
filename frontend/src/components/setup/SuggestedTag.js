@@ -17,7 +17,7 @@ const SuggestedTag = (props) => {
               region: profileData.region,
               tags: [
                 ...profileData.tags,
-                { id: profileData.tags.length, tag: props.name },
+                { id: profileData.tags.length, tagName: props.name },
               ],
             })
           )

@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken";
 //mongoDB user modeldotenv
 import User from "../../models/User.js";
 //mongoDB user verification model
@@ -16,8 +17,8 @@ let transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: "julianne.schaden@ethereal.email",
-    pass: "mbK19dQqVB4nqUmSVA",
+    user: "olga.schoen@ethereal.email",
+    pass: "VVgeZDw1VwN5JuVeUz",
   },
 });
 
@@ -54,8 +55,10 @@ export const signupRoute = asyncHandler(async (req, res) => {
         const saltRounds = 10;
         bcrypt.hash(password, saltRounds).then((hashedPassword) => {
           const newUser = new User({
-            firstName,
-            lastName,
+            name: {
+              firstName,
+              lastName,
+            },
             email,
             password: hashedPassword,
             dateOfBirth,
@@ -104,9 +107,13 @@ export const verifyOtp = asyncHandler(async (req, res) => {
           } else {
             await User.updateOne({ _id: userId }, { verified: true });
             await UserOtpVerification.deleteMany({ userId });
+            const token = jwt.sign({ userId }, process.env.JWT_SECRET);
+            console.log("JWT_SECRET is ", process.env.JWT_SECRET);
+            console.log("Token generated is ", token);
             res.json({
               status: "VERIFIED",
               message: "User email verified successfully",
+              token,
             });
           }
         }
@@ -146,7 +153,7 @@ const sendOtpVerificationEmail = async ({ _id, email }, res) => {
     const otp = `${Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000}`;
     //mail options
     const mailOptions = {
-      from: '"Julianne Schaden" <julianne.schaden@ethereal.email>',
+      from: '"Olga Schoen" <olga.schoen@ethereal.email>',
       to: email,
       subject: "Verify Your Email",
       html: `<p>Enther <b>${otp}</b> in the app to verify your email address and complete the signup process. The OTP expires in 1 hour</p>`,

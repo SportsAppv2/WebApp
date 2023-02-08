@@ -19,12 +19,12 @@ const NewModal = () => {
     dispatch(roomActions.toggleModal());
   };
   useEffect(() => {
-    if(!data.files==""){
+    if (!data.files == "") {
       filetag.current.classList.remove("hidden");
-    }else{
+    } else {
       filetag.current.classList.add("hidden");
     }
-  },[data.files])
+  }, [data.files]);
   return (
     <>
       <div className="w-screen h-screen fixed top-0 left-0">
@@ -39,18 +39,26 @@ const NewModal = () => {
             <UserInfo />
             <PostContent />
           </div>
-          <div 
-          className="text-[#5D5FEF] text-md w-fit font-medium pl-9 mb-3 cursor-pointer hover:text-blue-60"
-          onClick={() => {dispatch(createpostActions.addHashtag());}}
+          <div
+            className="text-[#5D5FEF] text-md w-fit font-medium pl-9 mb-3 cursor-pointer hover:text-blue-60"
+            onClick={() => {
+              dispatch(createpostActions.addHashtag());
+            }}
           >
             Add hashtag
           </div>
-          <div className="files hidden flex w-fit text-white-30 bg-[#151516] rounded-lg ml-5 mb-5 p-1" ref={filetag}>
-            <div>
-              {data.files}
-            </div>            
-            <button className="ml-3" onClick={() => {dispatch(createpostActions.filesDeleted());}}>
-              <RxCross1 className="hover:text-blue-80"/>
+          <div
+            className="files hidden flex w-fit text-white-30 bg-[#151516] rounded-lg ml-5 mb-5 p-1"
+            ref={filetag}
+          >
+            <div>{data.files}</div>
+            <button
+              className="ml-3"
+              onClick={() => {
+                dispatch(createpostActions.filesDeleted());
+              }}
+            >
+              <RxCross1 className="hover:text-blue-80" />
             </button>
           </div>
           <div className="bg-gray-600 h-[1px]"></div>

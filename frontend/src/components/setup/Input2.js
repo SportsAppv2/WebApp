@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setupActions } from "../../store/setupSlice";
+import { fetchCreateProfile, setupActions } from "../../store/setupSlice";
 import SearchItem from "./SearchItem";
 import SuggestedTag from "./SuggestedTag";
 import { AiOutlineSearch } from "react-icons/fa";
@@ -10,9 +10,6 @@ const Input2 = () => {
   const profileData = useSelector((state) => state.setup.profileInfo);
   const tagsData = profileData.tags;
   console.log(profileData);
-  const goToNext = () => {
-    dispatch(setupActions.pageChanged({ goTo: 2 }));
-  };
   const dataFilled = (userName, country, region, tags) => {
     dispatch(
       setupActions.profileInfoAdded({
@@ -46,7 +43,7 @@ const Input2 = () => {
                       profileData.region,
                       [
                         ...profileData.tags,
-                        { id: profileData.tags.length, tag: tag },
+                        { id: profileData.tags.length, tagName: tag },
                       ]
                     );
                     setTag("");
@@ -66,13 +63,15 @@ const Input2 = () => {
             </div>
             <div className="my-1 flex w-full flex-wrap">
               {tagsData.map((item, index) => (
-                <SearchItem name={item.tag} tagId={item.id} key={index} />
+                <SearchItem name={item.tagName} tagId={item.id} key={index} />
               ))}
             </div>
             <div className="my-2">
               <button
                 className="float-right px-3 py-1 text-lg  bg-[#5D5FEF] bg-opacity-50 hover:bg-blue-100 text-gray-200  shadow-md rounded-xl"
-                onClick={goToNext}
+                onClick={() => {
+                  dispatch(fetchCreateProfile());
+                }}
               >
                 Finish
               </button>

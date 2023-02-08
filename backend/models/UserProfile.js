@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const profileSchema = mongoose.Schema({
+  userId: { type: String, required: true },
   userName: { type: String, required: true },
   name: {
     firstName: { type: String, required: true },
@@ -16,12 +17,12 @@ const profileSchema = mongoose.Schema({
   },
   location: {
     country: { type: String, required: true },
-    state: { type: String, required: true },
+    region: { type: String, required: true },
   },
   profileView: {
     profilePic: { type: String },
     backgroundPic: { type: String },
-    bio: { type: String },
+    bio: { type: String, default: "Hey, I'm using sportsHub! Its cool!" },
     createdAt: { type: Date, default: Date.now },
     profileScore: { type: Number, default: 0 },
     profileVisits: { type: Number, default: 0 },
@@ -36,7 +37,7 @@ const profileSchema = mongoose.Schema({
   },
   tags: [
     {
-      tagId: { type: String, required: true },
+      tagId: { type: String },
       tagName: { type: String, required: true },
     },
   ],
