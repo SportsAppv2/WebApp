@@ -9,19 +9,20 @@ const profileSchema = mongoose.Schema({
   },
   contact: {
     email: { type: String, required: true },
-    phone: { type: String },
-    instagram: { type: String },
-    facebook: { type: String },
-    youtube: { type: String },
-    tiktok: { type: String },
+    phone: { type: String, default: "" },
+    website: { type: String, default: "" },
+    instagram: { type: String, default: "" },
+    facebook: { type: String, default: "" },
+    youtube: { type: String, default: "" },
+    tiktok: { type: String, default: "" },
   },
   location: {
     country: { type: String, required: true },
     region: { type: String, required: true },
   },
   profileView: {
-    profilePic: { type: String },
-    backgroundPic: { type: String },
+    profilePic: { type: String, default: "" },
+    backgroundPic: { type: String, default: "" },
     bio: { type: String, default: "Hey, I'm using sportsHub! Its cool!" },
     createdAt: { type: Date, default: Date.now },
     profileScore: { type: Number, default: 0 },
@@ -42,7 +43,7 @@ const profileSchema = mongoose.Schema({
     },
   ],
   settings: {
-    profilePrivacy: { type: String },
+    profilePrivacy: { type: String, default: "Everyone" },
   },
 });
 
@@ -57,6 +58,7 @@ const profileSchema = mongoose.Schema({
 //     "contact": {
 //       "email": "",
 //       "phone": "",
+//       "website": "",
 //       "instagram": "",
 //       "facebook": "",
 //       "youtube": "",
