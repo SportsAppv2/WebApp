@@ -11,7 +11,10 @@ const JoinRoom = () => {
         dispatch(homeActions.toggleJoinRoom());
     }
     return (
-        <div className='w-screen h-screen bg-gray-20 fixed top-0 left-0' onClick={toggle}>
+        <div className='w-screen h-screen  fixed top-0 left-0 z-10'>
+            <div className='w-screen h-screen fixed top-0 left-0 bg-gray-20' onClick={toggle}>
+
+            </div>
             <div className='h-fit w-[580px] bg-[#000000] m-auto mt-[130px] rounded-3xl relative p-2'>
                 <Header />
                 <div className="h-[32px] text-center mt-8">

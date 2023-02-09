@@ -4,8 +4,19 @@ import LeftBar from "../../components/Profile/LeftBar.js"
 import RightBar  from '../../components/Profile/RightBar.js';
 import FeedHeader from '../../components/Profile/FeedHeader.js';
 import Feed from '../Room/Feed.js';
+import EditProfile from '../../components/Profile/EditProfile';
+import {BsFillPencilFill} from 'react-icons/bs';
+import {GoLocation} from 'react-icons/go';
+import { useDispatch, useSelector } from 'react-redux';
+import { userProfileActions } from '../../store/userProfileSlice';
 
 const Profile = () => {
+    const data = useSelector((state) => state.userProfile);
+    const dispatch = useDispatch();
+    const toggle = () => {
+        dispatch(userProfileActions.toggleEditProfile());
+    }
+    console.log(data);
     return (
         <div className='flex flex-col h-screen'>
             <Header />
@@ -26,7 +37,7 @@ const Profile = () => {
                                 className='h-[100%] w-[100%] object-cover rounded-full'
                                 />
                             </div>
-                            <div className='flex text-white-100 font-bold text-[20px] mt-[120px] mx-5'>
+                            <div className='flex items-center text-white-100 font-bold text-[20px] mt-[120px] mx-5'>
                                 <div className='p-2'>
                                     Baibhav Saikia
                                 </div>
@@ -34,10 +45,16 @@ const Profile = () => {
                                     @hawk123
                                 </div>
                             </div>
-                            <div className='text-white-100 text-[18px] mx-5 p-2'>
+                            <div className='flex items-center text-gray-400 text-[16px] font-medium mx-5'>
+                                <GoLocation className='mx-2' />
+                                <div>
+                                    Guwahati, Assam
+                                </div>
+                            </div>
+                            <div className='text-white-100 text-[18px] mx-5 p-2 mt-2'>
                                 Hey, A football fan here!!! CR7 is ❤️ | NIT Silchar '23' | Following Real Madrid since the age of 10.
                             </div>
-                            <div className='follow flex absolute top-[265px] right-[100px] text-[18px]'>
+                            <div className='follow flex absolute top-[260px] right-[100px] text-[18px]'>
                                 <div className='flex'>
                                     <div className='text-white-100 mx-2'>
                                         826
@@ -55,6 +72,12 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className='absolute top-[330px] right-[30px] cursor-pointer text-gray-600 text-[18px] hover:text-blue-60'
+                                onClick={toggle}
+                                >
+                                    <BsFillPencilFill />
+                            </div>
+                            {data.showEditProfile && <EditProfile />}
                         </div>
                         <FeedHeader /> 
                         <Feed/>                                               
