@@ -1,26 +1,19 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import { decodeJwt } from "../../helpers/decodeJwt.js";
 import Post from "../../models/Posts.js";
 
 const router = express.Router();
-
-const decodeJwt = (token) => {
-  /* 
-    Here instead of userId, we will receive the JWT. 
-    On decoding the JWT, we will receive the userId.
-    */
-};
 export const deletePost = asyncHandler(async (req, res) => {
   try {
-    // const jwtToken = req.headers.authorization.split(" ")[1];
-    // const userId = decodeJwt(jwtToken);
-    const userId = req.headers.authorization.split(" ")[1]; //use JWT, remove this
+    const jwtToken = req.headers.authorization.split(" ")[1];
+    const userId = decodeJwt(jwtToken);
 
     const postId = req.params.id;
     console.log("User ID is ", userId);
     console.log("Post ID is ", postId);
 
-    Post.findOne({ _id: postId })
+    Post.findById(postId)
       .then((post) => {
         if (!post) {
           return res
@@ -37,6 +30,7 @@ export const deletePost = asyncHandler(async (req, res) => {
           post
             .remove()
             .then((post) => {
+              console.log("Deleted Post ", post);
               return res
                 .status(200)
                 .json({ message: "Post deleted successfully" });

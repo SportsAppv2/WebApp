@@ -8,7 +8,8 @@ export const decodeJwt = (token) => {
     console.log("Decoded JWT token ", decoded);
     return decoded.userId;
   } catch (error) {
-    console.error(error);
+    console.error("Error encountered, ", error);
+    console.error("About to return NULL");
     return null;
   }
 };

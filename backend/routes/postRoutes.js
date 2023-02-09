@@ -10,7 +10,8 @@ import { dislikeComment } from "../api/post/DislikeComment.js";
 import { dislikePost } from "../api/post/DislikePost.js";
 import { likeComment } from "../api/post/LikeComment.js";
 import { likePost } from "../api/post/LikePost.js";
-
+import protect from "../middleware/authVerify.js";
+router.use(protect);
 router.route("/test").post(testRoute);
 router.route("/post/create").post(createPost);
 router.route("/post/:id").delete(deletePost);

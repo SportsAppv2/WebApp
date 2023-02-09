@@ -4,14 +4,17 @@ import Post from "../../models/Posts.js";
 import Comment from "../../models/Comments.js";
 import User from "../../models/User.js";
 import mongoose from "mongoose";
+import { decodeJwt } from "../../helpers/decodeJwt.js";
 
 const router = express.Router();
 
 export const dislikeComment = asyncHandler(async (req, res) => {
   try {
-    const { commentId, userId } = req.body;
-    User.findOne({ _id: mongoose.Types.ObjectId(userId) })
-      .then((user) => {
+    const jwtToken = req.headers.authorization.split(" ")[1];
+    const userId = decodeJwt(jwtToken);
+    const { commentId } = req.body;
+    const findUser = await User.findById(mongoose.Types.ObjectId(userId))
+      .then(async (user) => {
         if (!user) {
           return Promise.reject(new Error("User not found."));
         }

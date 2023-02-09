@@ -35,7 +35,17 @@ export const createProfile = asyncHandler(async (req, res) => {
       console.log("About to create a new profile ", newProfile);
       const savedProfile = newProfile
         .save()
-        .then((profile) => {
+        .then(async (profile) => {
+          const userNameAdded = await User.findByIdAndUpdate(
+            userId,
+            { userName },
+            { new: true }
+          ).catch((err) => {
+            res.json({
+              status: "FAILED",
+              message: err.message,
+            });
+          });
           res.status(201).json({
             status: "SUCCESS",
             message: "Profile Added successfully",
