@@ -8,7 +8,7 @@ import Date from "../DropdownBlocks/Date";
 import Month from "../DropdownBlocks/Month";
 import Year from "../DropdownBlocks/Year";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSignup } from "../../../store/signupSlice";
+import { fetchSignup, signupActions } from "../../../store/signupSlice";
 import { useNavigate } from "react-router-dom";
 
 const SignupBlock = () => {
@@ -16,8 +16,18 @@ const SignupBlock = () => {
   const data = useSelector((state) => state.signup);
   const navigate = useNavigate();
   console.log(data);
+  const checkPasswordsMatched = () => {
+    const password = data.password;
+    const retypePassword = data.retypePassword;
+    if(password!=retypePassword){
+      dispatch(signupActions.invalidEntry(true));
+      dispatch(signupActions.setErrorMessage("Fuck you"));
+      return false;
+    }
+    return true
+  }
   return (
-    <div className="bg-[black] w-[80vw] h-[680px] md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
+    <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
       <div className="mx-4 md:mx-14">
         <div className="flex">
           <div className="logoIcon h-auto mr-2 ml-auto">
@@ -31,6 +41,11 @@ const SignupBlock = () => {
             Sports Hub
           </div>
         </div>
+        {data.invalid ? 
+          <div className="text-[#FF0000] text-center mt-3">
+            {data.errorMessage}
+          </div>
+        : ""}
         <div className="head font-medium leading-tight text-4xl text-center mt-4">
           Sign up
         </div>
@@ -89,13 +104,18 @@ const SignupBlock = () => {
             />
           </div>
           <div className="">
-            <TextBox width="w-[100%]" for="Retype Password" type="password" />
+            <TextBox width="w-[100%]" for="Retype Password" type="password" 
+            dispatcher="passwordRetyped"
+            />
           </div>
           <div className="btn flex justify-center pt-6">
             <button
               className="w-64 bg-white-100 hover:bg-gray-400 text-[#000000] font-medium text-xl pb-1 rounded-2xl text-center"
               onClick={() => {
+                if(checkPasswordsMatched() == true){
+
                 dispatch(fetchSignup());
+                }
               }}
             >
               Sign up

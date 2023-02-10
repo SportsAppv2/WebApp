@@ -29,7 +29,7 @@ const LoginBlock = () => {
     passwordRef.current.classList.remove("focused");
   };
   return (
-    <div className="bg-[black] w-[80vw] h-[590px] md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
+    <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
       <div className="mx-4 my-6 md:mx-14">
         <div className="flex">
           <div className="logoIcon h-auto mr-2 ml-auto">
@@ -43,6 +43,11 @@ const LoginBlock = () => {
             Sports Hub
           </div>
         </div>
+        {data.invalid ? 
+          <div className="text-[#FF0000] mt-3 text-center">
+            {data.errorMessage}
+          </div>
+        : "" }
         <div className="head font-medium leading-tight text-4xl text-center mt-4">
           Sign in
         </div>
