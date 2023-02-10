@@ -8,8 +8,7 @@ const router = express.Router();
 
 export const likePost = asyncHandler(async (req, res) => {
   try {
-    const jwtToken = req.headers.authorization.split(" ")[1];
-    const userId = decodeJwt(jwtToken);
+    const userId = req.userId;
     const { postId } = req.body;
     User.findById(userId)
       .then(async (user) => {

@@ -38,7 +38,12 @@ export const createProfile = asyncHandler(async (req, res) => {
         .then(async (profile) => {
           const userNameAdded = await User.findByIdAndUpdate(
             userId,
-            { userName },
+            {
+              $set: {
+                userName,
+                initalProfileDone: true,
+              },
+            },
             { new: true }
           ).catch((err) => {
             res.json({

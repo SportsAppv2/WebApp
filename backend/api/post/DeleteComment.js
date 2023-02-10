@@ -9,8 +9,7 @@ const router = express.Router();
 
 export const deleteComment = asyncHandler(async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const userId = decodeJwt(token);
+    const userId = req.userId;
     const commentId = req.params.id;
     console.log("User ID is ", userId);
     console.log("Comment ID is ", commentId);

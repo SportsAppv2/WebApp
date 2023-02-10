@@ -10,8 +10,7 @@ const router = express.Router();
 
 export const dislikeComment = asyncHandler(async (req, res) => {
   try {
-    const jwtToken = req.headers.authorization.split(" ")[1];
-    const userId = decodeJwt(jwtToken);
+    const userId = req.userId;
     const { commentId } = req.body;
     const findUser = await User.findById(mongoose.Types.ObjectId(userId))
       .then(async (user) => {

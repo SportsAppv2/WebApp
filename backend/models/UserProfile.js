@@ -45,7 +45,7 @@ const profileSchema = mongoose.Schema({
   settings: {
     profilePrivacy: { type: String, default: "Everyone" },
   },
-  setupDoone: { type: Boolean, default: false },
+  setupDone: { type: Boolean, default: false },
 });
 
 // Expected JSON response:
@@ -91,7 +91,8 @@ const profileSchema = mongoose.Schema({
 //     }],
 //     "settings": {
 //       "profilePrivacy": ""
-//     }
+//     },
+//     "setupDone": false,
 //   }
 
 const Profile = mongoose.model("Profile", profileSchema);

@@ -6,9 +6,7 @@ import Post from "../../models/Posts.js";
 const router = express.Router();
 export const deletePost = asyncHandler(async (req, res) => {
   try {
-    const jwtToken = req.headers.authorization.split(" ")[1];
-    const userId = decodeJwt(jwtToken);
-
+    const userId = req.userId;
     const postId = req.params.id;
     console.log("User ID is ", userId);
     console.log("Post ID is ", postId);

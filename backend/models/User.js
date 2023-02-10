@@ -11,6 +11,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   verified: { type: Boolean, default: false },
+  initalProfileDone: { type: Boolean, default: false },
 });
 
 const User = mongoose.model("User", UserSchema);

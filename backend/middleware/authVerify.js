@@ -1,8 +1,7 @@
-import jwt from "jsonwebtoken";
 import { decodeJwt } from "../helpers/decodeJwt.js";
 import User from "../models/User.js";
 const protect = async (req, res, next) => {
-  console.log("INSIDE MIDDLEWARE");
+  console.log("INSIDE MIDDLEWARE 1");
   try {
     if (
       req.headers.authorization &&
@@ -24,7 +23,10 @@ const protect = async (req, res, next) => {
           message: "User not authenticated.",
         });
       } else if (user) {
+        console.log("User is ", user);
         req.userId = user._id;
+        req.initalProfileDone = user.initalProfileDone;
+        console.log("req body is now ", req.initalProfileDone);
       }
     } else {
       res.status(401).json({
@@ -32,9 +34,15 @@ const protect = async (req, res, next) => {
         message: "User authentication failed. Invalid token.",
       });
     }
-
     next();
-  } catch {}
+  } catch {
+    (err) => {
+      res.json({
+        status: "FAILED",
+        message: err.message,
+      });
+    };
+  }
 };
 
 export default protect;

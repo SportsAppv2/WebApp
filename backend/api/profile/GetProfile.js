@@ -35,18 +35,9 @@ export const getProfile = asyncHandler(async (req, res) => {
 
 export const getProfileOwn = asyncHandler(async (req, res) => {
   try {
-    const jwtToken = req.headers.authorization.split(" ")[1];
-    console.log("Token is ", jwtToken);
-    const userId = decodeJwt(jwtToken);
-    if (!userId) {
-      return res.json({
-        status: "FAILED",
-        message: "Bearer token not found",
-      });
-    }
-    console.log("User ID is ", userId);
+    const userId = req.userId;
     const profileData = await Profile.findOne(
-      { userId: userId },
+      { userId },
       { strictQuery: false }
     ).catch((err) => {
       res.json({
@@ -55,7 +46,7 @@ export const getProfileOwn = asyncHandler(async (req, res) => {
       });
     });
     console.log("Profile data is ", profileData);
-    console.log("User ID is ", userId);
+    console.log("Should return the response now");
     return res.json({
       status: "SUCCESS",
       data: profileData,
