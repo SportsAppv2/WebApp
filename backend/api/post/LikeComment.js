@@ -13,7 +13,7 @@ export const likeComment = asyncHandler(async (req, res) => {
     const userId = req.userId;
     const { commentId } = req.body;
     User.findOne({ _id: mongoose.Types.ObjectId(userId) })
-      .then((user) => {
+      .then(async (user) => {
         if (!user) {
           return Promise.reject(new Error("User not found."));
         }

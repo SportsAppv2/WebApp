@@ -13,8 +13,10 @@ const Login = () => {
     if (data.authorized) {
       console.log("Should Route to a new page now");
       navigate("/home");
+    } else if (data.setupProfile) {
+      navigate("/setup");
     }
-  }, [data.authorized]);
+  }, [data.authorized, data.setupProfile]);
   return (
     <div className="bg-[#1A1C20] h-screen">
       <Body />

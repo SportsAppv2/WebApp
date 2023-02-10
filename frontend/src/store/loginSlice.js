@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const fetchData = createAsyncThunk(
   "login/check",
@@ -9,6 +10,8 @@ export const fetchData = createAsyncThunk(
       email: state.login.email,
       password: state.login.password,
     };
+    // const navigate = useNavigate();
+    console.log("useNavigate() initialised");
     console.log(state);
     const response = await axios
       .post("http://localhost:5000/api/user/login", JSON.stringify(data), {
@@ -23,12 +26,15 @@ export const fetchData = createAsyncThunk(
           console.log("Checking out token ", localStorage.getItem("token"));
           dispatch(loginActions.authChanged(true));
           dispatch(loginActions.invalidEntry(false));
+        } else if (res.data.status == "SETUP NOT COMPLETE") {
+          dispatch(loginActions.profileSetupIncomplete());
         } else {
           dispatch(loginActions.invalidEntry(true));
           dispatch(loginActions.setErrorMessage(res.data.message));
           // alert(res.data.message);
         }
         console.log(res);
+        return res;
       })
       .catch((error) => {
         console.log(error);
@@ -43,6 +49,7 @@ const loginSlice = createSlice({
     password: "",
     isLoading: false,
     authorized: false,
+    setupProfile: false,
     invalid: false,
     errorMessage: "",
   },
@@ -50,18 +57,21 @@ const loginSlice = createSlice({
     authChanged(state, action) {
       state.authorized = action.payload;
     },
+    profileSetupIncomplete(state) {
+      state.setupProfile = true;
+    },
     emailAdded(state, action) {
       state.email = action.payload;
     },
     passwordAdded(state, action) {
       state.password = action.payload;
     },
-    invalidEntry(state,action){
+    invalidEntry(state, action) {
       state.invalid = action.payload;
     },
-    setErrorMessage(state,action) {
+    setErrorMessage(state, action) {
       state.errorMessage = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state, action) => {
