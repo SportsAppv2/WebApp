@@ -1,5 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import { decodeJwt } from "../../helpers/decodeJwt.js";
 import Post from "../../models/Posts.js";
 import User from "../../models/User.js";
 
@@ -7,9 +8,11 @@ const router = express.Router();
 
 export const dislikePost = asyncHandler(async (req, res) => {
   try {
-    const { postId, userId } = req.body;
-    User.findOne({ _id: userId })
-      .then((user) => {
+    const jwtToken = req.headers.authorization.split(" ")[1];
+    const userId = decodeJwt(jwtToken);
+    const { postId } = req.body;
+    User.findById(userId)
+      .then(async (user) => {
         // if (!user) {
         //   return Promise.reject(new Error("User not found."));
         // }

@@ -105,10 +105,9 @@ export const verifyOtp = asyncHandler(async (req, res) => {
             //supplied OTP was wrong
             throw new Error("Wrong code passed.");
           } else {
-            await User.updateOne({ _id: userId }, { verified: true });
+            await User.findByIdAndUpdate(userId, { verified: true });
             await UserOtpVerification.deleteMany({ userId });
             const token = jwt.sign({ userId }, process.env.JWT_SECRET);
-            console.log("JWT_SECRET is ", process.env.JWT_SECRET);
             console.log("Token generated is ", token);
             res.json({
               status: "VERIFIED",

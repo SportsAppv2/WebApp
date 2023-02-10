@@ -10,8 +10,10 @@ const router = express.Router();
 export const createPost = asyncHandler(async (req, res) => {
   try {
     const { content, settings } = req.body;
-    const jwtToken = req.headers.authorization.split(" ")[1];
-    const userId = decodeJwt(jwtToken);
+    // const jwtToken = req.headers.authorization.split(" ")[1];
+    // const userId = decodeJwt(jwtToken);
+    const userId = req.userId;
+    console.log("User ID while creating a post is ", userId);
     const isCreatorEmpty = false;
     const isContentEmpty = false;
     const isSettingsEmpty = false;

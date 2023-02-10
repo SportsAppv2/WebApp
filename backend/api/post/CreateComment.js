@@ -9,16 +9,9 @@ const router = express.Router();
 
 export const createComment = asyncHandler(async (req, res) => {
   try {
-    const { parentPostId, parentCommentId, creator, content, stats, comments } =
-      req.body;
-    console.log(
-      parentPostId,
-      parentCommentId,
-      creator,
-      content,
-      stats,
-      comments
-    );
+    const { parentPostId, parentCommentId, content } = req.body;
+    const userId = req.userId;
+    console.log(parentPostId, parentCommentId, content);
     const isParentPostIdEmpty = false;
     const isCreatorEmpty = false;
     const isContentEmpty = false;
@@ -26,11 +19,17 @@ export const createComment = asyncHandler(async (req, res) => {
       throw new Error("Empty entries");
     } else {
       // Check if userId is valid
-      const user = await User.findById(mongoose.Types.ObjectId(creator.id));
+      const user = await User.findById(mongoose.Types.ObjectId(userId));
       if (!user) {
         throw new Error("User not found.");
       }
-
+      const creator = {
+        id: userId,
+        firstName: user.name.firstName,
+        lastName: user.name.lastName,
+        userName: user.userName,
+      };
+      console.log(creator);
       // Check if parentCommentId exists
       if (parentCommentId) {
         const parentComment = await Comment.findById(parentCommentId);
@@ -50,8 +49,6 @@ export const createComment = asyncHandler(async (req, res) => {
         parentCommentId,
         creator,
         content,
-        stats,
-        comments,
       });
       const savedComment = await newComment.save();
 

@@ -18,6 +18,7 @@ export const verifyProfile = async (req, res, next) => {
   try {
     const jwtToken = req.headers.authorization.split(" ")[1];
     const userId = decodeJwt(jwtToken);
+    console.log("User Id received ", userId);
     const profile = await Profile.findById(userId);
     if (!profile)
       return res
