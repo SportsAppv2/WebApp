@@ -60,6 +60,9 @@ const editProfileSlice = createSlice({
         },
         toggleDiscardChanges(state) {
             state.showDiscardChanges = !state.showDiscardChanges
+        },
+        profileUpdated(state){
+            state.userOriginal = state.editedData
         }
     }
 })

@@ -32,7 +32,9 @@ export const fetchSignup = createAsyncThunk(
       .catch((error) => {
         console.log(error);
       });
+      console.log("R is :" ,response);
     if (response.status == "PENDING") {
+      console.log("ACCOUNT VERIFIED. YAY")
       const resData = response.data;
       dispatch(
         otpActions.userDataAdded({
@@ -41,6 +43,11 @@ export const fetchSignup = createAsyncThunk(
         })
       );
       dispatch(signupActions.authChanged(true));
+      dispatch(signupActions.invalidEntry(false));
+    }else if(response.status == "FAILED"){
+      console.log('ERROR: ', response.message);
+      dispatch(signupActions.invalidEntry(true));
+      dispatch(signupActions.setErrorMessage(response.message));
     }
     return response.data;
   }
@@ -59,6 +66,9 @@ const signupSlice = createSlice({
     },
     password: "",
     signupAuthorized: false,
+    invalid: false,
+    errorMessage: "",
+    retypePassword: "",
   },
   reducers: {
     authChanged(state, action) {
@@ -85,6 +95,15 @@ const signupSlice = createSlice({
     passwordChanged(state, action) {
       state.password = action.payload;
     },
+    invalidEntry(state,action){
+      state.invalid = action.payload;
+    },
+    setErrorMessage(state, action){
+      state.errorMessage = action.payload;
+    },
+    passwordRetyped(state, action){
+      state.retypePassword = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSignup.pending, (state, action) => {

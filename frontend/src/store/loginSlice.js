@@ -22,8 +22,11 @@ export const fetchData = createAsyncThunk(
           localStorage.setItem("token", res.data.token);
           console.log("Checking out token ", localStorage.getItem("token"));
           dispatch(loginActions.authChanged(true));
+          dispatch(loginActions.invalidEntry(false));
         } else {
-          alert(res.data.message);
+          dispatch(loginActions.invalidEntry(true));
+          dispatch(loginActions.setErrorMessage(res.data.message));
+          // alert(res.data.message);
         }
         console.log(res);
       })
@@ -40,6 +43,8 @@ const loginSlice = createSlice({
     password: "",
     isLoading: false,
     authorized: false,
+    invalid: false,
+    errorMessage: "",
   },
   reducers: {
     authChanged(state, action) {
@@ -51,6 +56,12 @@ const loginSlice = createSlice({
     passwordAdded(state, action) {
       state.password = action.payload;
     },
+    invalidEntry(state,action){
+      state.invalid = action.payload;
+    },
+    setErrorMessage(state,action) {
+      state.errorMessage = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state, action) => {
