@@ -5,6 +5,7 @@ const roomSlice = createSlice({
   initialState: {
     currentFeedType: "top",
     showModal: false,
+    showComments: false,
   },
   reducers: {
     feedTypeChanged(state, action) {
@@ -14,6 +15,9 @@ const roomSlice = createSlice({
       state.showModal = !state.showModal;
       console.log(state.showModal);
     },
+    toggleComments(state) {
+      state.showComments = !state.showComments;
+    }
   },
 });
 

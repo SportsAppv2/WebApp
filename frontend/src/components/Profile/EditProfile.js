@@ -160,7 +160,9 @@ const EditProfile = () => {
                     </div>
                 </div>
                 <div className='flex justify-center my-5'>
-                    <button className='bg-white-100 font-semibold text-[18px] text-[#000000] rounded-2xl p-3 px-5 hover:bg-gray-400'>
+                    <button className='bg-white-100 font-semibold text-[18px] text-[#000000] rounded-2xl p-3 px-5 hover:bg-gray-400'
+                    onClick={dispatch()}
+                    >
                         Save
                     </button>
                 </div>

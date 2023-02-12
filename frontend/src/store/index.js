@@ -10,6 +10,7 @@ import signupSlice from "./signupSlice";
 import homeSlice from "./homeSlice";
 import userProfileSlice from "./userProfileSlice";
 import editProfileSlice from "./editProfileSlice";
+import replySlice from "./replySlice";
 
 const store = configureStore(
   {
@@ -22,7 +23,8 @@ const store = configureStore(
       createpost: createpostSlice.reducer,
       home: homeSlice.reducer,
       userProfile: userProfileSlice.reducer,
-      editProfile: editProfileSlice.reducer
+      editProfile: editProfileSlice.reducer,
+      reply: replySlice.reducer,
     },
   },
   applyMiddleware(thunk)
