@@ -4,6 +4,7 @@ dotenv.config();
 
 export const decodeJwt = (token) => {
   try {
+    console.log(token, process.env.JWT_SECRET);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log("Decoded JWT token ", decoded);
     return decoded.userId;

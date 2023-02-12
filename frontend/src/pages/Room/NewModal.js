@@ -13,18 +13,20 @@ import { createpostActions } from "../../store/createpostSlice";
 const NewModal = () => {
   const filetag = useRef("");
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.createpost);
-  console.log(data);
+  const createPostData = useSelector((state) => state.createpost);
+  console.log(createPostData);
+  const profileDetails = useSelector((state) => state.editProfile);
+  console.log("post details", profileDetails);
   const toggle = () => {
     dispatch(roomActions.toggleModal());
   };
   useEffect(() => {
-    if (!data.files == "") {
+    if (!createPostData.files == "") {
       filetag.current.classList.remove("hidden");
     } else {
       filetag.current.classList.add("hidden");
     }
-  }, [data.files]);
+  }, [createPostData.files]);
   return (
     <>
       <div className="w-screen h-screen fixed top-0 left-0">
@@ -36,7 +38,7 @@ const NewModal = () => {
           <Header />
           <div className="bg-gray-600 h-[1px]"></div>
           <div className="px-5">
-            <UserInfo />
+            <UserInfo userInfo={profileDetails} />
             <PostContent />
           </div>
           <div
@@ -51,7 +53,7 @@ const NewModal = () => {
             className="files hidden flex w-fit text-white-30 bg-[#151516] rounded-lg ml-5 mb-5 p-1"
             ref={filetag}
           >
-            <div>{data.files}</div>
+            <div>{createPostData.files}</div>
             <button
               className="ml-3"
               onClick={() => {
