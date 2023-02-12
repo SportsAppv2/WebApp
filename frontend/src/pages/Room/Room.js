@@ -4,10 +4,12 @@ import Name from "./Name";
 import TopNews from "./TopNews";
 import Feed from "./Feed";
 import UploadPost from "./UploadPost";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NewModal from "./NewModal";
+import { fetchUserDataInitial } from "../../store/editProfileSlice";
 
 const Room = () => {
+  const dispatch = useDispatch();
   const roomData = useSelector((state) => state.room);
   const modalState = roomData.showModal; //either true of false
   const scrollableDiv = useRef(null);
@@ -25,10 +27,13 @@ const Room = () => {
     }
   };
   useEffect(() => {
+    dispatch(fetchUserDataInitial());
     scrollableDiv.current.addEventListener("scroll", handleScroll);
 
     return () => {
-      scrollableDiv.current.removeEventListener("scroll", handleScroll);
+      if (scrollableDiv.current) {
+        scrollableDiv.current.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
   return (
@@ -47,9 +52,7 @@ const Room = () => {
             {modalState && <NewModal />}
           </div>
           <div className="h-100% bg-gray-600 w-[1px]"></div>
-          <div className="sidebar text-white-100 w-[15%] p-6">
-            xxx
-          </div>
+          <div className="sidebar text-white-100 w-[15%] p-6">xxx</div>
         </div>
       </div>
     </>
