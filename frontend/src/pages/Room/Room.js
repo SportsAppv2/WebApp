@@ -43,7 +43,7 @@ const Room = () => {
         ref={scrollableDiv}
       >
         <div className="content flex">
-          <div className="px-7 py-2 w-[85%]">
+          <div className="px-7 pb-20 pt-3 w-[85%]">
             <Name name="Manchester United" />
             <TopNews />
             <FeedHeader sticky={stickyFeed} />
