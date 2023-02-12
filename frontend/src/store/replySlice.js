@@ -5,6 +5,7 @@ const replySlice = createSlice({
     initialState: {
         text: "",
         files: "",
+        showComments: "",
     },
     reducers: {
         addHashtag(state) {
@@ -21,6 +22,9 @@ const replySlice = createSlice({
           },
           emojiAdded(state, action) {
             state.text = state.text + action.payload;
+          },
+          toggleComments(state) {
+            state.showComments = !state.showComments;
           },
     }
 })

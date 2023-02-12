@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AiOutlineLike,
   AiOutlineDislike,
   AiOutlineShareAlt,
 } from "react-icons/ai";
 import { BiCommentDetail, BiBookmark, BiDotsVertical } from "react-icons/bi";
+import { useDispatch, useSelector } from 'react-redux';
+import { replyActions } from '../../store/replySlice';
+import CommentBlock from './CommentBlock';
+import ReplyBlock from './ReplyBlock';
 
-const SingleComment = () => {
+const SingleComment = (props) => {
+    const [x, setX] = useState(false);
+    const data = useSelector((state) => state.reply);
+    const dispatch = useDispatch();
     const openComments = () => {
         if(props.id == 1){
           dispatch(replyActions.toggleComments());
         }    
     }
+    console.log(x);
+    useEffect(() => {
+        if(data.showComments==true){
+            console.log("inside useEffect sex")
+            setX(true);
+            console.log(x);
+        }else{
+            setX(false);
+            console.log(x);
+        }
+    },[data.showComments])
     return (
         <div className="text-white-50 text-[20px]">
             <div className="flex py-5">
@@ -41,7 +59,7 @@ const SingleComment = () => {
                     </div>
                 </div>
                 <div className="flex mt-3 text-gray-600 font-medium">
-                    <div className="flex items-center cursor-pointer" onClick={openComments}>
+                    <div className="flex items-center cursor-pointer" onClick={() => {openComments()}}>
                     <BiCommentDetail />
                     <div className="comments text-[16px] ml-2">321 comments</div>
                     </div>
@@ -64,6 +82,7 @@ const SingleComment = () => {
                 </div>
                 </div>
             </div>
+            {x && props.id==1 && data.showComments && <ReplyBlock/>}
             <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[75px]"/>
         </div>
     );

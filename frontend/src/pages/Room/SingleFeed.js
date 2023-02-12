@@ -55,7 +55,7 @@ const SingleFeed = (props) => {
             </div>
           </div>
           <div className="flex mt-3 text-gray-600 font-medium">
-            <div className="flex items-center cursor-pointer" onClick={openComments}>
+            <div className="flex items-center cursor-pointer" onClick={() => {openComments()}}>
               <BiCommentDetail />
               <div className="comments text-[16px] ml-2">5.2k comments</div>
             </div>
@@ -86,7 +86,7 @@ const SingleFeed = (props) => {
           </div>
         </div>
       </div>
-      {data.showComments && <CommentBlock />}
+      {props.id==1 && data.showComments && <CommentBlock />}
       <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[70px]"/>
     </div>
   );
