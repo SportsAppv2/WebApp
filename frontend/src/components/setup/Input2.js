@@ -63,7 +63,7 @@ const Input2 = () => {
             </div>
             <div className="my-1 flex w-full flex-wrap">
               {tagsData.map((item, index) => (
-                <SearchItem name={item.tagName} tagId={item.id} key={index} />
+                <SearchItem cut="setup" name={item.tagName} tagId={item.id} key={index} />
               ))}
             </div>
             <div className="my-2">
