@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const homeSlice = createSlice({
     name: "home",
     initialState: {
-        showJoinRoom: false
+        pageNumber: 0,
     },
     reducers: {
-        toggleJoinRoom(state){
-            state.showJoinRoom = !state.showJoinRoom;
+        pageChanged(state, action){
+            state.pageNumber = action.payload;
         }
     }
 })

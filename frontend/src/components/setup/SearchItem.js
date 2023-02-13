@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+import { createroomActions } from "../../store/createroomSlice";
 import { setupActions } from "../../store/setupSlice";
 
 const SearchItem = (props) => {
@@ -12,9 +13,12 @@ const SearchItem = (props) => {
         {props.name}
       </div>
       <div className="cancel bg-blue-80 hover:bg-[#5D5FEF] hover:cursor-pointer rounded-r-md px-2 flex items-center">
-        <AiOutlineClose
+        {props.cut == "setup" ? <AiOutlineClose
           onClick={() => dispatch(setupActions.tagsRemoved(props.tagId))}
-        />
+        /> : props.cut == "createroom" ? <AiOutlineClose
+        onClick={() => dispatch(createroomActions.tagsRemoved(props.tagId))}
+        /> : ""}
+        
       </div>
     </div>
   );
