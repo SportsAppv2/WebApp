@@ -38,7 +38,6 @@ const ReplyFiles = () => {
 
     const [emojiKeyboard, setEmojiKeyboard] = useState(false);
 
-    console.log(data);
 
     return (
         <>

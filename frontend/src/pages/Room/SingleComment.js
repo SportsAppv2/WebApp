@@ -19,15 +19,13 @@ const SingleComment = (props) => {
           dispatch(replyActions.toggleComments());
         }    
     }
+    console.log(data);
     console.log(x);
     useEffect(() => {
         if(data.showComments==true){
-            console.log("inside useEffect sex")
             setX(true);
-            console.log(x);
         }else{
             setX(false);
-            console.log(x);
         }
     },[data.showComments])
     return (
