@@ -5,6 +5,7 @@ import cors from "cors";
 import postRoutes from "./routes/postRoutes.js";
 import UserRoutes from "./routes/userRoutes.js";
 import ProfileRoutes from "./routes/profileRoutes.js";
+import RoomRoutes from "./routes/roomRoutes.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/api/user", UserRoutes);
 app.use("/api/home", postRoutes);
 app.use("/api/profile", ProfileRoutes);
+app.use("/api/room", RoomRoutes);
 
 //SERVER part
 const PORT = process.env.PORT || 5000;

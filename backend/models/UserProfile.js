@@ -45,6 +45,7 @@ const profileSchema = mongoose.Schema({
   settings: {
     profilePrivacy: { type: String, default: "Everyone" },
   },
+  roomsJoined: [{ type: String, default: null }],
   setupDone: { type: Boolean, default: false },
 });
 

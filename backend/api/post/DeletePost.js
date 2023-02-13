@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { decodeJwt } from "../../helpers/decodeJwt.js";
 import Post from "../../models/Posts.js";
+import Room from "../../models/Room.js";
 
 const router = express.Router();
 export const deletePost = asyncHandler(async (req, res) => {
@@ -18,8 +19,8 @@ export const deletePost = asyncHandler(async (req, res) => {
             .status(404)
             .json({ status: "FAILED", message: "Post not found." });
         }
-
-        if (post.creator.id !== userId) {
+        console.log(post.creator.id, userId);
+        if (post.creator.id !== userId.toString()) {
           console.log("Request not authorized");
           return res
             .status(401)
@@ -27,7 +28,12 @@ export const deletePost = asyncHandler(async (req, res) => {
         } else {
           post
             .remove()
-            .then((post) => {
+            .then(async (post) => {
+              const room = await Room.findByIdAndUpdate(post.roomId, {
+                $pull: { postList: postId },
+              }).catch((err) => {
+                res.json({ status: "FAILED", message: err.message });
+              });
               console.log("Deleted Post ", post);
               return res
                 .status(200)

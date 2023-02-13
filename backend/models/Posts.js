@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
+  roomId: { type: String, required: true },
   creator: {
     id: {
       type: String,
@@ -55,6 +56,9 @@ const postSchema = mongoose.Schema({
   },
 });
 
+const Post = mongoose.model("Posts", postSchema);
+
+export default Post;
 // Expected JSON response:
 // {
 //     "postId":"",
@@ -101,7 +105,3 @@ const postSchema = mongoose.Schema({
 //        ]
 //     }
 //  }
-
-const Post = mongoose.model("Posts", postSchema);
-
-export default Post;
