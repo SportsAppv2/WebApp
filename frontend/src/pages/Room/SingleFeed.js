@@ -13,11 +13,11 @@ const SingleFeed = (props) => {
   const data = useSelector((state) => state.room);
   const dispatch = useDispatch();
   const openComments = () => {
-    if(props.id == 1){
+    if (props.id == 1) {
       dispatch(roomActions.toggleComments());
-    }    
-  }
-  console.log(data);
+    }
+  };
+  // console.log(data);
   return (
     <div className="text-white-50 text-[20px] relative">
       <div className="flex py-5">
@@ -28,11 +28,9 @@ const SingleFeed = (props) => {
               alt="DP"
               className="rounded-[500px] w-[50px] h-[50px] object-cover  m-auto"
             />
-            {data.showComments && 
-            <div className="w-[1px] absolute left-[45px] bg-gray-600 h-[100%]">
-
-            </div>  
-            }
+            {data.showComments && (
+              <div className="w-[1px] absolute left-[45px] bg-gray-600 h-[100%]"></div>
+            )}
           </div>
         </div>
         <div className="w-9/12 mr-5">
@@ -55,7 +53,12 @@ const SingleFeed = (props) => {
             </div>
           </div>
           <div className="flex mt-3 text-gray-600 font-medium">
-            <div className="flex items-center cursor-pointer" onClick={() => {openComments()}}>
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => {
+                openComments();
+              }}
+            >
               <BiCommentDetail />
               <div className="comments text-[16px] ml-2">5.2k comments</div>
             </div>
@@ -86,8 +89,8 @@ const SingleFeed = (props) => {
           </div>
         </div>
       </div>
-      {props.id==1 && data.showComments && <CommentBlock />}
-      <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[70px]"/>
+      {props.id == 1 && data.showComments && <CommentBlock />}
+      <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[70px]" />
     </div>
   );
 };

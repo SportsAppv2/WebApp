@@ -12,6 +12,17 @@ export const createRoom = asyncHandler(async (req, res) => {
     const admin = {
       owner: userId,
     };
+    if (
+      !roomDetails.roomName ||
+      !roomDetails.isPrivateRoom ||
+      !roomDetails.sportsName ||
+      !roomDetails.sportsName
+    ) {
+      return res.json({
+        status: "FAILED",
+        message: "Empty fields not allowed",
+      });
+    }
     const newRoom = new Room({
       roomDetails,
       admin,

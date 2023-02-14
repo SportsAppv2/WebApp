@@ -13,12 +13,17 @@ const SearchItem = (props) => {
         {props.name}
       </div>
       <div className="cancel bg-blue-80 hover:bg-[#5D5FEF] hover:cursor-pointer rounded-r-md px-2 flex items-center">
-        {props.cut == "setup" ? <AiOutlineClose
-          onClick={() => dispatch(setupActions.tagsRemoved(props.tagId))}
-        /> : props.cut == "createroom" ? <AiOutlineClose
-        onClick={() => dispatch(createroomActions.tagsRemoved(props.tagId))}
-        /> : ""}
-        
+        {props.cut == "setup" ? (
+          <AiOutlineClose
+            onClick={() => dispatch(setupActions.tagsRemoved(props.tagId))}
+          />
+        ) : props.cut == "createroom" ? (
+          <AiOutlineClose
+            onClick={() => dispatch(createroomActions.tagsRemoved(props.name))}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

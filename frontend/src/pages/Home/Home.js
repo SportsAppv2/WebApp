@@ -13,7 +13,7 @@ const Home = () => {
         <div className="flex flex-grow h-full bg-[#000000]">
           <Rooms />
           <Routes>
-            <Route path="/room" element={<Room />} key="route-room-page" />
+            <Route path="/room/*" element={<Room />} key="route-room-page" />
             <Route path="/*" element={<Body />} key="route-body-page" />
           </Routes>
         </div>

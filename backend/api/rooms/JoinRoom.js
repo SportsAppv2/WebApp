@@ -14,7 +14,7 @@ export const joinRoom = asyncHandler(async (req, res) => {
     if (joiningCode) {
       room = await Room.findOne({ joiningCode }).catch((err) => {
         res.json({
-          status: "FAILED 1",
+          status: "FAILED",
           message: err.message,
         });
       });
@@ -22,7 +22,7 @@ export const joinRoom = asyncHandler(async (req, res) => {
       room = await Room.findOne({ "roomDetails.roomName": roomName }).catch(
         (err) => {
           res.json({
-            status: "FAILED 2",
+            status: "FAILED",
             message: err.message,
           });
         }
@@ -77,7 +77,7 @@ export const joinRoom = asyncHandler(async (req, res) => {
     });
   } catch (err) {
     res.json({
-      status: "FAILED 3",
+      status: "FAILED",
       message: err.message,
     });
   }
