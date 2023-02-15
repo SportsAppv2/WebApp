@@ -1,8 +1,12 @@
 import express from "express";
 import { testRoute } from "../api/auth/Test.js";
+import { acceptFollowReq } from "../api/profile/AcceptFollowReq.js";
 import { createProfile } from "../api/profile/CreateProfile.js";
 import { editProfile } from "../api/profile/EditProfile.js";
+import { fetchFollowReq } from "../api/profile/FetchFollowReq.js";
 import { getProfile, getProfileOwn } from "../api/profile/GetProfile.js";
+import { rejectFollowReq } from "../api/profile/RejectFollowReq.js";
+import { requestFollow } from "../api/profile/RequestFollow.js";
 import { isAccountSetupDone } from "../middleware/accountSetupVerify.js";
 import protect from "../middleware/authVerify.js";
 const router = express.Router();
@@ -11,6 +15,10 @@ router.route("/post").post(createProfile);
 router.route("/test").post(testRoute);
 router.use(isAccountSetupDone);
 router.route("/edit").post(editProfile);
+router.route("/follow").post(requestFollow);
+router.route("/acceptrequest").post(acceptFollowReq);
+router.route("/declinerequest").post(rejectFollowReq);
+router.route("/followrequest").get(fetchFollowReq);
 router.route("/initalfetch").get(getProfileOwn);
 router.route("/:id").get(getProfile);
 
