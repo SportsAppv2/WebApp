@@ -5,9 +5,15 @@ import { AiFillBell } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import "./Icons.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { headerActions } from "../../../../store/headerSlice";
+import Notifications from "./Notifications";
 
 const Icons = () => {
+  const data = useSelector((state) => (state.header));
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(data);
   return (
     <div className="flex">
       <div className="bookmark iconDiv">
@@ -16,7 +22,7 @@ const Icons = () => {
       <div className="mail iconDiv">
         <GrMail className="icon text-[32px]" />
       </div>
-      <div className="notification iconDiv">
+      <div className="notification iconDiv" onClick={()=>{dispatch(headerActions.toggleNotifications())}}>
         <AiFillBell className="icon text-[30px] mt-[2px]" />
       </div>
       <div className="notification iconDiv">
@@ -27,6 +33,7 @@ const Icons = () => {
           }}
         />
       </div>
+      {data.showNotifications && <Notifications />}
     </div>
   );
 };
