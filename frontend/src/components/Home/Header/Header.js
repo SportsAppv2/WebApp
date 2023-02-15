@@ -4,6 +4,7 @@ import Icons from "./Icons/Icons";
 import Ham from "./Ham/Ham";
 import logo from "../../../assets/iconLogo.svg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
