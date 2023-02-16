@@ -65,7 +65,7 @@ export const requestFollow = asyncHandler(async (req, res) => {
 
     return res
       .status(200)
-      .json({ status: "FAILED", message: "Follow request sent." });
+      .json({ status: "SUCCESS", message: "Follow request sent." });
   } catch (err) {
     res.json({ status: "FAILED", message: err.message });
   }

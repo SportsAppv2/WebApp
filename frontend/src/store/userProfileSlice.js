@@ -13,9 +13,17 @@ const userProfileSlice = createSlice({
         profilePic: "",
       },
       country: "",
-      region: ""
+      region: "",
+      follower: {
+        count: 0,
+        followerList: [],
+      },
+      following: {
+        count: 0,
+        followingList: [],
+      },
     },
-    showEditProfile: false
+    showEditProfile: false,
   },
   reducers: {
     userNameAdded(state, action) {
@@ -32,15 +40,15 @@ const userProfileSlice = createSlice({
     profilePicAdded(state, action) {
       state.user.profileView.profilePic = action.payload;
     },
-    toggleEditProfile(state){
+    toggleEditProfile(state) {
       state.showEditProfile = !state.showEditProfile;
     },
-    countryAdded(state, action){
+    countryAdded(state, action) {
       state.user.country = action.payload;
     },
-    regionAdded(state, action){
+    regionAdded(state, action) {
       state.user.region = action.payload;
-    }
+    },
   },
 });
 

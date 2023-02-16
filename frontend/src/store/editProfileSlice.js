@@ -81,6 +81,14 @@ const editProfileSlice = createSlice({
       tiktok: "",
       facebook: "",
     },
+    follower: {
+      count: 0,
+      followerList: [],
+    },
+    following: {
+      count: 0,
+      followingList: [],
+    },
     userName: "",
     showDiscardChanges: false,
   },
@@ -150,6 +158,9 @@ const editProfileSlice = createSlice({
       state.userOriginal.youtube = action.payload.contact.youtube;
       state.userOriginal.tiktok = action.payload.contact.tiktok;
       state.userOriginal.facebook = action.payload.contact.facebook;
+      state.follower.count = action.payload.follower.count;
+      state.following.count = action.payload.following.count;
+
       console.log(
         "Original user data ",
         state.userName,

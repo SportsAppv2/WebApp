@@ -15,6 +15,12 @@ export const fetchCreateRoom = createAsyncThunk(
         roomSummary: state.createroom.info.bio,
       },
     };
+    console.log(
+      data.roomDetails.roomName,
+      data.roomDetails.isPrivateRoom,
+      data.roomDetails.sportsName,
+      data.roomDetails.roomSummary
+    );
     const response = await axios
       .post("http://localhost:5000/api/room/create", JSON.stringify(data), {
         headers: {

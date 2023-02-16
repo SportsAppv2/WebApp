@@ -9,7 +9,7 @@ export const getRooms = asyncHandler(async (req, res) => {
   try {
     const userId = req.userId;
     const userProfile = await Profile.findOne({ userId }).catch();
-    const roomsJoined = userProfile.roomsJoined;
+    const roomsJoined = userProfile.roomsJoined.allRooms;
     const roomDetails = [];
     if (!roomsJoined) {
       return res.json({

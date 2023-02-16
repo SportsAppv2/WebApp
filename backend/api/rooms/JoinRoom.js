@@ -58,7 +58,7 @@ export const joinRoom = asyncHandler(async (req, res) => {
       //push the room Id to the list of Profile.joinedRoom
       const userProfile = await Profile.findOneAndUpdate(
         { userId },
-        { $push: { roomsJoined: room._id } }
+        { $push: { "roomsJoined.allRooms": room._id } }
       ).catch((err) => res.json({ status: "FAILED", message: err.message }));
       return res.json({ message: "Successfully joined the room" });
     }

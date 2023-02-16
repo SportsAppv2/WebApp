@@ -11,8 +11,9 @@ import homeSlice from "./homeSlice";
 import userProfileSlice from "./userProfileSlice";
 import editProfileSlice from "./editProfileSlice";
 import replySlice from "./replySlice";
-import createroomSlice from "./createroomSlice"
+import createroomSlice from "./createroomSlice";
 import headerSlice from "./headerSlice";
+import notificationSlice from "./notificationSlice";
 
 const store = configureStore(
   {
@@ -29,6 +30,7 @@ const store = configureStore(
       reply: replySlice.reducer,
       createroom: createroomSlice.reducer,
       header: headerSlice.reducer,
+      notification: notificationSlice.reducer,
     },
   },
   applyMiddleware(thunk)

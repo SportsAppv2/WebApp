@@ -13,9 +13,7 @@ import { fetchUserDataInitial } from "../../store/editProfileSlice";
 
 const Profile = () => {
   const data = useSelector((state) => state.userProfile);
-  const userProfileData = useSelector(
-    (state) => state.editProfile.userOriginal
-  );
+  const userProfileData = useSelector((state) => state.editProfile);
   const userName = useSelector((state) => state.editProfile.userName);
   const dispatch = useDispatch();
   const toggle = () => {
@@ -24,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(fetchUserDataInitial());
   }, []);
-  console.log(data);
+  console.log(userProfileData);
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -49,26 +47,32 @@ const Profile = () => {
               </div>
               <div className="flex items-center text-white-100 font-bold text-[20px] mt-[120px] mx-5">
                 <div className="p-2">
-                  {userProfileData.firstName} {userProfileData.lastName}
+                  {userProfileData.userOriginal.firstName}{" "}
+                  {userProfileData.userOriginal.lastName}
                 </div>
                 <div className="p-2 text-gray-600">@{userName}</div>
               </div>
               <div className="flex items-center text-gray-400 text-[16px] font-medium mx-5">
                 <GoLocation className="mx-2" />
                 <div>
-                  {userProfileData.region}, {userProfileData.country}
+                  {userProfileData.userOriginal.region},{" "}
+                  {userProfileData.userOriginal.country}
                 </div>
               </div>
               <div className="text-white-100 text-[18px] mx-5 p-2 mt-2">
-                {userProfileData.bio}
+                {userProfileData.userOriginal.bio}
               </div>
               <div className="follow flex absolute top-[260px] right-[100px] text-[18px]">
                 <div className="flex">
-                  <div className="text-white-100 mx-2">826</div>
+                  <div className="text-white-100 mx-2">
+                    {userProfileData.follower.count}
+                  </div>
                   <div className="text-gray-600 mr-2">Followers</div>
                 </div>
                 <div className="flex">
-                  <div className="text-white-100 ml-2">92</div>
+                  <div className="text-white-100 ml-2">
+                    {userProfileData.following.count}
+                  </div>
                   <div className="text-gray-600 mx-2">Following</div>
                 </div>
               </div>

@@ -14,9 +14,9 @@ export const createRoom = asyncHandler(async (req, res) => {
     };
     if (
       !roomDetails.roomName ||
-      !roomDetails.isPrivateRoom ||
+      !roomDetails.isPrivateRoom.toString().length ||
       !roomDetails.sportsName ||
-      !roomDetails.sportsName
+      !roomDetails.roomSummary
     ) {
       return res.json({
         status: "FAILED",
@@ -37,8 +37,16 @@ export const createRoom = asyncHandler(async (req, res) => {
     //push the room Id to the list of Profile.joinedRoom
     const userProfile = await Profile.findOneAndUpdate(
       { userId },
-      { $push: { roomsJoined: newRoom._id } }
+      {
+        $push: {
+          "roomsJoined.ownerOf": newRoom._id,
+          "roomsJoined.moderatorOf": newRoom._id,
+          "roomsJoined.allRooms": newRoom._id,
+        },
+      },
+      { new: true }
     ).catch((err) => res.json({ status: "FAILED", message: err.message }));
+    console.log("Updated user profile ", userProfile);
     return res.json({
       status: "SUCCESS",
       message: "New room created successfully.",

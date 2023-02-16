@@ -19,6 +19,7 @@ const CreateRoom = () => {
       event.target.value,
     ]);
     event.target.value = "none";
+    console.log(data);
   };
   return (
     <div>
