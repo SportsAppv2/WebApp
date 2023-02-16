@@ -36,6 +36,14 @@ const profileSchema = mongoose.Schema({
     count: { type: Number, default: 0 },
     followingList: [{ type: String }],
   },
+  followRequest: {
+    count: { type: Number, default: 0 },
+    requestList: [{ type: String }],
+  },
+  followingRequest: {
+    count: { type: Number, default: 0 },
+    requestList: [{ type: String }],
+  },
   tags: [
     {
       tagId: { type: String },
