@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { roomActions } from "../../../store/roomSlice";
+import { fetchJoinRoom, roomActions } from "../../../store/roomSlice";
 
 const SearchedRoomModal = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,12 @@ const SearchedRoomModal = () => {
           </div>
         </div>
         <div className="footer text-center">
-          <button className="bg-blue-60 px-3 py-1 rounded-sm text-[black]">
+          <button
+            className="bg-blue-60 px-3 py-1 rounded-sm text-[black]"
+            onClick={() => {
+              dispatch(fetchJoinRoom());
+            }}
+          >
             Join
           </button>
         </div>

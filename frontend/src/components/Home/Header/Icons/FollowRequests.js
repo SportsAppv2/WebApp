@@ -27,7 +27,7 @@ const FollowRequests = () => {
       {followData.requestList.map((item) => {
         return (
           <SingleFollow
-            key={item.userId}
+            key={item.userId + "follow"}
             name={item.name}
             profilePic={item.profilePic}
             userId={item.userId}

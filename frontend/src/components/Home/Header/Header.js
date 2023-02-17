@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Searchbar from "./Searchbar/Searchbar";
 import Icons from "./Icons/Icons";
 import Ham from "./Ham/Ham";
 import logo from "../../../assets/iconLogo.svg";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchFollowReq,
+  fetchRoomJoinReq,
+} from "../../../store/notificationSlice";
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Making the fetch requests");
+    dispatch(fetchFollowReq());
+    dispatch(fetchRoomJoinReq());
+  }, []);
   return (
     <div className="w-full bg-[#5D5FEF] h-[70px] flex items-center justify-between px-10 py-5">
       <div

@@ -48,6 +48,36 @@ export const fetchFindRoom = createAsyncThunk(
       .catch((err) => console.log(err.message));
   }
 );
+export const fetchJoinRoom = createAsyncThunk(
+  "room/join",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const data = {
+      joiningCode: state.room.roomCode,
+      roomName: state.room.roomName,
+    };
+    console.log("Joining a room with this ", data);
+    const response = await axios
+      .post("http://localhost:5000/api/room/join", JSON.stringify(data), {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.status == "SUCCESS") {
+          dispatch(roomActions.toogleSearchedRoomModal());
+          console.log(
+            "After this the user should redirect to the newly joined room"
+          );
+        } else if (res.data.status == "FAILED") {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
+);
 
 const roomSlice = createSlice({
   name: "room",
@@ -133,6 +163,18 @@ const roomSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchFindRoom.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchJoinRoom.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchJoinRoom.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchJoinRoom.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });
