@@ -1,28 +1,33 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const NewsCard2 = () => {
+const NewsCard2 = (props) => {
+    const navigate = useNavigate();
+    var path = props.url;
+    // path = "'" + path + "'";
     return (
         <div className='mx-11'>
             <div className='flex p-6'>
-                <div className='m-2'>
-                    <div className='text-white-100 font-medium text-[22px]'>
-                        Hockey World Cup: India's key players in quest for glory.
-                    </div>
+                <div className='m-2 mr-5 w-[600px]'>
+                    <a className='text-white-100 font-medium text-[22px] hover:underline cursor-pointer'
+                     href={path} target="-blank" rel="noreferrer">
+                        {props.title}
+                    </a>
                     <div className='text-gray-400 text-[18px] my-3'>
-                        The Indian hockey team which will play in the upcoming 2023 FIH Men's Hockey World Cup in Odisha is not short on talent, nor experience. While a few senior players have retired since...
+                        {props.description}
                     </div>
                     <div className='flex justify-between text-gray-600'>
                         <div>
-                            Time
+                            {props.time}
                         </div>
                         <div>
-                            Anish Anand | ESPN
+                            {props.author}
                         </div>
                     </div>
                 </div>
-                <div>
-                    <img src="https://images.thequint.com/thequint%2F2023-01%2Fafe72bac-fe7f-4f9e-a100-2f311433a8f0%2FScreenshot_2023_01_10_at_6_41_18_PM.png?auto=format%2Ccompress&fmt=webp&width=720" alt="img" 
-                    className='w-[400px] h-full'/>
+                <div className='w-[400px] h-[200px] relative'>
+                    <img src={props.image} alt="img" 
+                    className='min-w-[100%] min-h-[100%] max-h-[100%] max-w-[100%]'/>
                 </div>
             </div>
             <div className='w-full h-[1px] bg-gray-600'></div>
