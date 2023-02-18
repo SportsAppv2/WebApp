@@ -60,7 +60,7 @@ const JoinRoom = () => {
       </div>
       <div className="text-center mb-3 mt-1">
         <button
-          className="bg-blue-60 px-3 py-1 rounded-sm"
+          className="px-3 py-1 text-lg  bg-[#5D5FEF] bg-opacity-50 hover:bg-blue-100 text-gray-200  shadow-md rounded-xl"
           onClick={() => {
             dispatch(homeActions.pageChanged(0));
             dispatch(fetchFindRoom());

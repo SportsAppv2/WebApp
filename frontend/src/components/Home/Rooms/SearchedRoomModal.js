@@ -1,52 +1,56 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { roomActions } from "../../../store/roomSlice";
+import {BsFillPeopleFill} from 'react-icons/bs'
 
 const SearchedRoomModal = () => {
   const dispatch = useDispatch();
   const searchedRoomData = useSelector((state) => state.room.searchedRoom);
   return (
-    <div className="w-screen h-screen fixed top-0 left-0 z-10">
+    <div className="w-screen h-screen fixed top-0 left-0 z-20">
       <div
         className="w-screen h-screen fixed top-0 left-0 bg-gray-20"
-        onClick={() => {
-          dispatch(roomActions.toogleSearchedRoomModal());
-        }}
       ></div>
-      <div className="h-fit w-[580px] bg-[#000000] text-gray-100 m-auto mt-[80px] rounded-3xl relative p-2">
-        <div className="header">Room Details</div>
-        <div className="line h-[1px] bg-gray-100"></div>
-        <div className="container">
-          <div className="roomName">
-            <span>Room Name: </span>
-            <span>{searchedRoomData.roomName}</span>
+      <div className="h-fit w-[580px] bg-[#000000] text-gray-100 m-auto mt-[80px] rounded-3xl relative p-5">
+        
+        
+        <div className="container px-5">
+          <div className="roomName text-[24px] font-medium flex justify-center">
+            {searchedRoomData.roomName}
+          </div> 
+          {searchedRoomData.isPrivate ? <div className="italic text-blue-60 text-[14px] flex justify-end">
+            ( private room )
+          </div> : ""}                   
+          <div className="roomBio text-gray-400 mt-2">
+            {searchedRoomData.roomSummary}
           </div>
-          <div className="roomVerified">
-            <span>Is Room Verified: </span>
-            <span>{searchedRoomData.isVerified ? "YES" : "NO"}</span>
-          </div>
-          <div className="roomBio">
-            <span>Bio: </span>
-            <span>{searchedRoomData.roomSummary}</span>
-          </div>
-          <div className="otherStats flex justify-between">
-            <div className="sports">
-              <span>Discussed topics: </span>
+          <div></div>
+          <div className="otherStats flex justify-between my-6">
+            <div className="sports flex">
               <span>
                 {searchedRoomData.sports.map((item) => {
-                  return <span>{item} ,</span>;
+                  return <div className="bg-gray-600 font-medium p-1 px-4 rounded-lg text-[14px] mx-1">
+                  {item}
+                  </div>;
                 })}
               </span>
             </div>
-            <div className="memberCount">
-              <span>Member Count: </span>
-              <span>{searchedRoomData.userCount}</span>
+            <div className="memberCount flex items-center text-[18px]">
+              <BsFillPeopleFill className="text-blue-60 text-[24px]"/>
+              <span className="mx-2 font-medium">{searchedRoomData.userCount}</span>
+              
             </div>
           </div>
         </div>
-        <div className="footer text-center">
-          <button className="bg-blue-60 px-3 py-1 rounded-sm text-[black]">
+        <div className="footer text-center my-5">
+          <button className="px-3 py-1 text-lg w-[100px]  bg-[#5D5FEF] bg-opacity-50 hover:bg-blue-100 text-gray-200  shadow-md rounded-xl mr-8">
             Join
+          </button>
+          <button className="px-3 py-1 text-lg w-[100px] bg-[#f31b1b] bg-opacity-50 hover:bg-[#f00d0d] text-gray-200  shadow-md rounded-xl"
+          onClick={() => {
+            dispatch(roomActions.toogleSearchedRoomModal());
+          }}>
+            Cancel
           </button>
         </div>
       </div>
