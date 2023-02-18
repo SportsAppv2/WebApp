@@ -25,7 +25,7 @@ const RoomActivity = () => {
     console.log(data);
 
     return (
-        <div className='w-screen h-screen fixed top-0 left-0 z-10'>
+        <div className='w-screen h-screen fixed top-0 left-0 z-20'>
             <div className='w-screen h-screen fixed top-0 left-0 bg-gray-20' onClick={() => {toggleZero()}}>
 
             </div>

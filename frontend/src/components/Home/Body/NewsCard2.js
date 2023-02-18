@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 const NewsCard2 = (props) => {
     const navigate = useNavigate();
-    var path = props.url;
-    // path = "'" + path + "'";
+    //  path = "'" + path + "'";
     return (
         <div className='mx-11'>
             <div className='flex p-6'>
                 <div className='m-2 mr-5 w-[600px]'>
                     <a className='text-white-100 font-medium text-[22px] hover:underline cursor-pointer'
-                     href={path} target="-blank" rel="noreferrer">
+                     href={props.url} target="-blank" rel="noreferrer">
                         {props.title}
                     </a>
                     <div className='text-gray-400 text-[18px] my-3'>
