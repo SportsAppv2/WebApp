@@ -1,11 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineLeft } from "react-icons/ai";
 import { headerActions } from "../../../../store/headerSlice";
 import RoomGroup from "./RoomGroup";
 
 const RoomRequests = () => {
   const dispatch = useDispatch();
+  const roomReqData = useSelector((state) => state.notification.roomReq);
   const toggle = () => {
     dispatch(headerActions.toggleRoomRequests());
   };
@@ -20,11 +21,26 @@ const RoomRequests = () => {
         >
           <AiOutlineLeft />
         </div>
-        <div className="ml-[80px]">Room Requests</div>
+        <div className="ml-[80px] flex items-center">
+          Room Requests{" "}
+          <div className="rounded-full bg-green-60 w-[20px] h-[20px] flex items-center justify-center ml-3">
+            {roomReqData.totalCount}
+          </div>
+        </div>
       </div>
       <div className="w-full h-[1px] bg-gray-600 mb-4"></div>
-      <RoomGroup name="NITS Sports" />
-      <RoomGroup name="Sex Club" />
+      {console.log("Requested room data is ", roomReqData)}
+      {roomReqData.requestList.map((item) => {
+        return (
+          <RoomGroup
+            key={item.roomId + "room"}
+            name={item.roomName}
+            reqCount={item.reqCount}
+            roomId={item.roomId}
+            users={item.users}
+          />
+        );
+      })}
     </div>
   );
 };

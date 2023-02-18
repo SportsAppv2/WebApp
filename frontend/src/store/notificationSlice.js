@@ -22,6 +22,27 @@ export const fetchFollowReq = createAsyncThunk(
       });
   }
 );
+export const fetchRoomJoinReq = createAsyncThunk(
+  "roomreq/get",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const jwtToken = localStorage.getItem("token");
+    const response = await axios
+      .get("http://localhost:5000/api/room/roomreq/all", {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("Response data is ", res.data);
+        dispatch(notificationActions.updateRoomJoinReq(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
 
 export const fetchAcceptFollow = createAsyncThunk(
   "follower/accept",
@@ -80,6 +101,58 @@ export const fetchDeclineFollow = createAsyncThunk(
       });
   }
 );
+export const fetchAcceptRoomJoin = createAsyncThunk(
+  "roomreq/accept",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    console.log("Follower ID is ", arg.roomId);
+    const data = {
+      roomId: arg.roomId,
+      pendingUserId: arg.pendingUserId,
+    };
+    const jwtToken = localStorage.getItem("token");
+    console.log(state);
+    const response = await axios
+      .post("http://localhost:5000/api/room/accept", JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("Successfully accepted the room join request request");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
+export const fetchRejectRoomJoin = createAsyncThunk(
+  "roomreq/reject",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    console.log("Follower ID is ", arg.roomId);
+    const data = {
+      roomId: arg.roomId,
+      pendingUserId: arg.pendingUserId,
+    };
+    const jwtToken = localStorage.getItem("token");
+    console.log(state);
+    const response = await axios
+      .post("http://localhost:5000/api/room/reject", JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("Successfully rejected the room join request request");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
 const notificationSlice = createSlice({
   name: "notification",
   initialState: {
@@ -87,12 +160,19 @@ const notificationSlice = createSlice({
       count: 0,
       requestList: [],
     },
-    roomReq: {},
+    roomReq: {
+      totalCount: 0,
+      requestList: [],
+    },
   },
   reducers: {
     updateFollowReq(state, action) {
       state.followReq.count = action.payload.count;
       state.followReq.requestList = action.payload.requestList;
+    },
+    updateRoomJoinReq(state, action) {
+      state.roomReq.totalCount = action.payload.totalCount;
+      state.roomReq.requestList = action.payload.userList;
     },
   },
   extraReducers: (builder) => {
@@ -129,6 +209,42 @@ const notificationSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchDeclineFollow.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchRoomJoinReq.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchRoomJoinReq.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchRoomJoinReq.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchAcceptRoomJoin.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchAcceptRoomJoin.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchAcceptRoomJoin.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchRejectRoomJoin.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchRejectRoomJoin.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchRejectRoomJoin.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

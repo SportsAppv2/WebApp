@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { roomActions } from "../../../store/roomSlice";
 import {BsFillPeopleFill} from 'react-icons/bs'
+import { fetchJoinRoom, roomActions } from "../../../store/roomSlice";
 
 const SearchedRoomModal = () => {
   const dispatch = useDispatch();

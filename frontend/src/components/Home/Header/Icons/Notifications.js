@@ -6,16 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { headerActions } from "../../../../store/headerSlice";
 import FollowRequests from "./FollowRequests";
 import RoomRequests from "./RoomRequests";
-import { fetchFollowReq } from "../../../../store/notificationSlice";
 
 const Notifications = () => {
   const data = useSelector((state) => state.header);
   const notificationData = useSelector((state) => state.notification);
+  const roomReqData = useSelector((state) => state.notification.roomReq);
+
   const dispatch = useDispatch();
   const notif = useRef("");
-  useEffect(() => {
-    dispatch(fetchFollowReq());
-  }, []);
   if (data.showFollowRequests == false && notif.current) {
     notif.current.classList.remove("hidden");
   }
@@ -45,7 +43,12 @@ const Notifications = () => {
             dispatch(headerActions.toggleRoomRequests());
           }}
         >
-          <div>Room requests</div>
+          <div className="flex justify-between">
+            <div>Room requests</div>{" "}
+            <div className="bg-[#ff623e] rounded-full h-[20px] w-[20px] flex justify-center items-center mx-3">
+              {roomReqData.totalCount}
+            </div>
+          </div>
           <AiOutlineRight />
         </div>
         <LikedPost />

@@ -31,7 +31,7 @@ export const loginRoute = asyncHandler(async (req, res) => {
           console.log("User details", user);
           console.log(email, password);
           if (!user) {
-            res.json({
+            return res.json({
               status: "FAILED",
               message: "Invalid email/password",
             });
