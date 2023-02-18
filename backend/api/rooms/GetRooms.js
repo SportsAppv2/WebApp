@@ -1,3 +1,4 @@
+//this returns the list of rooms the user has joined
 import express from "express";
 import asyncHandler from "express-async-handler";
 import Room from "../../models/Room.js";
