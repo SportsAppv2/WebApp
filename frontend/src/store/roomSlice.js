@@ -78,6 +78,26 @@ export const fetchJoinRoom = createAsyncThunk(
       .catch((err) => console.log(err.message));
   }
 );
+export const getRoomDetails = createAsyncThunk(
+  "room/get",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const response = await axios
+      .get(`http://localhost:5000/api/room/details/${arg.roomId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log("Res data is ", res.data.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Success. Res is ", res.data.data);
+          dispatch(roomActions.updateCurrentRoom(res.data.data));
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
+);
 
 const roomSlice = createSlice({
   name: "room",
@@ -90,6 +110,14 @@ const roomSlice = createSlice({
     showModal: false,
     showComments: false,
     searchedRoom: {
+      roomName: "",
+      roomPic: "",
+      isVerified: false,
+      userCount: 0,
+      roomSummary: "",
+      sports: [],
+    },
+    currentRoom: {
       roomName: "",
       roomPic: "",
       isVerified: false,
@@ -131,6 +159,15 @@ const roomSlice = createSlice({
     },
     toogleSearchedRoomModal(state) {
       state.showSearchedRoomModal = !state.showSearchedRoomModal;
+    },
+    updateCurrentRoom(state, action) {
+      state.currentRoom.roomName = action.payload.roomDetails.roomName;
+      state.currentRoom.roomPic = action.payload.roomDetails.roomPic;
+      state.currentRoom.roomSummary = action.payload.roomDetails.roomSummary;
+      state.currentRoom.isVerified = action.payload.roomDetails.isVerified;
+      state.currentRoom.userCount = action.payload.userCount;
+      state.currentRoom.sports = action.payload.roomDetails.sportsName;
+      // console.log(state.currentRoom.roomName);
     },
     updateSearchedRoom(state, action) {
       state.searchedRoom.roomName = action.payload.roomDetails.roomName;
@@ -175,6 +212,18 @@ const roomSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchJoinRoom.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(getRoomDetails.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(getRoomDetails.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(getRoomDetails.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getRoomDetails } from "../../../store/roomSlice";
 
 const RoomIcon = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleNavigation = () => {
     navigate("/home/room/" + props.roomId);
+    dispatch(getRoomDetails({ roomId: props.roomId }));
   };
+  // useEffect(() => {
+  //   dispatch(getRoomDetails({ roomId: props.roomId }));
+  // }, []);
 
   return (
     <div className="room my-5">

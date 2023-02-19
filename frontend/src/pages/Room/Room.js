@@ -11,6 +11,7 @@ import { fetchUserDataInitial } from "../../store/editProfileSlice";
 const Room = () => {
   const dispatch = useDispatch();
   const roomData = useSelector((state) => state.room);
+  const currentRoomData = roomData.currentRoom;
   const modalState = roomData.showModal; //either true of false
   const scrollableDiv = useRef(null);
   const feedHeader = useRef(null);
@@ -36,6 +37,9 @@ const Room = () => {
       }
     };
   }, []);
+  useEffect(() => {
+    console.log(currentRoomData);
+  }, [currentRoomData]);
   return (
     <>
       <div
@@ -44,7 +48,7 @@ const Room = () => {
       >
         <div className="content flex">
           <div className="px-7 pb-20 pt-3 w-[85%]">
-            <Name name="Manchester United" />
+            <Name roomInfo={currentRoomData} />
             <TopNews />
             <FeedHeader sticky={stickyFeed} />
             <Feed />
