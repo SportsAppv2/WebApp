@@ -14,6 +14,7 @@ import replySlice from "./replySlice";
 import createroomSlice from "./createroomSlice";
 import headerSlice from "./headerSlice";
 import notificationSlice from "./notificationSlice";
+import feedbackSlice from "./feedbackSlice";
 
 const store = configureStore(
   {
@@ -31,6 +32,7 @@ const store = configureStore(
       createroom: createroomSlice.reducer,
       header: headerSlice.reducer,
       notification: notificationSlice.reducer,
+      feedback: feedbackSlice.reducer,
     },
   },
   applyMiddleware(thunk)
