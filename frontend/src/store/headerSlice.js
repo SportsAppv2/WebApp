@@ -6,6 +6,7 @@ const headerSlice = createSlice({
         showNotifications: false,
         showFollowRequests: false,
         showRoomRequests: false,
+        showMenu: false,
     },
     reducers: {
         toggleNotifications(state) {
@@ -16,6 +17,9 @@ const headerSlice = createSlice({
         },
         toggleRoomRequests(state) {
             state.showRoomRequests = !state.showRoomRequests
+        },
+        toggleMenu(state) {
+            state.showMenu = !state.showMenu;
         }
     }
 })
