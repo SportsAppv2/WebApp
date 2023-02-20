@@ -14,6 +14,8 @@ import replySlice from "./replySlice";
 import createroomSlice from "./createroomSlice";
 import headerSlice from "./headerSlice";
 import notificationSlice from "./notificationSlice";
+import roomPostsSlice from "./roomPostsSlice";
+import roomCommentsSlice from "./roomCommentsSlice";
 
 const store = configureStore(
   {
@@ -31,6 +33,8 @@ const store = configureStore(
       createroom: createroomSlice.reducer,
       header: headerSlice.reducer,
       notification: notificationSlice.reducer,
+      roomposts: roomPostsSlice.reducer,
+      roomcomments: roomCommentsSlice.reducer,
     },
   },
   applyMiddleware(thunk)

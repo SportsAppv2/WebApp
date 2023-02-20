@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const Body = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const data = useSelector((state) => (state.home));
+  const data = useSelector((state) => state.home);
   const [news, setNews] = useState([]);
   // const fetchNewsData = async () => {
   //   const response = await axios
@@ -32,7 +32,9 @@ const Body = () => {
   // }
   // console.log("news is ",news);
   // useEffect(()=> {fetchNewsData()},[])
-  useEffect(() => {dispatch(fetchNewsArticles())},[])
+  useEffect(() => {
+    dispatch(fetchNewsArticles());
+  }, []);
   console.log(data);
 
   return (
@@ -41,13 +43,27 @@ const Body = () => {
         <div className="content w-[80%] py-11 border-gray-600 border-r-[1px]">
           <FeedHeader sticky="true" />
           <div className="flex m-11 h-[270px]">
-            <NewsCard1 title={Array.from(data.news)[0].title} img={Array.from(data.news)[0].urlToImage} url={Array.from(data.news)[0].url}/>
+            <NewsCard1
+              title={Array.from(data.news)[0].title}
+              img={Array.from(data.news)[0].urlToImage}
+              url={Array.from(data.news)[0].url}
+            />
             <div className="w-[1px] mx-8 h-full bg-gray-600"></div>
             <TopHeadlines />
           </div>
           <div className="h-[1px] bg-gray-600 w-[90%] ml-14"></div>
-          {data.news.slice(6,).map((item,idx)=>{
-            return <NewsCard2 key={idx} title={item.title} description={item.description} author={item.author} image={item.urlToImage} time={item.publishedAt} url={item.url}/>      
+          {data.news.slice(6).map((item, idx) => {
+            return (
+              <NewsCard2
+                key={idx}
+                title={item.title}
+                description={item.description}
+                author={item.author}
+                image={item.urlToImage}
+                time={item.publishedAt}
+                url={item.url}
+              />
+            );
           })}
         </div>
         <RightBar />

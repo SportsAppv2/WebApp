@@ -104,6 +104,7 @@ const roomSlice = createSlice({
   initialState: {
     currentFeedType: "top",
     searchBy: "roomName",
+    currentRoomId: "",
     roomName: "",
     roomCode: "",
     showSearchedRoomModal: false,
@@ -176,6 +177,11 @@ const roomSlice = createSlice({
       state.searchedRoom.isVerified = action.payload.roomDetails.isVerified;
       state.searchedRoom.userCount = action.payload.users.count;
       state.searchedRoom.sports = action.payload.roomDetails.sportsName;
+    },
+    updateCurrentRoomId(state, action) {
+      if (state.currentRoomId != action.payload) {
+        state.currentRoomId = action.payload;
+      }
     },
   },
   extraReducers: (builder) => {

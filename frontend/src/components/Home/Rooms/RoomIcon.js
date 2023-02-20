@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getRoomDetails } from "../../../store/roomSlice";
+import { getRoomDetails, roomActions } from "../../../store/roomSlice";
 
 const RoomIcon = (props) => {
   const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const RoomIcon = (props) => {
   const handleNavigation = () => {
     navigate("/home/room/" + props.roomId);
     dispatch(getRoomDetails({ roomId: props.roomId }));
+    dispatch(roomActions.updateCurrentRoomId(props.roomId));
   };
   // useEffect(() => {
   //   dispatch(getRoomDetails({ roomId: props.roomId }));

@@ -24,7 +24,7 @@ const Rooms = () => {
       <div className="bg-[#8B8B8D]/50 w-[110px]">
         <div className="availableRooms mt-4">
           {roomData.fetchedRooms.map((item) => {
-            console.log("Room should be created about ", item);
+            // console.log("Room should be created about ", item);
             return (
               <RoomIcon
                 url={item.roomDetails.roomPic}

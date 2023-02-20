@@ -6,7 +6,9 @@ export const fetchCreatePost = createAsyncThunk(
   "post/create",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const roomId = state.room.currentRoomId;
     const data = {
+      roomId,
       content: {
         text: state.createpost.text,
       },

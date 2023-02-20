@@ -58,6 +58,9 @@ const profileSchema = mongoose.Schema({
     moderatorOf: [{ type: String, default: null }],
     allRooms: [{ type: String, default: null }],
   },
+  posts: {
+    posted: [{ type: String, default: null }],
+  },
   setupDone: { type: Boolean, default: false },
 });
 
