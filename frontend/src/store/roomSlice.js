@@ -110,6 +110,7 @@ const roomSlice = createSlice({
     showSearchedRoomModal: false,
     showModal: false,
     showComments: false,
+    showTournament: false,
     searchedRoom: {
       roomName: "",
       roomPic: "",
@@ -138,6 +139,9 @@ const roomSlice = createSlice({
     },
     toggleComments(state) {
       state.showComments = !state.showComments;
+    },
+    toggleTournament(state) {
+      state.showTournament = !state.showTournament;
     },
     insertRooms(state, action) {
       state.fetchedRooms = action.payload;
