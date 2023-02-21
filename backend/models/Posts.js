@@ -8,9 +8,6 @@ const postSchema = mongoose.Schema({
       ref: "User",
       required: true,
     },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    userName: { type: String, required: true },
   },
   content: {
     text: { type: String },

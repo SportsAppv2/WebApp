@@ -21,9 +21,9 @@ const SingleComment = (props) => {
   const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
   const jwtToken = localStorage.getItem("token");
   useEffect(() => {
-    if (props.upvotes == true) {
+    if (props.liked == true) {
       setVote("like");
-    } else if (props.downvotes == true) {
+    } else if (props.disliked == true) {
       setVote("dislike");
     }
   }, []);

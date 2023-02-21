@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, roomPostsActions } from "../../store/roomPostsSlice";
+import {
+  fetchOwnPosts,
+  fetchPosts,
+  roomPostsActions,
+} from "../../store/roomPostsSlice";
 import SingleFeed from "./SingleFeed";
 
 const Feed = (props) => {
@@ -8,8 +12,8 @@ const Feed = (props) => {
   const roomData = useSelector((state) => state.room);
   const postData = useSelector((state) => state.roomposts);
   useEffect(() => {
-    dispatch(roomPostsActions.resetPosts());
     if (props.feedType == "roomFeed") {
+      dispatch(roomPostsActions.resetPosts());
       dispatch(
         fetchPosts({
           roomId: roomData.currentRoomId,
@@ -17,6 +21,12 @@ const Feed = (props) => {
         })
       );
     } else if (props.feedType == "profileFeed") {
+      dispatch(roomPostsActions.resetPosts());
+      dispatch(
+        fetchOwnPosts({
+          postLimit: 10,
+        })
+      );
     }
   }, [roomData.currentRoomId, props.feedType]);
   const feedType = useSelector((data) => data.room.currentFeedType);

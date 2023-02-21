@@ -4,11 +4,13 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Comment from "../../models/Comments.js";
 import Post from "../../models/Posts.js";
+import Profile from "../../models/UserProfile.js";
 
 const router = express.Router();
 
 export const getComments = asyncHandler(async (req, res) => {
   try {
+    const userId = req.userId;
     const postId = req.params.postId;
     const commentId = req.params.commentId || "";
     console.log(
@@ -40,7 +42,31 @@ export const getComments = asyncHandler(async (req, res) => {
     for (const commentId of commentIds) {
       try {
         const comment = await Comment.findById(commentId);
-        comments.push(comment);
+        const creatorId = comment.creator.id;
+        const creatorProfile = await Profile.findOne({
+          userId: creatorId,
+        }).catch((err) => {
+          return res.json({ status: "FAILED", message: err.message });
+        });
+        const creator = {
+          id: creatorId,
+          firstName: creatorProfile.name.firstName,
+          lastName: creatorProfile.name.lastName,
+          userName: creatorProfile.userName,
+        };
+        const commentJson = comment.toJSON();
+        commentJson.creator = creator;
+        if (comment.stats.upvotes.users.includes(userId)) {
+          commentJson.liked = true;
+        } else {
+          commentJson.liked = false;
+        }
+        if (comment.stats.downvotes.users.includes(userId)) {
+          commentJson.disliked = true;
+        } else {
+          commentJson.disliked = false;
+        }
+        comments.push(commentJson);
       } catch (err) {
         return res.json({
           status: "FAILED",
