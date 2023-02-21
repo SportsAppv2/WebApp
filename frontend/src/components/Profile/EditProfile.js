@@ -41,7 +41,7 @@ const EditProfile = () => {
 
   console.log(data);
   return (
-    <div className="h-screen w-screen fixed top-0 left-0">
+    <div className="h-screen w-screen fixed top-0 left-0 z-[9999]">
       <div className="h-screen w-screen fixed top-0 left-0 bg-gray-20"></div>
       <div className="h-fit w-[580px] bg-[#000000] text-white-100  m-auto mt-[80px] rounded-3xl relative p-5">
         <div className="text-center text-[24px] font-semibold">

@@ -7,7 +7,7 @@ export const fetchPosts = createAsyncThunk(
     const state = getState();
     const response = await axios
       .get(
-        `http://localhost:5000/api/home/rooms/${arg.roomId}/posts?page=${arg.pageNumber}&limit=${arg.postLimit}`,
+        `http://localhost:5000/api/home/rooms/${arg.roomId}/posts?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -37,8 +37,8 @@ const roomPostsSlice = createSlice({
     postsAdded(state, action) {
       state.posts = state.posts.concat(action.payload);
     },
-    currentPageUpdated(state, action) {
-      state.currentPage = action.payload;
+    currentPageIncreased(state) {
+      state.currentPage = state.currentPage + 1;
     },
   },
   extraReducers: (builder) => {

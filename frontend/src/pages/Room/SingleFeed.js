@@ -1,28 +1,105 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineLike,
   AiOutlineDislike,
   AiOutlineShareAlt,
+  AiFillLike,
+  AiFillDislike,
 } from "react-icons/ai";
 import { BiCommentDetail, BiBookmark, BiDotsVertical } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
+import { timeFormatter } from "../../helpers/timeFormatter";
 import { roomActions } from "../../store/roomSlice";
 import CommentBlock from "./CommentBlock";
 
 const SingleFeed = (props) => {
   const data = useSelector((state) => state.room);
   const dispatch = useDispatch();
+  const votes = useRef("");
   const [showComments, setShowComments] = useState(false);
-  const date = new Date(props.time);
-  const formattedDate = date.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-    day: "numeric",
-    month: "short",
-    year: "2-digit",
-  });
-  // console.log(data);
+  const [vote, setVote] = useState("");
+  const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
+  useEffect(() => {
+    if (props.upvotes == true) {
+      setVote("like");
+    } else if (props.downvotes == true) {
+      setVote("dislike");
+    }
+  }, []);
+  const postId = props.postId;
+  const jwtToken = localStorage.getItem("token");
+  const handleLike = async (postId) => {
+    console.log("Current state is ", voteCount);
+    if (vote == "dislike") {
+      setVoteCount((voteCount) => voteCount + 2);
+      votes.current.innerHTML = voteCount + 2;
+    } else {
+      setVoteCount((voteCount) => voteCount + 1);
+      votes.current.innerHTML = voteCount + 1;
+    }
+    setVote("like");
+    const data = {
+      postId: props.postId,
+    };
+    const response = await axios
+      .post("http://localhost:5000/api/home/post/like/", JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Successfully liked the post ", voteCount);
+        } else {
+          votes.current.innerHTML = voteCount;
+          setVote("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleDislike = async (postId) => {
+    console.log("Current state is ", voteCount);
+    if (vote == "like") {
+      setVoteCount((voteCount) => voteCount - 2);
+      console.log(voteCount);
+      votes.current.innerHTML = voteCount - 2;
+    } else {
+      setVoteCount((voteCount) => voteCount - 1);
+      votes.current.innerHTML = voteCount - 1;
+    }
+    setVote("dislike");
+    const data = {
+      postId: props.postId,
+    };
+    const response = await axios
+      .post(
+        "http://localhost:5000/api/home/post/dislike/",
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Successfully disliked the post", voteCount);
+        } else {
+          votes.current.innerHTML = voteCount;
+          setVote("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="text-white-50 text-[20px] relative">
       <div className="flex py-5">
@@ -45,7 +122,7 @@ const SingleFeed = (props) => {
               <div className="italic mx-2 text-gray-600">@{props.userName}</div>
             </div>
             <div className="font-thin text-[16px] text-gray-600">
-              {formattedDate}
+              {timeFormatter(props.time)}
             </div>
           </div>
           <div className="text-[18px]">
@@ -82,20 +159,45 @@ const SingleFeed = (props) => {
         <div className="w-2/12  text-gray-600 text-center">
           <div className="likes mt-5">
             <div className="w-fit m-auto">
-              <AiOutlineLike />
+              {vote == "like" ? (
+                <AiFillLike className="text-[#c95353]" />
+              ) : (
+                <AiOutlineLike
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleLike();
+                  }}
+                />
+              )}
             </div>
-            <div className="text-[18px] my-3">
+            <div className="text-[18px] my-3" ref={votes}>
               {props.upvotes - props.downvotes}
             </div>
           </div>
           <div className="dislikes">
             <div className="w-fit m-auto">
-              <AiOutlineDislike />
+              {vote == "dislike" ? (
+                <AiFillDislike className="text-[#c95353]" />
+              ) : (
+                <AiOutlineDislike
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleDislike();
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
-      {showComments && <CommentBlock postId={props.postId} commentId="" />}
+      {showComments && (
+        <CommentBlock
+          postId={props.postId}
+          commentId=""
+          userName={props.userName}
+          dp={props.dp}
+        />
+      )}
       <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[70px]" />
     </div>
   );

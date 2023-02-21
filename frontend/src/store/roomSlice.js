@@ -108,7 +108,9 @@ const roomSlice = createSlice({
     roomName: "",
     roomCode: "",
     showSearchedRoomModal: false,
-    showModal: false,
+    showModal: false, //This is the create post modal
+    showRoomInfoModal: false,
+    showRoomSettingsModal: false,
     showComments: false,
     showTournament: false,
     searchedRoom: {
@@ -120,12 +122,18 @@ const roomSlice = createSlice({
       sports: [],
     },
     currentRoom: {
+      joiningCode: "",
       roomName: "",
       roomPic: "",
       isVerified: false,
       userCount: 0,
       roomSummary: "",
       sports: [],
+      admin: {
+        owner: "",
+        moderators: [],
+      },
+      createdAt: "",
     },
     fetchedRooms: [],
   },
@@ -162,6 +170,14 @@ const roomSlice = createSlice({
         state.searchBy = "roomName";
       }
     },
+    toggleRoomInfoModal(state) {
+      state.showRoomInfoModal = !state.showRoomInfoModal;
+      state.showRoomSettingsModal = false;
+    },
+    toggleRoomSettingsModal(state) {
+      state.showRoomSettingsModal = !state.showRoomSettingsModal;
+      state.showRoomInfoModal = false;
+    },
     toogleSearchedRoomModal(state) {
       state.showSearchedRoomModal = !state.showSearchedRoomModal;
     },
@@ -172,6 +188,9 @@ const roomSlice = createSlice({
       state.currentRoom.isVerified = action.payload.roomDetails.isVerified;
       state.currentRoom.userCount = action.payload.userCount;
       state.currentRoom.sports = action.payload.roomDetails.sportsName;
+      state.currentRoom.createdAt = action.payload.roomDetails.createdAt;
+      state.currentRoom.admin = action.payload.admin;
+      state.currentRoom.joiningCode = action.payload.joiningCode;
       // console.log(state.currentRoom.roomName);
     },
     updateSearchedRoom(state, action) {

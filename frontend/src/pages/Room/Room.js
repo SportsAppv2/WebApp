@@ -53,7 +53,7 @@ const Room = () => {
             <Name roomInfo={currentRoomData} />
             <TopNews />
             <FeedHeader sticky={stickyFeed} />
-            <Feed />
+            <Feed feedType="roomFeed" />
             <UploadPost />
             {modalState && <NewModal />}
           </div>

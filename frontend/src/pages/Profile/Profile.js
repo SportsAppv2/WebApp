@@ -85,7 +85,7 @@ const Profile = () => {
               {data.showEditProfile && <EditProfile />}
             </div>
             <FeedHeader />
-            <Feed />
+            <Feed feedType="profileFeed" />
           </div>
         </div>
         <RightBar />

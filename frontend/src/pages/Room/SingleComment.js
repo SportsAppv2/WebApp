@@ -1,24 +1,118 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineLike,
   AiOutlineDislike,
   AiOutlineShareAlt,
+  AiFillLike,
+  AiFillDislike,
 } from "react-icons/ai";
 import { BiCommentDetail, BiBookmark, BiDotsVertical } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
+import { timeFormatter } from "../../helpers/timeFormatter";
 import { replyActions } from "../../store/replySlice";
 import CommentBlock from "./CommentBlock";
 import ReplyBlock from "./ReplyBlock";
 
 const SingleComment = (props) => {
   const [showComments, setShowComments] = useState(false);
+  const votes = useRef("");
+  const [vote, setVote] = useState("");
+  const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
+  const jwtToken = localStorage.getItem("token");
+  useEffect(() => {
+    if (props.upvotes == true) {
+      setVote("like");
+    } else if (props.downvotes == true) {
+      setVote("dislike");
+    }
+  }, []);
+  const handleLike = async (postId) => {
+    console.log("Current state is ", voteCount);
+    if (vote == "dislike") {
+      setVoteCount((voteCount) => voteCount + 2);
+      votes.current.innerHTML = voteCount + 2;
+    } else {
+      setVoteCount((voteCount) => voteCount + 1);
+      votes.current.innerHTML = voteCount + 1;
+    }
+    setVote("like");
+    const data = {
+      commentId: props.commentId,
+    };
+    const response = await axios
+      .post(
+        "http://localhost:5000/api/home/comment/like/",
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Successfully liked the comment ", voteCount);
+        } else {
+          votes.current.innerHTML = voteCount;
+          setVote("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleDislike = async (postId) => {
+    console.log("Current state is ", voteCount);
+    if (vote == "like") {
+      setVoteCount((voteCount) => voteCount - 2);
+      console.log(voteCount);
+      votes.current.innerHTML = voteCount - 2;
+    } else {
+      setVoteCount((voteCount) => voteCount - 1);
+      votes.current.innerHTML = voteCount - 1;
+    }
+    setVote("dislike");
+    const data = {
+      commentId: props.commentId,
+    };
+    const response = await axios
+      .post(
+        "http://localhost:5000/api/home/comment/dislike/",
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Successfully disliked the comment", voteCount);
+        } else {
+          votes.current.innerHTML = voteCount;
+          setVote("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="text-white-50 text-[20px]">
       <div className="flex py-5">
         <div className="w-1/12 mr-1">
           <div className="m-auto">
             <img
-              src="https://pbs.twimg.com/profile_images/1458141066402488320/33d6K8kD_400x400.jpg"
+              src={
+                props.dp
+                  ? props.dp
+                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
+              }
               alt="DP"
               className="rounded-[500px] w-[50px] h-[50px] object-cover  m-auto"
             />
@@ -31,7 +125,7 @@ const SingleComment = (props) => {
               <div className="italic mx-2 text-gray-600">@{props.userName}</div>
             </div>
             <div className="font-thin text-[16px] text-gray-600">
-              {props.time}
+              {timeFormatter(props.time)}
             </div>
           </div>
           <div className="text-[18px]">
@@ -60,21 +154,43 @@ const SingleComment = (props) => {
         <div className="w-2/12  text-gray-600 text-center">
           <div className="likes mt-5">
             <div className="w-fit m-auto">
-              <AiOutlineLike />
+              {vote == "like" ? (
+                <AiFillLike className="text-[#c95353]" />
+              ) : (
+                <AiOutlineLike
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleLike();
+                  }}
+                />
+              )}
             </div>
-            <div className="text-[18px] my-3">
+            <div className="text-[18px] my-3" ref={votes}>
               {props.upvotes - props.downvotes}
             </div>
           </div>
           <div className="dislikes">
             <div className="w-fit m-auto">
-              <AiOutlineDislike />
+              {vote == "dislike" ? (
+                <AiFillDislike className="text-[#c95353]" />
+              ) : (
+                <AiOutlineDislike
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleDislike();
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
       {showComments && (
-        <CommentBlock postId={props.postId} commentId={props.commentId} />
+        <CommentBlock
+          userName={props.userName}
+          postId={props.postId}
+          commentId={props.commentId}
+        />
       )}
       <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[75px]" />
     </div>
