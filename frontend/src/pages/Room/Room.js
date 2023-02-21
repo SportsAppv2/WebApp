@@ -7,7 +7,7 @@ import UploadPost from "./UploadPost";
 import { useDispatch, useSelector } from "react-redux";
 import NewModal from "./NewModal";
 import { fetchUserDataInitial } from "../../store/editProfileSlice";
-import Tournament from "./Tournament";
+import Tournament from "../../components/Home/Tournament/Tournament.js";
 
 const Room = () => {
   const dispatch = useDispatch();

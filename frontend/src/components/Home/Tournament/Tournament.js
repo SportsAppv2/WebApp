@@ -1,9 +1,9 @@
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux';
-import { roomActions } from '../../store/roomSlice';
-import { tournamentActions } from '../../store/tournamentSlice';
-import TournamentDashboard from './TournamentDashboard';
+import { roomActions } from '../../../store/roomSlice';
+import { tournamentActions } from '../../../store/tournamentSlice.js';
+import TournamentDashboard from './TournamentDashboard.js';
 
 const Tournament = () => {
     const data = useSelector((state) => state.tournament);
@@ -14,6 +14,8 @@ const Tournament = () => {
         dispatch(roomActions.toggleTournament())
     }
     return (
+        <>
+        {data.dashboard ? <TournamentDashboard /> : 
         <div className='bg-[#1A1C20] h-full flex items-center justify-center'>
             <div className='h-fit w-[500px] bg-[black] text-white-100 p-5 rounded-xl'>
                 <div className='flex items-center text-[#5D5FEF] ml-3 mb-5'>
@@ -51,12 +53,14 @@ const Tournament = () => {
                     * All information can be changed later
                 </div>
                 <div className='ml-[80%] my-3'>
-                    <button className='bg-[#5D5FEF] hover:bg-blue-100 bg-opacity-50 shadow-md text-gray-200 font-medium text-[16px] px-3 py-1 mr-5 rounded-xl'>
+                    <button className='bg-[#5D5FEF] hover:bg-blue-100 bg-opacity-50 shadow-md text-gray-200 font-medium text-[16px] px-3 py-1 mr-5 rounded-xl'
+                    onClick={() => {dispatch(tournamentActions.showDashboard())}}>
                         Create
                     </button>
                 </div>
             </div>
-        </div>
+        </div>}
+        </>
     );
 };
 
