@@ -9,16 +9,8 @@ const Comments = (props) => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [commentsData, setcommentsData] = useState([]);
-  useEffect(async () => {
-    // dispatch(
-    //   fetchComments({
-    //     postId: props.postId,
-    //     commentId: props.commentId,
-    //     commentLimit: 2,
-    //     pageNumber,
-    //   })
-    // );
-    const response = await axios
+  const fetchComments = async () => {
+    await axios
       .get(
         `http://localhost:5000/api/home/rooms/${props.postId}/comments/${
           props.commentId ? props.commentId + "/" : ""
@@ -36,6 +28,18 @@ const Comments = (props) => {
       .catch((err) => {
         console.log(err.message);
       });
+  };
+  useEffect(() => {
+    // dispatch(
+    //   fetchComments({
+    //     postId: props.postId,
+    //     commentId: props.commentId,
+    //     commentLimit: 2,
+    //     pageNumber,
+    //   })
+    // );
+    fetchComments();
+    return () => {};
   }, [pageNumber]);
   return (
     <div>

@@ -17,9 +17,41 @@ export const getRoomDetails = asyncHandler(async (req, res) => {
         message: "Room not found",
       });
     }
+    let admins = {
+      moderators: [],
+    };
+    const profile = await Profile.findOne({
+      userId: room.admin.owner,
+    }).catch((err) => {
+      return res.json({ status: "FAILED", message: err.message });
+    });
+    admins.owner = {
+      name: profile.name,
+      userName: profile.userName,
+      profilePic: profile.profileView.profilePic,
+      userId: profile.userId,
+    };
+    for (let i = 0; i < room.admin.moderators.length; i++) {
+      const profile = await Profile.findOne({
+        userId: room.admin.moderators[i],
+      }).catch((err) => {
+        return res.json({ status: "FAILED", message: err.message });
+      });
+      admins.moderators.push({
+        name: profile.name,
+        userName: profile.userName,
+        profilePic: profile.profileView.profilePic,
+        userId: profile.userId,
+      });
+    }
     return res.json({
       status: "SUCCESS",
-      data: { roomDetails: room.roomDetails, userCount: room.users.count },
+      data: {
+        roomDetails: room.roomDetails,
+        userCount: room.users.count,
+        admin: admins,
+        joiningCode: room.joiningCode,
+      },
     });
   } catch (err) {
     return res.json({

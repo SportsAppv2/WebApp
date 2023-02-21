@@ -28,9 +28,6 @@ export const createPost = asyncHandler(async (req, res) => {
         .then((user) => {
           const creator = {
             id: userId,
-            firstName: user.name.firstName,
-            lastName: user.name.lastName,
-            userName: user.userName,
           };
           const newPost = new Post({
             roomId,

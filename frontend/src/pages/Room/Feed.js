@@ -3,25 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, roomPostsActions } from "../../store/roomPostsSlice";
 import SingleFeed from "./SingleFeed";
 
-const Feed = () => {
+const Feed = (props) => {
   const dispatch = useDispatch();
   const roomData = useSelector((state) => state.room);
   const postData = useSelector((state) => state.roomposts);
   useEffect(() => {
     dispatch(roomPostsActions.resetPosts());
-    dispatch(
-      fetchPosts({
-        roomId: roomData.currentRoomId,
-        pageNumber: 1,
-        postLimit: 10,
-      })
-    );
-  }, [roomData.currentRoomId]);
+    if (props.feedType == "roomFeed") {
+      dispatch(
+        fetchPosts({
+          roomId: roomData.currentRoomId,
+          postLimit: 10,
+        })
+      );
+    } else if (props.feedType == "profileFeed") {
+    }
+  }, [roomData.currentRoomId, props.feedType]);
   const feedType = useSelector((data) => data.room.currentFeedType);
   return (
     <div className="my-5">
       {postData.posts.map((post) => {
-        console.log(post);
+        // console.log(post);
         return (
           <SingleFeed
             key={post._id}
@@ -37,15 +39,25 @@ const Feed = () => {
             totalComments={post.comments.count}
             imageUrl={post.content.image}
             videoUrl={post.content.video}
+            liked={post.liked}
+            disliked={post.disliked}
           />
         );
       })}
-      {/* <SingleFeed id="1" dp="" name="" userId="" time="" content="" image="" />
-      <SingleFeed id="2" />
-      <SingleFeed id="3" />
-      <SingleFeed id="4" />
-      <SingleFeed id="5" />
-      <SingleFeed id="6" /> */}
+      <div
+        className="text-blue-60 cursor-pointer"
+        onClick={() => {
+          dispatch(roomPostsActions.currentPageIncreased());
+          dispatch(
+            fetchPosts({
+              roomId: roomData.currentRoomId,
+              postLimit: 10,
+            })
+          );
+        }}
+      >
+        See more posts..
+      </div>
     </div>
   );
 };

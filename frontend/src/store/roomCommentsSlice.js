@@ -24,6 +24,41 @@ export const fetchComments = createAsyncThunk(
       });
   }
 );
+export const fetchCreateComment = createAsyncThunk(
+  "comment/create",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const data = {
+      parentPostId: arg.postId,
+      parentCommentId: arg.commentId,
+      content: {
+        text: state.reply.text,
+      },
+    };
+    const jwtToken = localStorage.getItem("token");
+    console.log(state);
+    const response = await axios
+      .post(
+        "http://localhost:5000/api/home/comment/create",
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == "SUCCESS") {
+          console.log("Successfully posted the comment");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
 
 const roomCommentsSlice = createSlice({
   name: "roomcomments",
@@ -53,6 +88,18 @@ const roomCommentsSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchComments.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchCreateComment.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchCreateComment.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchCreateComment.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

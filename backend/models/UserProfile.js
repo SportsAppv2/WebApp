@@ -58,8 +58,14 @@ const profileSchema = mongoose.Schema({
     moderatorOf: [{ type: String, default: null }],
     allRooms: [{ type: String, default: null }],
   },
-  posts: {
-    posted: [{ type: String, default: null }],
+  activities: {
+    posts: {
+      posted: [{ type: String, default: null }], //postId
+      commented: [{ type: String, default: null }], //commentId
+      liked: [{ type: String, default: null }], //postId
+      disliked: [{ type: String, default: null }], //postId
+      reported: [{ type: String, default: null }], //postId
+    },
   },
   setupDone: { type: Boolean, default: false },
 });
