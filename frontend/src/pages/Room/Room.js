@@ -7,6 +7,7 @@ import UploadPost from "./UploadPost";
 import { useDispatch, useSelector } from "react-redux";
 import NewModal from "./NewModal";
 import { fetchUserDataInitial } from "../../store/editProfileSlice";
+import Tournament from "./Tournament";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const Room = () => {
         className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll"
         ref={scrollableDiv}
       >
+        {roomData.showTournament ? <Tournament /> : 
         <div className="content flex">
           <div className="px-7 pb-20 pt-3 w-[85%]">
             <Name roomInfo={currentRoomData} />
@@ -57,7 +59,8 @@ const Room = () => {
           </div>
           <div className="h-100% bg-gray-600 w-[1px]"></div>
           <div className="sidebar text-white-100 w-[15%] p-6">xxx</div>
-        </div>
+        </div>}
+        
       </div>
     </>
   );

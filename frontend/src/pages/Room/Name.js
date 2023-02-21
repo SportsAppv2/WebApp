@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { roomActions } from "../../store/roomSlice";
 import RoomInfoModal from "./RoomInfoModal";
 import RoomSettingsModal from "./RoomSettingsModal";
+import { AiFillTrophy } from "react-icons/ai";
 const Name = (props) => {
   const dispatch = useDispatch();
   console.log("props are ", props);
@@ -23,6 +24,12 @@ const Name = (props) => {
           )}
         </div>
         <div className="flex items-center icons text-white-30 text-[28px]">
+          <AiFillTrophy
+            className="mx-3 cursor-pointer hover:text-gray-300"
+            onClick={() => {
+              dispatch(roomActions.toggleTournament());
+            }}
+          />
           <AiFillInfoCircle
             className="mx-3 cursor-pointer hover:text-gray-300"
             onClick={() => {
