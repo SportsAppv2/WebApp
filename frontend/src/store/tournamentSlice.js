@@ -23,7 +23,9 @@ const tournamentSlice = createSlice({
             name: "",
             country: "",
             email: "",
-            players: [],    
+            playerCount: 1,
+            playerValues: [""], 
+            logo: "",  
         }
     },
     reducers: {
@@ -77,6 +79,25 @@ const tournamentSlice = createSlice({
         },
         addTeamEmail(state, action) {
             state.teamData.email = action.payload;
+        },
+        addInputField(state,action) {
+            state.teamData.playerCount = state.teamData.playerCount+1;
+            state.teamData.playerValues = [...state.teamData.playerValues,""];
+        },
+        addPlayerValues (state, action) {
+            console.log("in slice XXX ", action.payload.index);
+            state.teamData.playerValues[action.payload.index] = action.payload.value;
+        },
+        removePlayerValues (state, action) {
+            console.log("in slice", action.payload.index);
+            state.teamData.playerValues.splice(action.payload.index,1);
+            state.teamData.playerCount = state.teamData.playerCount - 1;
+        },
+        teamLogoAdded (state, action) {
+            state.teamData.logo = action.payload;
+        },
+        logoDeleted (state ,action) {
+            state.teamData.logo = "";
         }
     }
 })
