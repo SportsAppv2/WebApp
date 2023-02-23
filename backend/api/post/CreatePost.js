@@ -24,6 +24,7 @@ export const createPost = asyncHandler(async (req, res) => {
         message: "Invalid input fields",
       });
     } else {
+      let postId;
       const userDetails = await Profile.findOne({ userId })
         .then((user) => {
           const creator = {
@@ -36,6 +37,8 @@ export const createPost = asyncHandler(async (req, res) => {
             settings,
           });
           newPost.save().then(async (post) => {
+            postId = post._id;
+            user.activities.posts.posted.push(postId);
             console.log("Saved new post", post);
             //push the postId to Room.post
             const room = await Room.findByIdAndUpdate(roomId, {
@@ -46,6 +49,9 @@ export const createPost = asyncHandler(async (req, res) => {
             if (!room) {
               return res.json({ status: "FAILED", message: "Room not found" });
             }
+            await user.save().catch((err) => {
+              res.json({ status: "FAILED", message: err.message });
+            });
             return res.json({
               status: "SUCCESS",
               message: "Post successfully saved.",

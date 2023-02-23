@@ -76,8 +76,13 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page) || 1; // default to page 1 if not specified
     const limit = parseInt(req.query.limit) || 10; // default to 10 posts per page if not specified
     const skip = (page - 1) * limit;
-    const room = await Room.findById(roomId).select("postList").exec();
-    const postIds = room.postList.slice(skip, skip + limit);
+    const userProfile = await Profile.findOne({ userId }).catch((err) => {
+      res.json({ status: "FAILED", message: err.message });
+    });
+    const postIds = userProfile.activities.posts.posted.slice(
+      skip,
+      skip + limit
+    );
     const posts = [];
     for (const postId of postIds) {
       try {
@@ -116,7 +121,7 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
         });
       }
     }
-    const count = room.postList.length;
+    const count = userProfile.activities.posts.posted.length;
     const totalPages = Math.ceil(count / limit);
     return res.json({
       data: posts,

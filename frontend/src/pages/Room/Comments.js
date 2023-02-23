@@ -61,6 +61,8 @@ const Comments = (props) => {
             totalComments={comment.comments.count}
             imageUrl={comment.content.image}
             videoUrl={comment.content.video}
+            liked={comment.liked}
+            disliked={comment.disliked}
           />
         );
       })}

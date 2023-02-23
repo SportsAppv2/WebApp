@@ -21,9 +21,9 @@ const SingleFeed = (props) => {
   const [vote, setVote] = useState("");
   const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
   useEffect(() => {
-    if (props.upvotes == true) {
+    if (props.liked == true) {
       setVote("like");
-    } else if (props.downvotes == true) {
+    } else if (props.disliked == true) {
       setVote("dislike");
     }
   }, []);
