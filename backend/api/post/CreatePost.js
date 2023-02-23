@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import { decodeJwt } from "../../helpers/decodeJwt.js";
+import Notification from "../../models/Notification.js";
 import Post from "../../models/Posts.js";
 import Room from "../../models/Room.js";
 import User from "../../models/User.js";
@@ -40,6 +41,17 @@ export const createPost = asyncHandler(async (req, res) => {
             postId = post._id;
             user.activities.posts.posted.push(postId);
             console.log("Saved new post", post);
+            const notification = new Notification({
+              type: "Post",
+              receipentId: userId,
+              postId: postId,
+            });
+            notification.save().catch((err) => {
+              return res.json({
+                status: "FAILED",
+                message: err.message,
+              });
+            });
             //push the postId to Room.post
             const room = await Room.findByIdAndUpdate(roomId, {
               $push: { postList: post._id },

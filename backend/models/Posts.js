@@ -51,6 +51,9 @@ const postSchema = mongoose.Schema({
       },
     ],
   },
+  notification: {
+    notificationId: { type: Number, required: true },
+  },
 });
 
 const Post = mongoose.model("Posts", postSchema);
