@@ -21,11 +21,11 @@ const Player = () => {
 
     return (
         <div className=''>
-            {Array.from({length:data.teamData.playerCount}).map((_, index) => (
+            {Array.from({length:data.teamData.playerCount}).map((_, index) => ( 
                 <div className='flex items-center' key={index} ref={inputField}>
                     <div className='mb-3'>
                         <input type="text" 
-                        // value = {data.teamData.playerValues[index]} 
+                        value = {data.teamData.playerValues[index]} 
                         placeholder={'Player ' + index}
                         className='bg-[black] border-gray-600 border-[1px] w-full text-white-100 p-2 outline-none shadow-md'
                         onChange={(e) => {handleChange(e, index)}}/>                    
