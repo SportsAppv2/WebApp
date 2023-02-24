@@ -11,7 +11,7 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch(fetchNewsArticles());
-  },[])
+  }, []);
   return (
     <>
       <div className="flex flex-col h-screen overflow-hidden">
@@ -19,7 +19,11 @@ const Home = () => {
         <div className="flex flex-grow h-full bg-[#000000]">
           <Rooms />
           <Routes>
-            <Route path="/room/*" element={<Room />} key="route-room-page" />
+            <Route
+              path="/room/:roomId/*"
+              element={<Room />}
+              key="route-room-page"
+            />
             <Route path="/*" element={<Body />} key="route-body-page" />
           </Routes>
         </div>

@@ -6,7 +6,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Body from "./Body";
 
 const Room = () => {
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
   const scrollableDiv = useRef(null);
   const [offset, setOffset] = useState(0);
   const [stickyFeed, setStickyFeed] = useState(false);
@@ -42,10 +42,14 @@ const Room = () => {
         className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll"
         ref={scrollableDiv}
       >
-      <Routes>
-        <Route path="/tournament/*" element={<Tournament />} key="route-tournament-page" />
-        <Route path="/*" element={<Body />} key="route-room-page" />
-      </Routes>        
+        <Routes>
+          <Route
+            path="/tournament/*"
+            element={<Tournament />}
+            key="route-tournament-page"
+          />
+          <Route path="/*" element={<Body />} key="route-room-page" />
+        </Routes>
       </div>
     </>
   );
