@@ -6,7 +6,9 @@ import { roomActions } from "../../store/roomSlice";
 import RoomInfoModal from "./RoomInfoModal";
 import RoomSettingsModal from "./RoomSettingsModal";
 import { AiFillTrophy } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 const Name = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   console.log("props are ", props);
   const roomData = useSelector((state) => state.room);
@@ -27,7 +29,7 @@ const Name = (props) => {
           <AiFillTrophy
             className="mx-3 cursor-pointer hover:text-gray-300"
             onClick={() => {
-              dispatch(roomActions.toggleTournament());
+              navigate("tournament");
             }}
           />
           <AiFillInfoCircle

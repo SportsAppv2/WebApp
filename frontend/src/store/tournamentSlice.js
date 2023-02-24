@@ -9,14 +9,6 @@ const tournamentSlice = createSlice({
             to: "",
             venue: "",
         },
-        dashboard: false,
-        leftbar:{
-            participants: true,
-            format: false,
-            schedule: false,
-            results: false,
-            settings: false,
-        },
         addTeam: false,
         addParticipant: false,
         teamData:{
@@ -26,7 +18,19 @@ const tournamentSlice = createSlice({
             playerCount: 1,
             playerValues: [""], 
             logo: "",  
-        }
+        },
+        participantData: {
+            name: "",
+            country: "",
+            email: "",
+            logo: "",
+        },
+        groupOnly: false,
+        groupAndKnockout: false,
+        knockoutOnly: false,
+        noOfGroups: "",
+        noOfParticipantPerGroup: "",
+        format2ndpage: false,
     },
     reducers: {
         titleAdded(state, action) {
@@ -47,28 +51,10 @@ const tournamentSlice = createSlice({
             state.createInfo.to = "";
             state.createInfo.venue = "";
         },
-        showDashboard(state) {
-            state.dashboard = !state.dashboard;
-        },
-        showParticipants(state) {
-            state.leftbar.participants = !state.leftbar.participants;
-        },
-        showFormat(state) {
-            state.leftbar.format= !state.leftbar.format;
-        },
-        showSchedule(state) {
-            state.leftbar.schedule = !state.leftbar.schedule;
-        },
-        showResults(state) {
-            state.leftbar.results = !state.leftbar.results;
-        },
-        showSettings(state) {
-            state.leftbar.settings = !state.leftbar.settings;
-        },
         showAddTeam(state) {
             state.addTeam = !state.addTeam
         },
-        showAddPArticipant(state) {
+        showAddParticipant(state) {
             state.addParticipant = !state.addParticipant
         },
         addTeamName(state,action) {
@@ -96,8 +82,41 @@ const tournamentSlice = createSlice({
         teamLogoAdded (state, action) {
             state.teamData.logo = action.payload;
         },
-        logoDeleted (state ,action) {
+        teamlogoDeleted (state ,action) {
             state.teamData.logo = "";
+        },
+        addParticipantName(state,action) {
+            state.participantData.name = action.payload;
+        },
+        addParticipantCountry(state, action) {
+            state.participantData.country = action.payload;
+        },
+        addParticipantEmail(state, action) {
+            state.participantData.email = action.payload;
+        },
+        participantLogoAdded (state, action) {
+            state.participantData.logo = action.payload;
+        },
+        participantlogoDeleted (state ,action) {
+            state.participantData.logo = "";
+        },
+        showGroupOnly (state) {
+            state.groupOnly = !state.groupOnly;
+        },
+        showGroupAndKnockout (state) {
+            state.groupAndKnockout = !state.groupAndKnockout;
+        },
+        showKnockoutOnly (state) {
+            state.knockoutOnly = !state.knockoutOnly;
+        },
+        addNoOfGroups (state, action) {
+            state.noOfGroups = action.payload;
+        },
+        addNoOfParticipantPerGroup (state, action) {
+            state.noOfParticipantPerGroup = action.payload;
+        },
+        showFormat2ndpage (state) {
+            state.format2ndpage = !state.format2ndpage;
         }
     }
 })

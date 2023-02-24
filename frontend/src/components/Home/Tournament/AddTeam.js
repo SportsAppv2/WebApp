@@ -90,7 +90,7 @@ const AddTeam = () => {
                         <button
                         className="ml-3"
                         onClick={() => {
-                            dispatch(tournamentActions.logoDeleted());
+                            dispatch(tournamentActions.teamlogoDeleted());
                         }}
                         >
                         <RxCross1 className="hover:text-blue-80" />
