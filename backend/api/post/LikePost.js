@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import { decodeJwt } from "../../helpers/decodeJwt.js";
 import Post from "../../models/Posts.js";
 import User from "../../models/User.js";
+import { addPostNotification } from "../notification/postNotifications.js";
 
 const router = express.Router();
 
@@ -54,13 +55,14 @@ export const likePost = asyncHandler(async (req, res) => {
           })
           .then((post) => {
             const notificationData = {
-              recipientId: userId,
-              senderId: post.creator.id,
+              recipientId: post.creator.id,
+              senderId: userId,
               postId,
               commentId: "",
+              notificationId: post.notification.notificationId,
               notificationType: "postLiked",
             };
-            addNotification(notificationData);
+            addPostNotification(notificationData);
             console.log(post);
             res.json({
               status: "SUCCESS",

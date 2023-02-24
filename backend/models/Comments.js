@@ -51,6 +51,9 @@ const commentSchema = mongoose.Schema({
       },
     ],
   },
+  notification: {
+    notificationId: { type: String, default: "" },
+  },
 });
 
 // {  "commentId": "",

@@ -52,7 +52,7 @@ const postSchema = mongoose.Schema({
     ],
   },
   notification: {
-    notificationId: { type: Number, required: true },
+    notificationId: { type: String, default: "" },
   },
 });
 

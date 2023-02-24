@@ -5,6 +5,7 @@ import Comment from "../../models/Comments.js";
 import User from "../../models/User.js";
 import mongoose from "mongoose";
 import { decodeJwt } from "../../helpers/decodeJwt.js";
+import { addCommentNotification } from "../notification/commentNotification.js";
 
 const router = express.Router();
 
@@ -58,6 +59,15 @@ export const likeComment = asyncHandler(async (req, res) => {
             );
           })
           .then((comment) => {
+            const notificationData = {
+              recipientId: comment.creator.id,
+              senderId: userId,
+              postId: "",
+              commentId,
+              notificationId: comment.notification.notificationId,
+              notificationType: "commentLiked",
+            };
+            addCommentNotification(notificationData);
             console.log("Comment is ", comment);
             res.json({
               status: "SUCCESS",

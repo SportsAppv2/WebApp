@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 const notificationSchema = mongoose.Schema({
   type: { type: String, required: true },
   receipentId: { type: String, required: true },
+  // parentPostId: { type: String },
   postId: { type: String },
+  // parentCommentId: { type: String },
   commentId: { type: String },
   like: {
     senderId: { type: String, default: "" },

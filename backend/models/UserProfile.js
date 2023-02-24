@@ -67,6 +67,9 @@ const profileSchema = mongoose.Schema({
       reported: [{ type: String, default: null }], //postId
     },
   },
+  notification: {
+    notificationList: [{ type: String, default: null }],
+  },
   setupDone: { type: Boolean, default: false },
 });
 

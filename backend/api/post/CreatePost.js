@@ -46,12 +46,19 @@ export const createPost = asyncHandler(async (req, res) => {
               receipentId: userId,
               postId: postId,
             });
-            notification.save().catch((err) => {
-              return res.json({
-                status: "FAILED",
-                message: err.message,
+            notification
+              .save()
+              .then(async (notification) => {
+                await Post.findByIdAndUpdate(postId, {
+                  "notification.notificationId": notification._id,
+                });
+              })
+              .catch((err) => {
+                return res.json({
+                  status: "FAILED",
+                  message: err.message,
+                });
               });
-            });
             //push the postId to Room.post
             const room = await Room.findByIdAndUpdate(roomId, {
               $push: { postList: post._id },
