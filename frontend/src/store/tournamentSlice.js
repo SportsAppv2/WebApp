@@ -25,6 +25,7 @@ const tournamentSlice = createSlice({
             email: "",
             logo: "",
         },
+        allTeamData : [],
         groupOnly: false,
         groupAndKnockout: false,
         knockoutOnly: false,
@@ -117,6 +118,9 @@ const tournamentSlice = createSlice({
         },
         showFormat2ndpage (state) {
             state.format2ndpage = !state.format2ndpage;
+        },
+        teamDataAdded (state) {
+            state.allTeamData = [...state.allTeamData, state.teamData];
         }
     }
 })
