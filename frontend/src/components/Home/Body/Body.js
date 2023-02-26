@@ -33,6 +33,7 @@ const Body = () => {
   // console.log("news is ",news);
   // useEffect(()=> {fetchNewsData()},[])
   useEffect(() => {
+    console.log("Initial Load");
     dispatch(fetchNewsArticles());
   }, []);
   console.log(data);
@@ -40,32 +41,34 @@ const Body = () => {
   return (
     <div className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll">
       <div className="h-fit flex">
-        <div className="content w-[80%] py-11 border-gray-600 border-r-[1px]">
-          <FeedHeader sticky="true" />
-          <div className="flex m-11 h-[270px]">
-            <NewsCard1
-              title={Array.from(data.news)[0].title}
-              img={Array.from(data.news)[0].urlToImage}
-              url={Array.from(data.news)[0].url}
-            />
-            <div className="w-[1px] mx-8 h-full bg-gray-600"></div>
-            <TopHeadlines />
-          </div>
-          <div className="h-[1px] bg-gray-600 w-[90%] ml-14"></div>
-          {data.news.slice(6).map((item, idx) => {
-            return (
-              <NewsCard2
-                key={idx}
-                title={item.title}
-                description={item.description}
-                author={item.author}
-                image={item.urlToImage}
-                time={item.publishedAt}
-                url={item.url}
+        {data.news.length > 0 && (
+          <div className="content w-[80%] py-11 border-gray-600 border-r-[1px]">
+            <FeedHeader sticky="true" />
+            <div className="flex m-11 h-[270px]">
+              <NewsCard1
+                title={Array.from(data.news)[0].title}
+                img={Array.from(data.news)[0].urlToImage}
+                url={Array.from(data.news)[0].url}
               />
-            );
-          })}
-        </div>
+              <div className="w-[1px] mx-8 h-full bg-gray-600"></div>
+              <TopHeadlines />
+            </div>
+            <div className="h-[1px] bg-gray-600 w-[90%] ml-14"></div>
+            {data.news.slice(6).map((item, idx) => {
+              return (
+                <NewsCard2
+                  key={idx}
+                  title={item.title}
+                  description={item.description}
+                  author={item.author}
+                  image={item.urlToImage}
+                  time={item.publishedAt}
+                  url={item.url}
+                />
+              );
+            })}
+          </div>
+        )}
         <RightBar />
       </div>
     </div>

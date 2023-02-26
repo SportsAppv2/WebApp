@@ -33,6 +33,7 @@ export const fetchCreatePost = createAsyncThunk(
         console.log(res.data);
         if (res.data.status == "SUCCESS") {
           dispatch(roomActions.toggleModal());
+          dispatch(createpostActions.resetContent());
         }
       })
       .catch((err) => {
@@ -70,6 +71,11 @@ const createpostSlice = createSlice({
     },
     pollModal(state) {
       state.pollShow = !state.pollShow;
+    },
+    resetContent(state) {
+      state.text = "";
+      state.files = "";
+      state.pollShow = false;
     },
   },
   extraReducers: (builder) => {

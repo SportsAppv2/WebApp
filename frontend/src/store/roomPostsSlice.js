@@ -15,7 +15,12 @@ export const fetchPosts = createAsyncThunk(
         }
       )
       .then((res) => {
-        dispatch(roomPostsActions.postsAdded(res.data.data));
+        if (res.data.data.length == 0) {
+          dispatch(roomPostsActions.setHasMoreItem(false));
+        } else {
+          dispatch(roomPostsActions.setIsLoading(false));
+          dispatch(roomPostsActions.postsAdded(res.data.data));
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -36,7 +41,12 @@ export const fetchOwnPosts = createAsyncThunk(
         }
       )
       .then((res) => {
-        dispatch(roomPostsActions.postsAdded(res.data.data));
+        if (res.data.data.length == 0) {
+          dispatch(roomPostsActions.setHasMoreItem(false));
+        } else {
+          dispatch(roomPostsActions.setIsLoading(false));
+          dispatch(roomPostsActions.postsAdded(res.data.data));
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -50,17 +60,32 @@ const roomPostsSlice = createSlice({
     posts: [],
     totalPost: 0,
     currentPage: 1,
+    isLoading: false,
+    hasMoreItems: true,
+    reachedPageEnd: false,
   },
   reducers: {
     resetPosts(state) {
       state.currentPage = 1;
       state.posts = [];
+      state.isLoading = false;
+      state.hasMoreItems = true;
+      state.reachedPageEnd = false;
     },
     postsAdded(state, action) {
       state.posts = state.posts.concat(action.payload);
     },
     currentPageIncreased(state) {
       state.currentPage = state.currentPage + 1;
+    },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload;
+    },
+    setHasMoreItem(state, action) {
+      state.hasMoreItems = action.payload;
+    },
+    togglePageEndReached(state, action) {
+      state.reachedPageEnd = action.payload;
     },
   },
   extraReducers: (builder) => {

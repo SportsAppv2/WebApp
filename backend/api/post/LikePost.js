@@ -61,6 +61,7 @@ export const likePost = asyncHandler(async (req, res) => {
               commentId: "",
               notificationId: post.notification.notificationId,
               notificationType: "postLiked",
+              res,
             };
             addPostNotification(notificationData);
             console.log(post);

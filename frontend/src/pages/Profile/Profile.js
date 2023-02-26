@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Header from "../../components/Home/Header/Header";
 import LeftBar from "../../components/Profile/LeftBar.js";
 import RightBar from "../../components/Profile/RightBar.js";
@@ -10,23 +10,41 @@ import { GoLocation } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileActions } from "../../store/userProfileSlice";
 import { fetchUserDataInitial } from "../../store/editProfileSlice";
+import { roomPostsActions } from "../../store/roomPostsSlice";
 
 const Profile = () => {
   const data = useSelector((state) => state.userProfile);
   const userProfileData = useSelector((state) => state.editProfile);
   const userName = useSelector((state) => state.editProfile.userName);
   const dispatch = useDispatch();
+  const scrollableDiv = useRef("");
   const toggle = () => {
     dispatch(userProfileActions.toggleEditProfile());
   };
   useEffect(() => {
     dispatch(fetchUserDataInitial());
   }, []);
+  const handleScroll2 = () => {
+    const node = scrollableDiv.current;
+    if (node) {
+      const { scrollTop, clientHeight, scrollHeight } = node;
+      console.log(scrollTop + clientHeight - (scrollHeight - 500));
+      if (scrollTop + clientHeight >= scrollHeight - 500) {
+        dispatch(roomPostsActions.togglePageEndReached(true));
+      }
+    }
+  };
   console.log(userProfileData);
   return (
     <div className="flex flex-col h-screen">
       <Header />
-      <div className="flex flex-grow h-full bg-[#000000] overflow-y-scroll">
+      <div
+        className="flex flex-grow h-full bg-[#000000] overflow-y-scroll"
+        onScroll={() => {
+          handleScroll2();
+        }}
+        ref={scrollableDiv}
+      >
         <LeftBar />
         <div className="body w-[70%] h-fit p-4 border-gray-600 border-x-[1px]">
           <div className="content">

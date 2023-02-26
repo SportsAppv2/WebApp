@@ -53,11 +53,12 @@ export const getNotifications = asyncHandler(async (req, res) => {
         const isRead = notification.like.isRead || notification.comment.isRead;
         const resObj = {
           read: isRead,
+          postId: notification.postId,
           message: `Your ${
             notification.type == "Post" ? "Post" : "Comment"
-          } has ${isLike ? `like from ${likedBy} and` : ""} ${
-            isComment ? `comment from ${commentedBy}` : ""
-          }`,
+          } has ${isLike ? `like from ${likedBy}` : ""} ${
+            isLike && isComment ? "and" : ""
+          } ${isComment ? `comment from ${commentedBy}` : ""}`,
         };
         response.push(resObj);
       } catch (err) {

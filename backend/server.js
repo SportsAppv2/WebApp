@@ -7,11 +7,11 @@ import UserRoutes from "./routes/userRoutes.js";
 import ProfileRoutes from "./routes/profileRoutes.js";
 import RoomRoutes from "./routes/roomRoutes.js";
 import NotificationRoutes from "./routes/notificationRoutes.js";
+import Profile from "./models/UserProfile.js";
 
 dotenv.config({ path: "../.env" });
 
 connectDB();
-
 const app = express();
 app.use(express.json()); //to parse the json from the request
 app.use(cors());

@@ -58,6 +58,7 @@ export const getPosts = asyncHandler(async (req, res) => {
     const count = room.postList.length;
     const totalPages = Math.ceil(count / limit);
     return res.json({
+      status: "SUCCESS",
       data: posts,
       page,
       limit,

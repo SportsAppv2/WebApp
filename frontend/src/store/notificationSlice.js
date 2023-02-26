@@ -43,6 +43,27 @@ export const fetchRoomJoinReq = createAsyncThunk(
       });
   }
 );
+export const fetchEngagementReq = createAsyncThunk(
+  "engagement/get",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const jwtToken = localStorage.getItem("token");
+    const response = await axios
+      .get("http://localhost:5000/api/notification/fetch", {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("Response data is ", res.data);
+        dispatch(notificationActions.updateEngagementReq(res.data.data));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
 
 export const fetchAcceptFollow = createAsyncThunk(
   "follower/accept",
@@ -164,6 +185,9 @@ const notificationSlice = createSlice({
       totalCount: 0,
       requestList: [],
     },
+    engagementReq: {
+      requestList: [],
+    },
   },
   reducers: {
     updateFollowReq(state, action) {
@@ -173,6 +197,9 @@ const notificationSlice = createSlice({
     updateRoomJoinReq(state, action) {
       state.roomReq.totalCount = action.payload.totalCount;
       state.roomReq.requestList = action.payload.userList;
+    },
+    updateEngagementReq(state, action) {
+      state.engagementReq.requestList = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -245,6 +272,18 @@ const notificationSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchRejectRoomJoin.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchEngagementReq.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchEngagementReq.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchEngagementReq.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

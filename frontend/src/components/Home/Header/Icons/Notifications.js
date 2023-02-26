@@ -51,6 +51,9 @@ const Notifications = () => {
           </div>
           <AiOutlineRight />
         </div>
+        {notificationData.engagementReq.requestList.map((notification) => {
+          return <LikedPost message={notification.message} />;
+        })}
         <LikedPost />
         <CommentedPost />
       </div>

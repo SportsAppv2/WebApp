@@ -6,6 +6,7 @@ import logo from "../../../assets/iconLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchEngagementReq,
   fetchFollowReq,
   fetchRoomJoinReq,
 } from "../../../store/notificationSlice";
@@ -16,6 +17,7 @@ const Header = () => {
     console.log("Making the fetch requests");
     dispatch(fetchFollowReq());
     dispatch(fetchRoomJoinReq());
+    dispatch(fetchEngagementReq());
   }, []);
   return (
     <div className="w-full bg-[#5D5FEF] h-[70px] flex items-center justify-between px-10 py-5">

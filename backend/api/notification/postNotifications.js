@@ -12,7 +12,11 @@ export const addPostNotification = async ({
   commentId,
   notificationId,
   notificationType,
+  res,
 }) => {
+  if (!notificationId) {
+    throw new Error("Post too old");
+  }
   const notification = await Notification.findById(notificationId).catch(
     (err) => {
       return res.json({
