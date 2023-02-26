@@ -30,14 +30,14 @@ const TournamentDashboard = () => {
             <div className='flex'>
                 <div className='leftbar w-[15%] h-screen border-gray-600 border-r-[1px]'>
                     <div className='text-white-100 text-center flex items-center p-4 border-gray-600 border-2 bg-[#8B8B8D]/30 cursor-pointer'
-                    onClick={() => {navigate("participants")}}>
+                    onClick={(e) => {navigate("participants")}}>
                         <BsFillPeopleFill className='text-[28px] mr-5'/>
                         <div className='text-[20px]'>
                             Participants
                         </div>
                     </div>
                     <div className='text-white-100 text-center flex items-center p-4 border-gray-600 border-2 hover:bg-[#8B8B8D]/30 cursor-pointer'
-                    onClick={() => {navigate("format")}}>
+                    onClick={(e) => {navigate("format")}}>
                         <MdGroupWork className='text-[28px] mr-5'/>
                         <div className='text-[20px]'>
                             Format
