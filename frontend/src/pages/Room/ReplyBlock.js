@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { replyActions } from "../../store/replySlice";
 import ReplyFiles from "./ReplyFiles";
@@ -9,6 +9,7 @@ const ReplyBlock = (props) => {
   const userData = useSelector((state) => state.editProfile);
   const data = useSelector((state) => state.reply);
   const dispatch = useDispatch();
+  const [text, setText] = useState("");
   const filetag = useRef("");
   const ta = useRef("");
   console.log("Props data is ", props);
@@ -42,9 +43,10 @@ const ReplyBlock = (props) => {
         </div>
         <textarea
           ref={ta}
-          value={data.text}
+          value={text}
           onChange={(e) => {
-            dispatch(replyActions.contentChanged(e.target.value));
+            // dispatch(replyActions.contentChanged(e.target.value));
+            setText(e.target.value);
           }}
           className="bg-gray-600 text-white-30 text-[18px] focus:outline-none px-5 pt-3 w-full h-fit rounded-md shadow-md bg-[transparent]"
           placeholder={`Comment as @${userData.userName}`}
@@ -52,7 +54,7 @@ const ReplyBlock = (props) => {
       </div>
       <div
         className="text-[#5D5FEF] text-[14px] w-fit font-medium pl-9 mb-3 cursor-pointer hover:text-blue-60"
-        onClick={() => dispatch(replyActions.addHashtag())}
+        onClick={() => setText((text) => text + " #")}
       >
         Add hashtag
       </div>
@@ -81,6 +83,7 @@ const ReplyBlock = (props) => {
                 fetchCreateComment({
                   postId: props.postId,
                   commentId: props.commentId,
+                  content: { text },
                 })
               );
             }}

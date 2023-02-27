@@ -12,8 +12,6 @@ const router = express.Router();
 export const createPost = asyncHandler(async (req, res) => {
   try {
     const { content, settings, roomId } = req.body;
-    // const jwtToken = req.headers.authorization.split(" ")[1];
-    // const userId = decodeJwt(jwtToken);
     const userId = req.userId;
     console.log("User ID while creating a post is ", userId);
     const isCreatorEmpty = false;
@@ -26,7 +24,7 @@ export const createPost = asyncHandler(async (req, res) => {
       });
     } else {
       let postId;
-      const userDetails = await Profile.findOne({ userId })
+      const user = await Profile.findOne({ userId })
         .then((user) => {
           const creator = {
             id: userId,
@@ -61,7 +59,7 @@ export const createPost = asyncHandler(async (req, res) => {
               });
             //push the postId to Room.post
             const room = await Room.findByIdAndUpdate(roomId, {
-              $push: { postList: post._id },
+              $push: { postList: { $each: [post._id], $position: 0 } },
             }).catch((err) => {
               res.json({ status: "FAILED", message: err.message });
             });
@@ -71,9 +69,15 @@ export const createPost = asyncHandler(async (req, res) => {
             await user.save().catch((err) => {
               res.json({ status: "FAILED", message: err.message });
             });
+            let newPostJson = post.toObject();
+            console.log("The user details are ", user);
+            newPostJson.creator.userName = user.userName;
+            newPostJson.creator.firstName = user.name.firstName;
+            newPostJson.creator.lastName = user.name.lastName;
             return res.json({
               status: "SUCCESS",
               message: "Post successfully saved.",
+              post: newPostJson,
             });
           });
         })

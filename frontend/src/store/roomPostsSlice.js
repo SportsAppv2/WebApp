@@ -75,6 +75,9 @@ const roomPostsSlice = createSlice({
     postsAdded(state, action) {
       state.posts = state.posts.concat(action.payload);
     },
+    postUploaded(state, action) {
+      state.posts.unshift(action.payload);
+    },
     currentPageIncreased(state) {
       state.currentPage = state.currentPage + 1;
     },
