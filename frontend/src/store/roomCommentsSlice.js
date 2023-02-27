@@ -32,7 +32,7 @@ export const fetchCreateComment = createAsyncThunk(
       parentPostId: arg.postId,
       parentCommentId: arg.commentId,
       content: {
-        text: state.reply.text,
+        text: arg.content.text,
       },
     };
     const jwtToken = localStorage.getItem("token");

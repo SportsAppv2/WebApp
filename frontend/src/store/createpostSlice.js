@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { roomPostsActions } from "./roomPostsSlice";
 import { roomActions } from "./roomSlice";
 
 export const fetchCreatePost = createAsyncThunk(
@@ -34,6 +35,7 @@ export const fetchCreatePost = createAsyncThunk(
         if (res.data.status == "SUCCESS") {
           dispatch(roomActions.toggleModal());
           dispatch(createpostActions.resetContent());
+          dispatch(roomPostsActions.postUploaded(res.data.post));
         }
       })
       .catch((err) => {
