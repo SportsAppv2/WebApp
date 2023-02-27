@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 
 const SingleParticipant = (props) => {
     const data = useSelector((state) => state.tournament);
-    console.log(props.val);
+    const handleDragStart = (e) => {
+        e.dataTransfer.setData('text/plain' , props.val.name);
+    };
     return (
-        <div className='bg-gray-600 w-[300px] h-fit text-white-100 p-3 rounded-lg'>
-            XXX
-            {/* {data.allTeamData.props.ind.name} */}
+        <div className='bg-[#333030] w-[300px] h-fit text-white-100 font-medium text-[18px] p-3 rounded-lg m-5 cursor-pointer hover:bg-[#232121]' draggable={true} onDragStart={(e) => {handleDragStart(e)}}>
+            {props.val.name}
         </div>
     );
 };

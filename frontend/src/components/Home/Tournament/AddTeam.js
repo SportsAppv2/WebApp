@@ -33,8 +33,8 @@ const AddTeam = () => {
       }, [data.teamData.logo]);
 
       const submitDetails = () => {
-        dispatch(tournamentActions.showAddTeam());
         dispatch(tournamentActions.teamDataAdded());
+        dispatch(tournamentActions.showAddTeam());
       }
       
 
