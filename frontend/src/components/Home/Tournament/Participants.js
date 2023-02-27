@@ -9,11 +9,13 @@ const Participants = () => {
     const data = useSelector((state) => state.tournament);
     const dispatch = useDispatch();
     return (
-        <div className='bg-[#1A1C20] h-screen w-[100%] flex justify-center'>
-            {Array.from(data.allTeamData).map((value, index) => {
-                console.log(value);
-                <SingleParticipant val={value}/>
-            })} 
+        <div className='bg-[#1A1C20] h-screen w-[100%] flex'>
+            <div className='w-[600px]'>
+                {Array.from(data.allTeamData).map((value, index) => {
+                    console.log(value);
+                    return (<SingleParticipant val={value}/>)
+                })}
+            </div>             
             <div className='bg-[black] text-white-100 w-[300px] h-fit mt-[150px] rounded-2xl p-5 shadow-2xl text-center py-11'>
                 <div className='text-[22px] text-[#5D5FEF] cursor-pointer hover:underline'
                 onClick={() => {dispatch(tournamentActions.showAddTeam())}}>

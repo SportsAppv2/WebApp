@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Group from '../../../assets/group.png';
 import GroupKnockout from '../../../assets/group+knockout.png';
 import Knockout from '../../../assets/knockout.png'
@@ -13,9 +13,13 @@ const Format = () => {
     const data = useSelector((state) => state.tournament);
     const dispatch = useDispatch();
     console.log(data);
+    const [inputValue , setInputValue] = useState('');
+    const handleDrop = (data) => {
+        setInputValue(data);
+    }
     return (
         <>
-        {data.format2ndpage ? <Format2 /> :
+        {data.format2ndpage ? <Format2 value={inputValue} onDrop={handleDrop}/> :
         <div className='bg-[#000000] h-screen w-[100%]'>
             <div className='text-white-100 text-[32px] text-center mt-8 font-medium'>
                 Choose a tournament format
