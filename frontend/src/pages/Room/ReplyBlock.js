@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { replyActions } from "../../store/replySlice";
 import ReplyFiles from "./ReplyFiles";
 import { RxCross1 } from "react-icons/rx";
-import { fetchCreateComment } from "../../store/roomCommentsSlice";
+import {
+  fetchCreateComment,
+  roomComments,
+} from "../../store/roomCommentsSlice";
 
 const ReplyBlock = (props) => {
   const userData = useSelector((state) => state.editProfile);
@@ -20,6 +23,12 @@ const ReplyBlock = (props) => {
       filetag.current.classList.add("hidden");
     }
   }, [data.files]);
+  useEffect(() => {
+    if (data.currentEmoji) {
+      setText((text) => text + data.currentEmoji);
+      dispatch(replyActions.emojiRemoved());
+    }
+  }, [data.currentEmoji]);
   // useEffect(()=> {
   //     ta.current.focus();
   // }, [data.text])
@@ -54,7 +63,10 @@ const ReplyBlock = (props) => {
       </div>
       <div
         className="text-[#5D5FEF] text-[14px] w-fit font-medium pl-9 mb-3 cursor-pointer hover:text-blue-60"
-        onClick={() => setText((text) => text + " #")}
+        onClick={() => {
+          setText((text) => text + " #");
+          ta.current.focus();
+        }}
       >
         Add hashtag
       </div>
@@ -78,7 +90,13 @@ const ReplyBlock = (props) => {
           <button
             className="bg-[#5D5FEF] hover:bg-blue-100 bg-opacity-50 shadow-md text-gray-200 font-medium text-[16px] px-3 py-1 mr-5 rounded-xl"
             onClick={() => {
-              console.log("CLicked");
+              dispatch(roomComments.postIdAdded(props.postId));
+              dispatch(roomComments.commentIdAdded(props.commentId));
+              console.log(
+                "PostId and commentId added ",
+                props.postId,
+                props.commentId
+              );
               dispatch(
                 fetchCreateComment({
                   postId: props.postId,
@@ -86,6 +104,8 @@ const ReplyBlock = (props) => {
                   content: { text },
                 })
               );
+              setText("");
+              // dispatch(roomComments.commentAdded({}));
             }}
           >
             Comment
