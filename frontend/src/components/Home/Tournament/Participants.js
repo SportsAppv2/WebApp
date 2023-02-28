@@ -12,7 +12,6 @@ const Participants = () => {
         <div className='bg-[#1A1C20] h-screen w-[100%] flex'>
             <div className='w-[600px]'>
                 {Array.from(data.allTeamData).map((value, index) => {
-                    console.log(value);
                     return (<SingleParticipant val={value}/>)
                 })}
             </div>             

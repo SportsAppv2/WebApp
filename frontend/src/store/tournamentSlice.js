@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { generateRandomString } from "../helpers/randomGenerator";
 
 const tournamentSlice = createSlice({
     name: "tournament",
@@ -12,6 +13,7 @@ const tournamentSlice = createSlice({
         addTeam: false,
         addParticipant: false,
         teamData:{
+            key: "",
             name: "",
             country: "",
             email: "",
@@ -32,6 +34,7 @@ const tournamentSlice = createSlice({
         noOfGroups: "",
         noOfParticipantPerGroup: "",
         format2ndpage: false,
+        groupValues: {},
     },
     reducers: {
         titleAdded(state, action) {
@@ -120,7 +123,10 @@ const tournamentSlice = createSlice({
             state.format2ndpage = !state.format2ndpage;
         },
         teamDataAdded (state) {
-            state.allTeamData = [...state.allTeamData, state.teamData];
+            state.allTeamData = [...state.allTeamData, {...state.teamData, key: generateRandomString(6)}];
+        },
+        groupValuesAdded (state, action) {
+            state.groupValues[action.payload.key] = action.payload.val;
         }
     }
 })
