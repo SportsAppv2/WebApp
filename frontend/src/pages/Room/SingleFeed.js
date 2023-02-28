@@ -106,7 +106,11 @@ const SingleFeed = (props) => {
         <div className="w-1/12 mr-1">
           <div className="flex-col m-auto">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
+              src={
+                props.dp
+                  ? props.dp
+                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
+              }
               alt="DP"
               className="rounded-[500px] w-[50px] h-[50px] object-cover  m-auto"
             />

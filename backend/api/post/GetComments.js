@@ -53,6 +53,7 @@ export const getComments = asyncHandler(async (req, res) => {
           firstName: creatorProfile.name.firstName,
           lastName: creatorProfile.name.lastName,
           userName: creatorProfile.userName,
+          profilePic: creatorProfile.profileView.profilePic,
         };
         const commentJson = comment.toJSON();
         commentJson.creator = creator;

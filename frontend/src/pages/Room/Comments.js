@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchComments } from "../../store/roomCommentsSlice";
+import { fetchComments, roomComments } from "../../store/roomCommentsSlice";
 import SingleComment from "./SingleComment";
 
 const Comments = (props) => {
-  //   const commentsData = useSelector((state) => state.roomcomments);
+  const commentSliceData = useSelector((state) => state.roomcomments);
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [commentsData, setcommentsData] = useState([]);
@@ -30,17 +30,29 @@ const Comments = (props) => {
       });
   };
   useEffect(() => {
-    // dispatch(
-    //   fetchComments({
-    //     postId: props.postId,
-    //     commentId: props.commentId,
-    //     commentLimit: 2,
-    //     pageNumber,
-    //   })
-    // );
     fetchComments();
     return () => {};
   }, [pageNumber]);
+  useEffect(() => {
+    console.log(
+      "Inside the useEffect hook ",
+      commentSliceData.newComment,
+      commentSliceData.commentedPostId,
+      props.postId,
+      commentSliceData.commentedCommentId,
+      props.commentId
+    );
+    if (
+      commentSliceData.newComment &&
+      commentSliceData.commentedPostId == props.postId &&
+      commentSliceData.commentedCommentId == props.commentId
+    ) {
+      setcommentsData((commentsData) =>
+        commentsData.concat(commentSliceData.postedComment)
+      );
+      dispatch(roomComments.toggleNewComment(false));
+    }
+  }, [commentSliceData.newComment]);
   return (
     <div>
       {commentsData.map((comment) => {
@@ -50,7 +62,7 @@ const Comments = (props) => {
             commentId={comment._id}
             postId={comment.parentPostId}
             parentCommentId={comment.parentCommentId}
-            dp={""}
+            dp={comment.creator.profilePic || props.dp}
             name={comment.creator.firstName + " " + comment.creator.lastName}
             userName={comment.creator.userName}
             userId={comment.creator.id}

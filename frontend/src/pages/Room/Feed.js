@@ -64,7 +64,7 @@ const Feed = (props) => {
             <SingleFeed
               key={post._id}
               postId={post._id}
-              dp={""}
+              dp={post.creator.profilePic}
               name={post.creator.firstName + " " + post.creator.lastName}
               userName={post.creator.userName}
               userId={post.creator.id}

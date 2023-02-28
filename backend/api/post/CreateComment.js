@@ -5,6 +5,7 @@ import Comment from "../../models/Comments.js";
 import Notification from "../../models/Notification.js";
 import Post from "../../models/Posts.js";
 import User from "../../models/User.js";
+import Profile from "../../models/UserProfile.js";
 import {
   addCommentNotification,
   commentAdded,
@@ -31,13 +32,17 @@ export const createComment = asyncHandler(async (req, res) => {
       if (!user) {
         throw new Error("User not found.");
       }
+      const creatorProfile = await Profile.findOne({ userId }).catch((err) =>
+        res.json({ status: "FAILED", message: err.message })
+      );
       const creator = {
         id: userId,
         firstName: user.name.firstName,
         lastName: user.name.lastName,
         userName: user.userName,
+        profilePic: creatorProfile.profileView.profilePic,
       };
-      console.log(creator);
+      console.log("Creator is ", creator);
       // Check if parentCommentId exists
       if (parentCommentId) {
         parentComment = await Comment.findById(parentCommentId);
@@ -60,7 +65,9 @@ export const createComment = asyncHandler(async (req, res) => {
         creator,
         content,
       });
-      const savedComment = await newComment.save();
+      const savedComment = await newComment
+        .save()
+        .catch((err) => res.json({ status: "FAILED", message: err.message }));
       const notification = new Notification({
         type: "Comment",
         receipentId: userId,
@@ -117,10 +124,11 @@ export const createComment = asyncHandler(async (req, res) => {
           { new: true }
         );
       }
-
+      console.log("NEW COMMENT IS ", savedComment);
       res.json({
         status: "SUCCESS",
         message: "Comment Added successfully",
+        comment: savedComment,
       });
     }
   } catch (error) {

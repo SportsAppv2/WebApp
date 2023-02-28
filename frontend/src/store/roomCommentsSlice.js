@@ -51,7 +51,9 @@ export const fetchCreateComment = createAsyncThunk(
       .then((res) => {
         console.log(res.data);
         if (res.data.status == "SUCCESS") {
-          console.log("Successfully posted the comment");
+          dispatch(roomComments.commentAdded(res.data.comment));
+          dispatch(roomComments.toggleNewComment(true));
+          console.log(state.roomcomments.postedComment);
         }
       })
       .catch((err) => {
@@ -66,6 +68,10 @@ const roomCommentsSlice = createSlice({
     comments: [],
     totalComments: 0,
     currentPage: 1,
+    newComment: false,
+    commentedPostId: "",
+    commentedCommentId: "",
+    postedComment: {},
   },
   reducers: {
     resetComments(state) {
@@ -76,6 +82,23 @@ const roomCommentsSlice = createSlice({
     },
     currentPageUpdated(state, action) {
       state.currentPage = action.payload;
+    },
+    toggleNewComment(state, action) {
+      state.newComment = action.payload;
+      if (action.payload == false) {
+        state.commentedCommentId = "";
+        state.commentedPostId = "";
+        state.postedComment = {};
+      }
+    },
+    commentIdAdded(state, action) {
+      state.commentedCommentId = action.payload;
+    },
+    postIdAdded(state, action) {
+      state.commentedPostId = action.payload;
+    },
+    commentAdded(state, action) {
+      state.postedComment = action.payload;
     },
   },
   extraReducers: (builder) => {

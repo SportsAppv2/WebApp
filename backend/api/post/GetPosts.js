@@ -35,6 +35,7 @@ export const getPosts = asyncHandler(async (req, res) => {
           firstName: creatorProfile.name.firstName,
           lastName: creatorProfile.name.lastName,
           userName: creatorProfile.userName,
+          profilePic: creatorProfile.profileView.profilePic,
         };
         postJson.creator = creator;
         if (post.stats.upvotes.users.includes(userId)) {
@@ -102,6 +103,7 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
           firstName: creatorProfile.name.firstName,
           lastName: creatorProfile.name.lastName,
           userName: creatorProfile.userName,
+          profilePic: creatorProfile.profileView.profilePic,
         };
         postJson.creator = creator;
         if (post.stats.upvotes.users.includes(userId)) {
