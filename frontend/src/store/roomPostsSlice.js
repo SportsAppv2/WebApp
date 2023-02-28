@@ -33,7 +33,33 @@ export const fetchOwnPosts = createAsyncThunk(
     const state = getState();
     const response = await axios
       .get(
-        `http://localhost:5000/api/home/post/getown?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
+        `http://localhost:5000/api/home/post/get?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.data.length == 0) {
+          dispatch(roomPostsActions.setHasMoreItem(false));
+        } else {
+          dispatch(roomPostsActions.setIsLoading(false));
+          dispatch(roomPostsActions.postsAdded(res.data.data));
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
+export const fetchProfilePosts = createAsyncThunk(
+  "posts/profile",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const response = await axios
+      .get(
+        `http://localhost:5000/api/home/post/get/${arg.userName}?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -113,6 +139,18 @@ const roomPostsSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchOwnPosts.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchProfilePosts.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchProfilePosts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchProfilePosts.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

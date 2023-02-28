@@ -14,6 +14,7 @@ const CommentBlock = (props) => {
       <Comments
         postId={props.postId}
         commentId={props.commentId}
+        userName={props.userName}
         dp={props.dp}
       />
     </div>

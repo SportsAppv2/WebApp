@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchOwnPosts,
   fetchPosts,
+  fetchProfilePosts,
   roomPostsActions,
 } from "../../store/roomPostsSlice";
 import SingleFeed from "./SingleFeed";
@@ -20,13 +21,18 @@ const Feed = (props) => {
           postLimit: 10,
         })
       );
-    } else if (props.feedType == "profileFeed") {
+    } else if (props.feedType == "profileFeed" && props.profileType == "Own") {
       dispatch(roomPostsActions.resetPosts());
       dispatch(
         fetchOwnPosts({
           postLimit: 10,
         })
       );
+    } else if (
+      props.feedType == "profileFeed" &&
+      props.profileType == "Visiting"
+    ) {
+      dispatch(fetchProfilePosts({ userName: props.userName }));
     }
   }, [roomData.currentRoomId, props.feedType]);
   useEffect(() => {
@@ -58,7 +64,6 @@ const Feed = (props) => {
   return (
     <div className="my-5">
       {postData.posts.map((post) => {
-        console.log(post);
         if (post) {
           return (
             <SingleFeed

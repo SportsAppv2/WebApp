@@ -9,28 +9,40 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileActions } from "../../store/userProfileSlice";
-import { fetchUserDataInitial } from "../../store/editProfileSlice";
+import {
+  fetchUserDataInitial,
+  fetchUserProfile,
+} from "../../store/editProfileSlice";
 import { roomPostsActions } from "../../store/roomPostsSlice";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const data = useSelector((state) => state.userProfile);
   const userProfileData = useSelector((state) => state.editProfile);
   const userName = useSelector((state) => state.editProfile.userName);
+  const { user } = useParams();
+  console.log("User Name is ", user);
   const dispatch = useDispatch();
   const scrollableDiv = useRef("");
   const toggle = () => {
     dispatch(userProfileActions.toggleEditProfile());
   };
   useEffect(() => {
-    dispatch(fetchUserDataInitial());
+    if (!user) {
+      dispatch(fetchUserDataInitial());
+    } else if (user) {
+      dispatch(fetchUserProfile({ user }));
+    }
   }, []);
   const handleScroll2 = () => {
     const node = scrollableDiv.current;
     if (node) {
       const { scrollTop, clientHeight, scrollHeight } = node;
-      console.log(scrollTop + clientHeight - (scrollHeight - 500));
       if (scrollTop + clientHeight >= scrollHeight - 500) {
-        dispatch(roomPostsActions.togglePageEndReached(true));
+        if (!user) {
+          dispatch(roomPostsActions.togglePageEndReached(true));
+        } else if (user) {
+        }
       }
     }
   };
@@ -94,16 +106,23 @@ const Profile = () => {
                   <div className="text-gray-600 mx-2">Following</div>
                 </div>
               </div>
-              <div
-                className="absolute top-[330px] right-[30px] cursor-pointer text-gray-600 text-[18px] hover:text-blue-60"
-                onClick={toggle}
-              >
-                <BsFillPencilFill />
-              </div>
+              {!user && (
+                <div
+                  className="absolute top-[330px] right-[30px] cursor-pointer text-gray-600 text-[18px] hover:text-blue-60"
+                  onClick={toggle}
+                >
+                  <BsFillPencilFill />
+                </div>
+              )}
               {data.showEditProfile && <EditProfile />}
             </div>
             <FeedHeader />
-            <Feed feedType="profileFeed" />
+            <Feed
+              feedType="profileFeed"
+              profileType={user ? "Visiting" : "Own"}
+              userId={userProfileData.userOriginal.userId}
+              userName={user}
+            />
           </div>
         </div>
         <RightBar />

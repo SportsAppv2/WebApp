@@ -32,7 +32,6 @@ const Room = () => {
     const node = scrollableDiv.current;
     if (node) {
       const { scrollTop, clientHeight, scrollHeight } = node;
-      console.log(scrollTop + clientHeight - (scrollHeight - 500));
       if (scrollTop + clientHeight >= scrollHeight - 500) {
         dispatch(roomPostsActions.togglePageEndReached(true));
       }
