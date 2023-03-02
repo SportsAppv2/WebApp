@@ -10,6 +10,7 @@ import {IoSettings} from 'react-icons//io5'
 import Participants from './Participants';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Format from './Format';
+import Schedule from './Schedule';
 
 const TournamentDashboard = () => {
     const data = useSelector((state) => state.tournament);
@@ -68,7 +69,7 @@ const TournamentDashboard = () => {
                 <Routes>
                     <Route path="/participants/" element={<Participants />} key="route-participants-page" />
                     <Route path="/format" element={<Format/>} key="route-format-page" />
-                    <Route path="/schedule" element={<Participants />} key="route-schedule-page" />
+                    <Route path="/schedule" element={<Schedule />} key="route-schedule-page" />
                     <Route path="/results" element={<Participants />} key="route-results-page" />
                     <Route path="/settings" element={<Participants />} key="route-settings-page" />
                 </Routes>
