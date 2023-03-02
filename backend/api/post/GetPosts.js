@@ -60,6 +60,7 @@ export const getPosts = asyncHandler(async (req, res) => {
     const totalPages = Math.ceil(count / limit);
     return res.json({
       status: "SUCCESS",
+      userId: req.userId,
       data: posts,
       page,
       limit,
@@ -85,6 +86,7 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
       skip,
       skip + limit
     );
+    console.log("POST IDS are ", postIds);
     const posts = [];
     for (const postId of postIds) {
       try {
@@ -127,6 +129,8 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
     const count = userProfile.activities.posts.posted.length;
     const totalPages = Math.ceil(count / limit);
     return res.json({
+      status: "SUCCESS",
+      userId: req.userId,
       data: posts,
       page,
       limit,
@@ -201,6 +205,8 @@ export const getProfilePost = asyncHandler(async (req, res) => {
     const count = userProfile.activities.posts.posted.length;
     const totalPages = Math.ceil(count / limit);
     return res.json({
+      status: "SUCCESS",
+      userId: req.userId,
       data: posts,
       page,
       limit,

@@ -13,8 +13,8 @@ const Feed = (props) => {
   const roomData = useSelector((state) => state.room);
   const postData = useSelector((state) => state.roomposts);
   useEffect(() => {
+    dispatch(roomPostsActions.resetPosts());
     if (props.feedType == "roomFeed") {
-      dispatch(roomPostsActions.resetPosts());
       dispatch(
         fetchPosts({
           roomId: roomData.currentRoomId,
@@ -22,7 +22,7 @@ const Feed = (props) => {
         })
       );
     } else if (props.feedType == "profileFeed" && props.profileType == "Own") {
-      dispatch(roomPostsActions.resetPosts());
+      // dispatch(roomPostsActions.resetPosts());
       dispatch(
         fetchOwnPosts({
           postLimit: 10,
@@ -32,9 +32,9 @@ const Feed = (props) => {
       props.feedType == "profileFeed" &&
       props.profileType == "Visiting"
     ) {
-      dispatch(fetchProfilePosts({ userName: props.userName }));
+      dispatch(fetchProfilePosts({ userName: props.userName, postLimit: 10 }));
     }
-  }, [roomData.currentRoomId, props.feedType]);
+  }, [roomData.currentRoomId, props.feedType, props.userName]);
   useEffect(() => {
     if (
       postData.reachedPageEnd == true &&
@@ -50,10 +50,24 @@ const Feed = (props) => {
             postLimit: 10,
           })
         );
-      } else if (props.feedType == "profileFeed") {
+      } else if (
+        props.feedType == "profileFeed" &&
+        props.profileType == "Own"
+      ) {
         dispatch(roomPostsActions.setIsLoading(true));
         dispatch(
           fetchOwnPosts({
+            postLimit: 10,
+          })
+        );
+      } else if (
+        props.feedType == "profileFeed" &&
+        props.profileType == "Visiting"
+      ) {
+        dispatch(roomPostsActions.setIsLoading(true));
+        dispatch(
+          fetchProfilePosts({
+            userName: props.userName,
             postLimit: 10,
           })
         );

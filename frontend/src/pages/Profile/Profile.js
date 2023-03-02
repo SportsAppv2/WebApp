@@ -33,16 +33,13 @@ const Profile = () => {
     } else if (user) {
       dispatch(fetchUserProfile({ user }));
     }
-  }, []);
+  }, [user]);
   const handleScroll2 = () => {
     const node = scrollableDiv.current;
     if (node) {
       const { scrollTop, clientHeight, scrollHeight } = node;
       if (scrollTop + clientHeight >= scrollHeight - 500) {
-        if (!user) {
-          dispatch(roomPostsActions.togglePageEndReached(true));
-        } else if (user) {
-        }
+        dispatch(roomPostsActions.togglePageEndReached(true));
       }
     }
   };

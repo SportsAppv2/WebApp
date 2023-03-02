@@ -9,6 +9,7 @@ import {
 } from "react-icons/ai";
 import { BiCommentDetail, BiBookmark, BiDotsVertical } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { timeFormatter } from "../../helpers/timeFormatter";
 import { replyActions } from "../../store/replySlice";
 import CommentBlock from "./CommentBlock";
@@ -17,6 +18,7 @@ import ReplyBlock from "./ReplyBlock";
 const SingleComment = (props) => {
   const [showComments, setShowComments] = useState(false);
   const votes = useRef("");
+  const navigate = useNavigate();
   const [vote, setVote] = useState("");
   const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
   const jwtToken = localStorage.getItem("token");
@@ -124,7 +126,12 @@ const SingleComment = (props) => {
         </div>
         <div className="w-9/12 mr-5">
           <div className="flex justify-between">
-            <div className="flex">
+            <div
+              className="flex cursor-pointer"
+              onClick={() => {
+                navigate(`/profile/${props.userName}`);
+              }}
+            >
               <div className="font-bold">{props.name}</div>
               <div className="italic mx-2 text-gray-600">@{props.userName}</div>
             </div>

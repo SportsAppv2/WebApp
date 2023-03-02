@@ -44,38 +44,7 @@ const Room = () => {
       dispatch(getRoomDetails({ roomId }));
       dispatch(roomActions.updateCurrentRoomId(roomId));
     }
-    // scrollableDiv.current.addEventListener("scroll", handleScroll);
-
-    // return () => {
-    //   if (scrollableDiv.current) {
-    //     scrollableDiv.current.removeEventListener("scroll", handleScroll);
-    //   }
-    // };
   }, []);
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     console.log("Entered the useEffect hook");
-  //     const node = scrollableDiv.current;
-  //     if (node) {
-  //       const { scrollTop, clientHeight, scrollHeight } = node;
-  //       if (scrollTop + clientHeight >= scrollHeight - 500) {
-  //         dispatch(roomPostsActions.currentPageIncreased());
-  //         if (true) {
-  //           dispatch(
-  //             fetchPosts({
-  //               roomId: roomData.currentRoomId,
-  //               postLimit: 10,
-  //             })
-  //           );
-  //         }
-  //       }
-  //     }
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [scrollableDiv]);
   return (
     <>
       <div
