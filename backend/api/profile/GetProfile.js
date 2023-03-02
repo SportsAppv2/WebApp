@@ -15,7 +15,9 @@ export const getProfile = asyncHandler(async (req, res) => {
     return res.json({
       status: "SUCCESS",
       data: {
+        userId: profileData.userId,
         name: profileData.name,
+        userName: profileData.userName,
         contact: profileData.contact,
         location: profileData.location,
         profileView: profileData.profileView,

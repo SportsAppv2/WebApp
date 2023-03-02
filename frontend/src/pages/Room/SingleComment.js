@@ -109,7 +109,11 @@ const SingleComment = (props) => {
           <div className="m-auto">
             <img
               src={
-                props.dp
+                props.ownUserName == props.userName
+                  ? props.ownDp
+                    ? props.ownDp
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
+                  : props.dp
                   ? props.dp
                   : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
               }
@@ -190,6 +194,7 @@ const SingleComment = (props) => {
           userName={props.userName}
           postId={props.postId}
           commentId={props.commentId}
+          dp={props.ownDp}
         />
       )}
       <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[75px]" />

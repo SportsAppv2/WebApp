@@ -47,9 +47,19 @@ const Comments = (props) => {
       commentSliceData.commentedPostId == props.postId &&
       commentSliceData.commentedCommentId == props.commentId
     ) {
-      setcommentsData((commentsData) =>
-        commentsData.concat(commentSliceData.postedComment)
-      );
+      let commentNew = commentSliceData.postedComment;
+      console.log("DP IS ", props.dp, props);
+      console.log("type of is ", typeof commentNew, commentNew);
+      let updatedComment = {
+        ...commentNew,
+        creator: {
+          ...commentNew.creator,
+          profilePic: props.dp,
+        },
+      };
+      // commentNew.creator.profilePic = props.dp;
+      console.log("new comment is ", updatedComment);
+      setcommentsData((commentsData) => commentsData.concat(updatedComment));
       dispatch(roomComments.toggleNewComment(false));
     }
   }, [commentSliceData.newComment]);
@@ -62,7 +72,7 @@ const Comments = (props) => {
             commentId={comment._id}
             postId={comment.parentPostId}
             parentCommentId={comment.parentCommentId}
-            dp={comment.creator.profilePic || props.dp}
+            dp={comment.creator.profilePic}
             name={comment.creator.firstName + " " + comment.creator.lastName}
             userName={comment.creator.userName}
             userId={comment.creator.id}
@@ -75,6 +85,8 @@ const Comments = (props) => {
             videoUrl={comment.content.video}
             liked={comment.liked}
             disliked={comment.disliked}
+            ownDp={props.dp}
+            ownUserName={props.userName}
           />
         );
       })}

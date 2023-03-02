@@ -20,6 +20,26 @@ export const fetchUserDataInitial = createAsyncThunk(
     return response.data;
   }
 );
+export const fetchUserProfile = createAsyncThunk(
+  "get/profile/user",
+  async (arg, { getState, dispatch }) => {
+    console.log(`http://localhost:5000/api/profile/${arg.user}`);
+    const state = getState();
+    const response = await axios
+      .get(`http://localhost:5000/api/profile/${arg.user}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    console.log("Response data is ", response.data.data);
+    dispatch(editProfileActions.originalDataUpdated(response.data.data));
+    // console.log("Updated Originial data is ", state.editProfile);
+    return response.data;
+  }
+);
 export const fetchUpdateProfile = createAsyncThunk(
   "user/data/update",
   async (arg, { getState, dispatch }) => {
@@ -57,6 +77,8 @@ export const fetchUpdateProfile = createAsyncThunk(
 const editProfileSlice = createSlice({
   name: "editProfile",
   initialState: {
+    userId: "",
+    userName: "",
     userOriginal: {
       firstName: "",
       lastName: "",
@@ -89,7 +111,6 @@ const editProfileSlice = createSlice({
       count: 0,
       followingList: [],
     },
-    userName: "",
     showDiscardChanges: false,
   },
   reducers: {
@@ -147,6 +168,7 @@ const editProfileSlice = createSlice({
       );
     },
     originalDataUpdated(state, action) {
+      state.userId = action.payload.userId;
       state.userName = action.payload.userName;
       state.userOriginal.firstName = action.payload.name.firstName;
       state.userOriginal.lastName = action.payload.name.lastName;
@@ -199,6 +221,18 @@ const editProfileSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchUpdateProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchUserProfile.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchUserProfile.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });
