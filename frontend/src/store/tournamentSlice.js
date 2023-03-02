@@ -35,6 +35,8 @@ const tournamentSlice = createSlice({
         noOfParticipantPerGroup: "",
         format2ndpage: false,
         groupValues: {},
+        noOfMatches: 0,
+        matches: [],
     },
     reducers: {
         titleAdded(state, action) {
@@ -127,6 +129,15 @@ const tournamentSlice = createSlice({
         },
         groupValuesAdded (state, action) {
             state.groupValues[action.payload.key] = action.payload.val;
+        },
+        groupValuesRemoved (state, action) {
+            state.groupValues[action.payload.key] = "";
+        },
+        addNoOfMatches (state, action) {
+            state.noOfMatches = state.noOfMatches + 1;
+        },
+        addMatches (state, action) {
+            state.matches = [...state.matches, action.payload];
         }
     }
 })
