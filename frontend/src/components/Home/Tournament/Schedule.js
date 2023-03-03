@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import {AiOutlinePlus} from 'react-icons/ai';
 import SingleMatch from './SingleMatch';
 import { tournamentActions } from '../../../store/tournamentSlice';
+import SingleMatch2 from './SingleMatch2';
 
 const Schedule = () => {
     const data = useSelector((state) => state.tournament)
     const dispatch = useDispatch();
     console.log(data);
     return (
-        <div className='bg-[#000000] h-screen w-[100%] flex'>
+        <div className='bg-[#000000] h-screen w-[100%] flex mb-[80px]'>
             <div className='w-[900px]'>
                 <div className='text-white-100 flex items-center rounded-lg ml-5 mt-5 sticky top-2 left-2 bg-[#1b1a1a] cursor-pointer hover:bg-[#28282a] w-fit p-2 px-5'
                 onClick={() => {dispatch(tournamentActions.addNoOfMatches())}}>
@@ -19,8 +20,12 @@ const Schedule = () => {
                     <AiOutlinePlus className='text-[20px]' />
                 </div>
                 {Array.from({length: data.noOfMatches}).map((item,index) => {
-                    console.log(index);
-                    return <SingleMatch key={index}/>
+                    if(data.matches[index] && data.matches[index].showSingleMatch2 == true){
+                        
+                        return <SingleMatch2 uniqueKey={index}/>
+                    }else{
+                        return <SingleMatch uniqueKey={index}/>
+                    }                    
                 })}
             </div>
             <div className=''>

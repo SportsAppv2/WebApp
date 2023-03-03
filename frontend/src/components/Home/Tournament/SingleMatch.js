@@ -6,10 +6,11 @@ const SingleMatch = (props) => {
     const data = useSelector((state) => state.tournament);
     const dispatch = useDispatch();
     const matchValues = {};
-    console.log(props.key);
-    matchValues.key = props.key;
+    // matchValues.key = props.uniqueKey;
+    matchValues.showSingleMatch2 = false;
     const submitInfo = () => {
-        dispatch(tournamentActions.addMatches(matchValues));
+        matchValues.showSingleMatch2 = true;
+        dispatch(tournamentActions.addMatches({key: props.uniqueKey, val: matchValues}));
     }
     console.log(data);
     return (
