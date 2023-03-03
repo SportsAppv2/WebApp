@@ -1,8 +1,10 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import { decodeJwt } from "../../helpers/decodeJwt.js";
+import Notification from "../../models/Notification.js";
 import Post from "../../models/Posts.js";
 import Room from "../../models/Room.js";
+import Profile from "../../models/UserProfile.js";
 
 const router = express.Router();
 export const deletePost = asyncHandler(async (req, res) => {
@@ -34,10 +36,27 @@ export const deletePost = asyncHandler(async (req, res) => {
               }).catch((err) => {
                 res.json({ status: "FAILED", message: err.message });
               });
+              const userProfile = await Profile.findOne({ userId }).catch(
+                (err) => {
+                  res.json({ status: "FAILED", message: err.message });
+                }
+              );
+              const notification = await Notification.findOne({ postId }).catch(
+                (err) => {
+                  res.json({ status: "FAILED", message: err.message });
+                }
+              );
+              if (notification) {
+                const notificationId = notification._id;
+                userProfile.notification.notificationList.pull(notificationId);
+              }
+              userProfile.activities.posts.posted.pull(postId);
+              userProfile.save();
               console.log("Deleted Post ", post);
-              return res
-                .status(200)
-                .json({ message: "Post deleted successfully" });
+              return res.status(200).json({
+                status: "SUCCESS",
+                message: "Post deleted successfully",
+              });
             })
             .catch((error) => {
               res.json({

@@ -9,7 +9,8 @@ import {
 } from "../../store/roomCommentsSlice";
 
 const ReplyBlock = (props) => {
-  const userData = useSelector((state) => state.editProfile);
+  const userData = useSelector((state) => state.userProfile);
+  // const userData = useSelector((state) => state.editProfile);
   const data = useSelector((state) => state.reply);
   const dispatch = useDispatch();
   const [text, setText] = useState("");
@@ -42,8 +43,8 @@ const ReplyBlock = (props) => {
         <div className="h-[50px] w-[50px] rounded-full mr-3">
           <img
             src={
-              userData.userOriginal.profilePic
-                ? userData.userOriginal.profilePic
+              userData.profilePic
+                ? userData.profilePic
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBBHpIKwwDXQrCf_lf4prJHLrddzCt0lWGfXlZKyJmw&s"
             }
             alt=""

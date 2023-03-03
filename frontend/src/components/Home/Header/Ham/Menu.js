@@ -13,6 +13,9 @@ const Menu = () => {
     dispatch(headerActions.toggleMenu());
     navigate(destination);
   };
+  const accountLogout = () => {
+    localStorage.removeItem("token");
+  };
   return (
     <div className="absolute top-[80px] right-[20px] max-h-[450px] h-fit font-medium bg-[#333030] z-[999] text-white-100 w-[350px] overflow-y-scroll p-3 rounded-lg">
       <div
@@ -51,7 +54,8 @@ const Menu = () => {
       <div
         className="bg-gray-600 bg-opacity-50 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center"
         onClick={() => {
-          goTo("/logout");
+          accountLogout();
+          goTo("/login");
         }}
       >
         <div className="icon bg-gray-20 p-2 rounded-full mr-4 text-[22px]">

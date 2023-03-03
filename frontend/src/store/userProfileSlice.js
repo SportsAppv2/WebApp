@@ -5,6 +5,7 @@ const userProfileSlice = createSlice({
   initialState: {
     user: {
       userName: "",
+      userId: "",
       name: {
         firstName: "",
         lastName: "",
@@ -28,6 +29,9 @@ const userProfileSlice = createSlice({
   reducers: {
     userNameAdded(state, action) {
       state.user.userName = action.payload;
+    },
+    userIdAdded(state, action) {
+      state.userId = action.payload;
     },
     nameAdded(state, action) {
       state.user.name.firstName = action.payload.firstName;

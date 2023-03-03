@@ -18,6 +18,7 @@ import roomPostsSlice from "./roomPostsSlice";
 import roomCommentsSlice from "./roomCommentsSlice";
 import feedbackSlice from "./feedbackSlice";
 import tournamentSlice from "./tournamentSlice";
+import modalSlice from "./modalSlice";
 
 const store = configureStore(
   {
@@ -39,6 +40,7 @@ const store = configureStore(
       roomcomments: roomCommentsSlice.reducer,
       feedback: feedbackSlice.reducer,
       tournament: tournamentSlice.reducer,
+      modal: modalSlice.reducer,
     },
   },
   applyMiddleware(thunk)

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { userProfileActions } from "./userProfileSlice";
 
 export const fetchPosts = createAsyncThunk(
   "posts/get",
@@ -15,11 +16,14 @@ export const fetchPosts = createAsyncThunk(
         }
       )
       .then((res) => {
-        if (res.data.data.length == 0) {
-          dispatch(roomPostsActions.setHasMoreItem(false));
-        } else {
-          dispatch(roomPostsActions.setIsLoading(false));
-          dispatch(roomPostsActions.postsAdded(res.data.data));
+        if (res.data.status == "SUCCESS") {
+          dispatch(userProfileActions.userIdAdded(res.data.userId));
+          if (res.data.data.length == 0) {
+            dispatch(roomPostsActions.setHasMoreItem(false));
+          } else {
+            dispatch(roomPostsActions.setIsLoading(false));
+            dispatch(roomPostsActions.postsAdded(res.data.data));
+          }
         }
       })
       .catch((err) => {
@@ -41,11 +45,14 @@ export const fetchOwnPosts = createAsyncThunk(
         }
       )
       .then((res) => {
-        if (res.data.data.length == 0) {
-          dispatch(roomPostsActions.setHasMoreItem(false));
-        } else {
-          dispatch(roomPostsActions.setIsLoading(false));
-          dispatch(roomPostsActions.postsAdded(res.data.data));
+        if (res.data.status == "SUCCESS") {
+          dispatch(userProfileActions.userIdAdded(res.data.userId));
+          if (res.data.data.length == 0) {
+            dispatch(roomPostsActions.setHasMoreItem(false));
+          } else {
+            dispatch(roomPostsActions.setIsLoading(false));
+            dispatch(roomPostsActions.postsAdded(res.data.data));
+          }
         }
       })
       .catch((err) => {
@@ -67,11 +74,35 @@ export const fetchProfilePosts = createAsyncThunk(
         }
       )
       .then((res) => {
-        if (res.data.data.length == 0) {
-          dispatch(roomPostsActions.setHasMoreItem(false));
-        } else {
-          dispatch(roomPostsActions.setIsLoading(false));
-          dispatch(roomPostsActions.postsAdded(res.data.data));
+        if (res.data.status == "SUCCESS") {
+          dispatch(userProfileActions.userIdAdded(res.data.userId));
+          if (res.data.data.length == 0) {
+            dispatch(roomPostsActions.setHasMoreItem(false));
+          } else {
+            dispatch(roomPostsActions.setIsLoading(false));
+            dispatch(roomPostsActions.postsAdded(res.data.data));
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
+);
+export const fetchDeletePost = createAsyncThunk(
+  "post/delete",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const response = await axios
+      .delete(`http://localhost:5000/api/home/post/${arg.postId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log("DELETED POST, res is ", res);
+        if (res.data.status == "SUCCESS") {
+          dispatch(roomPostsActions.postDeleted(arg.postId));
         }
       })
       .catch((err) => {
@@ -100,6 +131,12 @@ const roomPostsSlice = createSlice({
     },
     postsAdded(state, action) {
       state.posts = state.posts.concat(action.payload);
+    },
+    postDeleted(state, action) {
+      state.posts = state.posts.filter((obj) => {
+        console.log(obj);
+        return obj._id !== action.payload;
+      });
     },
     postUploaded(state, action) {
       state.posts.unshift(action.payload);
@@ -151,6 +188,18 @@ const roomPostsSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchProfilePosts.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchDeletePost.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchDeletePost.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchDeletePost.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });
