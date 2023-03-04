@@ -37,7 +37,7 @@ export const createPost = asyncHandler(async (req, res) => {
           });
           newPost.save().then(async (post) => {
             postId = post._id;
-            user.activities.posts.posted.push(postId);
+            user.activities.posts.posted.unshift(postId);
             console.log("Saved new post", post);
             const notification = new Notification({
               type: "Post",

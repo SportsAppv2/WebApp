@@ -6,18 +6,31 @@ import { GoVerified } from "react-icons/go";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { modalActions } from "../../store/modalSlice";
 import WarningModal from "../../components/Helpers/WarningModal";
+import { leaveRoom, roomActions } from "../../store/roomSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RoomInfoModal = () => {
   const dispatch = useDispatch();
   const modalData = useSelector((state) => state.modal);
+  const roomData = useSelector((state) => state.room);
+  const navigate = useNavigate();
+  const { roomId } = useParams();
   const currentRoomData = useSelector((state) => state.room.currentRoom);
   useEffect(() => {
     if (modalData.button.mainBtn) {
-      console.log("Button clicked ", modalData.button.mainBtn);
+      console.log("Button clicked ", modalData.button.mainBtn, roomId);
       dispatch(modalActions.resetButtons());
       dispatch(modalActions.toggleShowWarningModal(false));
+      dispatch(leaveRoom({ roomId }));
     }
-  }, [modalData.button.mainBtn]);
+    if (roomData.roomLeft == true) {
+      console.log("INSIDE THE RESTRICTED USEEFFECT. ", roomData);
+      dispatch(modalActions.toggleShowWarningModal(false));
+      dispatch(roomActions.toggleRoomLeft(false));
+      dispatch(roomActions.removedRoom(roomId));
+      navigate("/home");
+    }
+  }, [modalData.button.mainBtn, roomData.roomLeft]);
   console.log(currentRoomData);
   return (
     <div className="h-fit w-[350px] bg-[#1b1a1a] text-white-100 rounded-xl p-5 absolute right-11 top-11 z-[9999]">
@@ -38,28 +51,30 @@ const RoomInfoModal = () => {
       ) : (
         ""
       )}
-      <div className="mt-3 float-right">
-        <span className="italic">joining code: </span>{" "}
-        <span>{currentRoomData.joiningCode}</span>
+      <div className="mt-3 flex justify-between">
+        <div className="">
+          <span className="italic">Joining code: </span>{" "}
+          <span>{currentRoomData.joiningCode}</span>
+        </div>
+        <div className="memberCount flex items-center text-[18px] w-[20%]">
+          <BsFillPeopleFill className="text-blue-60 text-[24px]" />
+          <span className="mx-2 font-medium">{currentRoomData.userCount}</span>
+        </div>
       </div>
-      <div className="mt-11 mb-5 mx-2 text-gray-400">
+      <div className="mt-5 mb-5 text-gray-400">
         {currentRoomData.roomSummary}
       </div>
       <div className="otherStats flex justify-between my-6">
-        <div className="sports flex">
-          <span>
+        <div className="sports">
+          <div className="flex flex-wrap">
             {currentRoomData.sports.map((item) => {
               return (
-                <div className="bg-gray-600 font-medium p-1 px-4 rounded-lg text-[14px] mx-1">
+                <div className="bg-gray-600 font-medium p-1 px-4 rounded-lg text-[14px] mx-1 my-1">
                   {item}
                 </div>
               );
             })}
-          </span>
-        </div>
-        <div className="memberCount flex items-center text-[18px]">
-          <BsFillPeopleFill className="text-blue-60 text-[24px]" />
-          <span className="mx-2 font-medium">{currentRoomData.userCount}</span>
+          </div>
         </div>
       </div>
       <div>
@@ -72,9 +87,16 @@ const RoomInfoModal = () => {
       </div>
       <div>
         <span className="text-gray-600 font-medium">moderators: </span>{" "}
-        <span className="text-gray-400 cursor-pointer hover:underline">
+        <span className="text-gray-400 ">
           {currentRoomData.admin.moderators.map((moderator) => {
-            return moderator.name.firstName + " " + moderator.name.lastName;
+            return (
+              <>
+                <span className="cursor-pointer hover:underline">
+                  {moderator.name.firstName + " " + moderator.name.lastName}
+                </span>
+                <span>, </span>
+              </>
+            );
           })}
         </span>
       </div>
@@ -93,11 +115,11 @@ const RoomInfoModal = () => {
         </button>
         {modalData.warningModal.showModal && (
           <WarningModal
-            heading={"Do you want to delete the post?"}
+            heading={"Do you want unfollow this page?"}
             message={
-              "Items in your recycle bin will be automatically deleted after 30 days. You can delete them from your recycle bin earlier by going to Activity log in your settings."
+              "You'll not be able to see the posts of this group once you leave it. You can rejoin anytime you want."
             }
-            mainBtn={"Move"}
+            mainBtn={"Leave"}
           />
         )}
       </div>

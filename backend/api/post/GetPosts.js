@@ -24,6 +24,7 @@ export const getPosts = asyncHandler(async (req, res) => {
           return res.json({ status: "FAILED", message: err.message });
         });
         const creatorId = post.creator.id;
+        console.log("CREATOR IS ", creatorId);
         const postJson = post.toJSON();
         const creatorProfile = await Profile.findOne({
           userId: creatorId,
@@ -86,7 +87,6 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
       skip,
       skip + limit
     );
-    console.log("POST IDS are ", postIds);
     const posts = [];
     for (const postId of postIds) {
       try {
@@ -158,18 +158,23 @@ export const getProfilePost = asyncHandler(async (req, res) => {
       })
     );
     const userId = userProfile.userId;
-    console.log("User Profile is ", userProfile);
     const postIds = userProfile.activities.posts.posted.slice(
       skip,
       skip + limit
     );
+    console.log("POST IDS ARE ", postIds);
     const posts = [];
     for (const postId of postIds) {
       try {
+        console.log("POST FOUND ", postId);
         const post = await Post.findById(postId).catch((err) => {
           return res.json({ status: "FAILED", message: err.message });
         });
+        if (post) {
+          console.log("POST FOUND ", postId);
+        }
         const creatorId = post.creator.id;
+        console.log("CREATOR ID IS ", creatorId);
         const postJson = post.toJSON();
         const creatorProfile = await Profile.findOne({
           userId: creatorId,

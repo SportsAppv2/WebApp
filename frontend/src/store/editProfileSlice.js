@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { userProfileActions } from "./userProfileSlice";
 
 export const fetchUserDataInitial = createAsyncThunk(
   "user/data",
@@ -16,6 +17,7 @@ export const fetchUserDataInitial = createAsyncThunk(
       });
     console.log("Response data is ", response.data.data);
     dispatch(editProfileActions.originalDataUpdated(response.data.data));
+    dispatch(userProfileActions.userIdAdded(response.data.data.userId));
     // console.log("Updated Originial data is ", state.editProfile);
     return response.data;
   }
@@ -36,6 +38,10 @@ export const fetchUserProfile = createAsyncThunk(
       });
     console.log("Response data is ", response.data.data);
     dispatch(editProfileActions.originalDataUpdated(response.data.data));
+    dispatch(
+      editProfileActions.toggleIsFollowing(response.data.data.isFollowing)
+    );
+    dispatch(userProfileActions.userIdAdded(response.data.data.myUserId));
     // console.log("Updated Originial data is ", state.editProfile);
     return response.data;
   }
@@ -111,6 +117,7 @@ const editProfileSlice = createSlice({
       count: 0,
       followingList: [],
     },
+    isFollowing: false,
     showDiscardChanges: false,
   },
   reducers: {
@@ -149,6 +156,15 @@ const editProfileSlice = createSlice({
     },
     profileUpdated(state) {
       state.userOriginal = state.editedData;
+    },
+    followerIncreased(state, action) {
+      state.follower.count = state.follower.count + action.payload;
+    },
+    followingIncreased(state, action) {
+      state.following.count = state.following.count + action.payload;
+    },
+    toggleIsFollowing(state, action) {
+      state.isFollowing = action.payload;
     },
     updatedEditedData(state) {
       state.editedData = state.userOriginal;

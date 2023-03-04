@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { modalActions } from "./modalSlice";
 
 export const fetchRooms = createAsyncThunk(
   "rooms/get",
@@ -12,7 +13,6 @@ export const fetchRooms = createAsyncThunk(
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.status == "SUCCESS") {
           dispatch(roomActions.insertRooms(res.data.data));
         }
@@ -28,7 +28,6 @@ export const fetchFindRoom = createAsyncThunk(
       joiningCode: state.room.roomCode,
       roomName: state.room.roomName,
     };
-    console.log("Searching for room with this ", data);
     const response = await axios
       .post("http://localhost:5000/api/room/find", JSON.stringify(data), {
         headers: {
@@ -37,7 +36,6 @@ export const fetchFindRoom = createAsyncThunk(
         },
       })
       .then((res) => {
-        console.log("Searched for a room and this is the response ", res);
         if (res.data.status == "SUCCESS") {
           dispatch(roomActions.updateSearchedRoom(res.data.data));
           dispatch(roomActions.toogleSearchedRoomModal());
@@ -56,7 +54,6 @@ export const fetchJoinRoom = createAsyncThunk(
       joiningCode: state.room.roomCode,
       roomName: state.room.roomName,
     };
-    console.log("Joining a room with this ", data);
     const response = await axios
       .post("http://localhost:5000/api/room/join", JSON.stringify(data), {
         headers: {
@@ -65,12 +62,8 @@ export const fetchJoinRoom = createAsyncThunk(
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.status == "SUCCESS") {
           dispatch(roomActions.toogleSearchedRoomModal());
-          console.log(
-            "After this the user should redirect to the newly joined room"
-          );
         } else if (res.data.status == "FAILED") {
           alert(res.data.message);
         }
@@ -89,16 +82,42 @@ export const getRoomDetails = createAsyncThunk(
         },
       })
       .then((res) => {
-        console.log("Res data is ", res.data.data);
         if (res.data.status == "SUCCESS") {
-          console.log("Success. Res is ", res.data.data);
+          dispatch(roomActions.toggleRoomNotFound(false));
           dispatch(roomActions.updateCurrentRoom(res.data.data));
+        }
+        if (
+          res.data.status == "FAILED" &&
+          res.data.message == "Room not found"
+        ) {
+          dispatch(roomActions.toggleRoomNotFound(true));
         }
       })
       .catch((err) => console.log(err.message));
   }
 );
-
+export const leaveRoom = createAsyncThunk(
+  "room/leave",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const data = {
+      roomId: arg.roomId,
+    };
+    const response = await axios
+      .post("http://localhost:5000/api/room/leave", JSON.stringify(data), {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.data.status == "SUCCESS") {
+          dispatch(roomActions.toggleRoomLeft(true));
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
+);
 const roomSlice = createSlice({
   name: "room",
   initialState: {
@@ -138,6 +157,8 @@ const roomSlice = createSlice({
       createdAt: "",
     },
     fetchedRooms: [],
+    roomLeft: false,
+    roomNotFound: false,
   },
   reducers: {
     feedTypeChanged(state, action) {
@@ -145,7 +166,6 @@ const roomSlice = createSlice({
     },
     toggleModal(state) {
       state.showModal = !state.showModal;
-      console.log(state.showModal);
     },
     toggleComments(state) {
       state.showComments = !state.showComments;
@@ -155,7 +175,11 @@ const roomSlice = createSlice({
     },
     insertRooms(state, action) {
       state.fetchedRooms = action.payload;
-      console.log("fetched rooms is now ", state.fetchedRooms);
+    },
+    removedRoom(state, action) {
+      state.fetchedRooms = state.fetchedRooms.filter(
+        (item) => item._id !== action.payload
+      );
     },
     insertRoomName(state, action) {
       state.roomName = action.payload;
@@ -172,6 +196,9 @@ const roomSlice = createSlice({
         state.searchBy = "roomName";
       }
     },
+    toggleRoomLeft(state, action) {
+      state.roomLeft = action.payload;
+    },
     toggleRoomInfoModal(state) {
       state.showRoomInfoModal = !state.showRoomInfoModal;
       state.showRoomSettingsModal = false;
@@ -182,6 +209,9 @@ const roomSlice = createSlice({
     },
     toogleSearchedRoomModal(state) {
       state.showSearchedRoomModal = !state.showSearchedRoomModal;
+    },
+    toggleRoomNotFound(state, action) {
+      state.roomNotFound = action.payload;
     },
     updateCurrentRoom(state, action) {
       state.currentRoom.roomName = action.payload.roomDetails.roomName;
@@ -255,6 +285,18 @@ const roomSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(getRoomDetails.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(leaveRoom.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(leaveRoom.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(leaveRoom.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

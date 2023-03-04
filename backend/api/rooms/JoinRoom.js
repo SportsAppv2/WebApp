@@ -82,3 +82,53 @@ export const joinRoom = asyncHandler(async (req, res) => {
     });
   }
 });
+
+export const leaveRoom = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { roomId } = req.body;
+    const room = await Room.findById(roomId).catch((err) => {
+      return res.status({
+        status: "FAILED",
+        message: err.message,
+      });
+    });
+    if (room.admin.owner == userId) {
+      return res.json({
+        status: "FAILED",
+        message:
+          "Room owner cannot leave the room. Please transfer the room ownership first.",
+      });
+    } else if (room.admin.moderators.includes(userId)) {
+      room.admin.moderators.pull(userId);
+    }
+    room.users.count--;
+    room.users.userList.pull(userId);
+    room.save();
+    const userProfile = await Profile.findOne({ userId }).catch((err) => {
+      return res.json({
+        status: "FAILED",
+        message: err.message,
+      });
+    });
+    if (userProfile.roomsJoined.ownerOf.includes(roomId)) {
+      userProfile.roomsJoined.ownerOf.pull(roomId);
+    }
+    if (userProfile.roomsJoined.moderatorOf.includes(roomId)) {
+      userProfile.roomsJoined.moderatorOf.pull(roomId);
+    }
+    if (userProfile.roomsJoined.allRooms.includes(roomId)) {
+      userProfile.roomsJoined.allRooms.pull(roomId);
+    }
+    userProfile.save();
+    return res.json({
+      status: "SUCCESS",
+      message: "Room left successfully",
+    });
+  } catch (err) {
+    return res.json({
+      status: "FAILED",
+      message: err.message,
+    });
+  }
+});

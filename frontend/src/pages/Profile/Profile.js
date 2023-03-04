@@ -8,20 +8,28 @@ import EditProfile from "../../components/Profile/EditProfile";
 import { BsFillPencilFill } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { userProfileActions } from "../../store/userProfileSlice";
+import {
+  fetchFollowProfile,
+  fetchUnfollowProfile,
+  userProfileActions,
+} from "../../store/userProfileSlice";
 import {
   fetchUserDataInitial,
   fetchUserProfile,
 } from "../../store/editProfileSlice";
 import { roomPostsActions } from "../../store/roomPostsSlice";
 import { useParams } from "react-router-dom";
+import { modalActions } from "../../store/modalSlice";
+import WarningModal from "../../components/Helpers/WarningModal";
 
 const Profile = () => {
-  const data = useSelector((state) => state.userProfile);
+  const data = useSelector((state) => state.userProfile); //login owner user profile
   const userProfileData = useSelector((state) => state.editProfile);
-  const userName = useSelector((state) => state.editProfile.userName);
-  const { user } = useParams();
-  console.log("User Name is ", user);
+  const userName = useSelector((state) => state.editProfile.userName); //user name of the current Profile user
+  const userId = useSelector((state) => state.editProfile.userId); //userId of the active Profile Page user
+  const warningModalData = useSelector((state) => state.modal);
+  const { user } = useParams(); //user name of the current Profile user
+  console.log("User Name is ", data.user.userId, userProfileData);
   const dispatch = useDispatch();
   const scrollableDiv = useRef("");
   const toggle = () => {
@@ -34,6 +42,12 @@ const Profile = () => {
       dispatch(fetchUserProfile({ user }));
     }
   }, [user]);
+  useEffect(() => {
+    if (warningModalData.button.mainBtn) {
+      modalActions.resetButtons();
+      dispatch(fetchUnfollowProfile({ followedUserId: userId }));
+    }
+  }, [warningModalData.button.mainBtn]);
   const handleScroll2 = () => {
     const node = scrollableDiv.current;
     if (node) {
@@ -89,20 +103,56 @@ const Profile = () => {
               <div className="text-white-100 text-[18px] mx-5 p-2 mt-2">
                 {userProfileData.userOriginal.bio}
               </div>
-              <div className="follow flex absolute top-[260px] right-[100px] text-[18px]">
+              <div className="follow absolute top-[260px] right-[100px] text-[18px]">
                 <div className="flex">
-                  <div className="text-white-100 mx-2">
-                    {userProfileData.follower.count}
+                  <div className="flex">
+                    <div className="text-white-100 mx-2">
+                      {userProfileData.follower.count}
+                    </div>
+                    <div className="text-gray-600 mr-2">Followers</div>
                   </div>
-                  <div className="text-gray-600 mr-2">Followers</div>
+                  <div className="flex">
+                    <div className="text-white-100 ml-2">
+                      {userProfileData.following.count}
+                    </div>
+                    <div className="text-gray-600 mx-2">Following</div>
+                  </div>
                 </div>
-                <div className="flex">
-                  <div className="text-white-100 ml-2">
-                    {userProfileData.following.count}
-                  </div>
-                  <div className="text-gray-600 mx-2">Following</div>
+                <div className="followBtn mt-3 text-right">
+                  {data.user.userId == userId ? (
+                    ""
+                  ) : userProfileData.isFollowing ? (
+                    <button
+                      className="bg-[#66667aba] hover:bg-[#8e8ecfba] border-2 border-blue-70 text-white-30 px-5 py-[2px] text-[22px] rounded-lg"
+                      onClick={() => {
+                        console.log("Should unfollow the user now");
+                        dispatch(modalActions.toggleShowWarningModal(true));
+                      }}
+                    >
+                      Following
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-[#66667aba] hover:bg-[#8e8ecfba] border-2 border-blue-70 text-white-30 px-5 py-[2px] text-[22px] rounded-lg"
+                      onClick={() => {
+                        dispatch(
+                          fetchFollowProfile({ followedUserId: userId })
+                        );
+                      }}
+                    >
+                      Follow
+                    </button>
+                  )}
+                  {warningModalData.warningModal.showModal && (
+                    <WarningModal
+                      heading="Do you want to unfollow this user?"
+                      message="Once you unfollow this user, you won't be able to see their posts on your feed."
+                      mainBtn="Unfollow"
+                    />
+                  )}
                 </div>
               </div>
+
               {!user && (
                 <div
                   className="absolute top-[330px] right-[30px] cursor-pointer text-gray-600 text-[18px] hover:text-blue-60"
