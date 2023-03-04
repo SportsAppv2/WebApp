@@ -137,8 +137,8 @@ const tournamentSlice = createSlice({
             state.noOfMatches = state.noOfMatches + 1;
         },
         addMatches (state, action) {
-            state.matches = [...state.matches, action.payload];
-        }
+            state.matches[action.payload.key] = action.payload.val;
+        },
     }
 })
 
