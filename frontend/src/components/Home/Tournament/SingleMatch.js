@@ -5,12 +5,10 @@ import { tournamentActions } from '../../../store/tournamentSlice';
 const SingleMatch = (props) => {
     const data = useSelector((state) => state.tournament);
     const dispatch = useDispatch();
-    const matchValues = {};
-    // matchValues.key = props.uniqueKey;
-    matchValues.showSingleMatch2 = false;
     const submitInfo = () => {
-        matchValues.showSingleMatch2 = true;
-        dispatch(tournamentActions.addMatches({key: props.uniqueKey, val: matchValues}));
+        dispatch(tournamentActions.openSingleMatch2());
+        // dispatch(tournamentActions.addMatches({key: props.uniqueKey}));
+        dispatch(tournamentActions.clearMatchValues());
     }
     console.log(data);
     return (
@@ -22,7 +20,8 @@ const SingleMatch = (props) => {
                         className='rounded-full object-cover'/>
                     </div>
                     <select className='bg-[#3b3939] mt-3 text-white-100 w-full p-1 shadow-2xl rounded-lg'
-                    onChange={(e) => {matchValues.player1 = e.target.value}}
+                    onChange={(e) => {dispatch(tournamentActions.addPlayer1(e.target.value));}}
+                    // value={data.matches[props.uniqueKey].player1}
                     >
                         <option value="none">Select one</option>
                         {Array.from(data.allTeamData).map((item) => {
@@ -41,7 +40,8 @@ const SingleMatch = (props) => {
                         className='rounded-full object-cover'/>
                     </div>
                     <select className='bg-[#3b3939] mt-3 text-white-100 w-full p-1 shadow-2xl rounded-lg'
-                    onChange={(e) => {matchValues.player2 = e.target.value}}
+                    onChange={(e) => {dispatch(tournamentActions.addPlayer2(e.target.value))}}
+                    // value={data.matches[props.uniqueKey].player2}
                     >
                         <option value="none">Select one</option>
                         {Array.from(data.allTeamData).map((item) => {
@@ -57,21 +57,27 @@ const SingleMatch = (props) => {
                     Date:
                 </div>
                 <input type="date" className='bg-[#3b3939] ml-8 border-gray-600 border-[1px] p-1' 
-                onChange={(e) => {matchValues.date = e.target.value}}/>
+                onChange={(e) => {dispatch(tournamentActions.addDate(e.target.value))}}
+                // value={data.matches[props.uniqueKey].date}
+                />
             </div>
             <div className='flex items-center my-5'>
                 <div>
                     Start time:
                 </div>
                 <input type="time" className='bg-[#3b3939] ml-8 border-gray-600 border-[1px] p-1' 
-                onChange={(e) => {matchValues.startTime = e.target.value}}/>
+                onChange={(e) => {dispatch(tournamentActions.addStartTime(e.target.value))}}
+                // value={data.matches[props.uniqueKey].startTime}
+                />
             </div>
             <div className='flex items-center my-5'>
                 <div>
                     End time:
                 </div>
                 <input type="time" className='bg-[#3b3939] ml-8 border-gray-600 border-[1px] p-1' 
-                onChange={(e) => {matchValues.endTime = e.target.value}}/>
+                onChange={(e) => {dispatch(tournamentActions.addEndTime(e.target.value))}}
+                // value={data.matches[props.uniqueKey].endTime}
+                />
             </div>
             <div className='flex items-center justify-center'>
                 <button className='px-3 py-1 text-lg  bg-[#5D5FEF] bg-opacity-50 hover:bg-blue-100 text-gray-200  shadow-md rounded-xl'

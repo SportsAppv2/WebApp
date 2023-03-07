@@ -37,6 +37,14 @@ const tournamentSlice = createSlice({
         groupValues: {},
         noOfMatches: 0,
         matches: [],
+        matchValues: {
+            player1: "",
+            player2: "",
+            date: "",
+            startTime: "",
+            endTime: "",
+            singleMatch2: false,
+        },
     },
     reducers: {
         titleAdded(state, action) {
@@ -137,8 +145,45 @@ const tournamentSlice = createSlice({
             state.noOfMatches = state.noOfMatches + 1;
         },
         addMatches (state, action) {
-            state.matches[action.payload.key] = action.payload.val;
+            state.matches[action.payload.key] = state.matchValues;
         },
+        addPlayer1 (state, action) {
+            state.matchValues.player1 = action.payload;
+        },
+        addPlayer2 (state, action) {
+            state.matchValues.player2 = action.payload;
+        },
+        addDate (state, action) {
+            state.matchValues.date = action.payload;
+        },
+        addStartTime (state, action) {
+            state.matchValues.startTime = action.payload;
+        },
+        addEndTime (state, action) {
+            state.matchValues.endTime = action.payload;
+        },
+        openSingleMatch2 (state, action) {
+            state.matchValues.singleMatch2 = true;
+        },
+        closeSingleMatch2 (state, action) {
+            state.matches[action.payload.key].singleMatch2 = false;
+        },
+        clearMatchValues (state) {
+            state.matchValues.player1 = "";
+            state.matchValues.player2 = "";
+            state.matchValues.date = "";
+            state.matchValues.startTime = "";
+            state.matchValues.endTime = "";
+
+        },
+        setMatchValues (state, action) {
+            state.matchValues.player1 = state.matches[action.payload.key].player1;
+            state.matchValues.player2 = state.matches[action.payload.key].player2;
+            state.matchValues.date = state.matches[action.payload.key].date;
+            state.matchValues.startTime = state.matches[action.payload.key].startTime;
+            state.matchValues.endTime = state.matches[action.payload.key].endTime;
+            state.matchValues.singleMatch2 = state.matches[action.payload.key].singleMatch2;
+        }
     }
 })
 
