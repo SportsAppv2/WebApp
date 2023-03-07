@@ -7,7 +7,7 @@ import GoogleLogo from "../../../assets/iconGoogle1.svg";
 import FbLogo from "../../../assets/iconFb1.svg";
 import { fetchData, loginActions } from "../../../store/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { MdVisibilityOff } from "react-icons/md";
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 const LoginBlock = () => {
   const dispatch = useDispatch();
@@ -28,6 +28,17 @@ const LoginBlock = () => {
   const handlePasswordBlur = () => {
     passwordRef.current.classList.remove("focused");
   };
+  const unmaskPassword = () => {
+    passwordRef.current.children[0].type = "text";
+    passwordRef.current.children[2].classList.add("hidden");
+    passwordRef.current.children[3].classList.remove("hidden");
+  }
+  const maskPassword = () => {
+    passwordRef.current.children[0].type = "password";
+    passwordRef.current.children[3].classList.add("hidden");
+    passwordRef.current.children[2].classList.remove("hidden");
+  }
+
   return (
     <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
       <div className="mx-4 my-6 md:mx-14">
@@ -81,7 +92,8 @@ const LoginBlock = () => {
               onBlur={handlePasswordBlur}
             />
             <RiLockPasswordLine className="relative top-[-22px] left-[5px] h-[18px] w-auto" />
-            <MdVisibilityOff className="absolute top-[-1px] right-[50px] h-[18px] w-auto" />
+            <MdVisibilityOff className="absolute top-[-1px] right-[20px] h-[18px] w-auto cursor-pointer" onClick={() => {unmaskPassword()}}/>
+            <MdVisibility className="absolute hidden top-[-1px] right-[20px] h-[18px] w-auto cursor-pointer" onClick={() => {maskPassword()}} />
           </div>
         </div>
         <div className="forgotPw">

@@ -11,7 +11,7 @@ const RoomRequests = () => {
     dispatch(headerActions.toggleRoomRequests());
   };
   return (
-    <div className="absolute top-[80px] right-[100px] bg-gray-600 max-h-[450px] h-fit z-[999] text-white-100 w-[350px] overflow-y-scroll p-5">
+    <div className="absolute top-[80px] right-[100px] bg-[#1b1a1a] rounded-2xl max-h-[450px] h-fit z-[999] text-white-100 w-[350px] overflow-y-scroll p-5">
       <div className="flex items-center font-medium mb-3">
         <div
           className="cursor-pointer hover:text-blue-60"

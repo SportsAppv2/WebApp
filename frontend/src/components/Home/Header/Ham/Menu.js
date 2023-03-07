@@ -17,9 +17,9 @@ const Menu = () => {
     localStorage.removeItem("token");
   };
   return (
-    <div className="absolute top-[80px] right-[20px] max-h-[450px] h-fit font-medium bg-[#333030] z-[999] text-white-100 w-[350px] overflow-y-scroll p-3 rounded-lg">
+    <div className="absolute top-[80px] right-[20px] max-h-[450px] h-fit font-medium bg-[#1b1a1a] z-[999] text-white-100 w-[350px] overflow-y-scroll p-3 rounded-lg">
       <div
-        className="bg-gray-600 bg-opacity-50 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
+        className="bg-gray-600 bg-opacity-20 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
         onClick={() => {
           goTo("/feedback");
         }}
@@ -30,7 +30,7 @@ const Menu = () => {
         <div className="text text-[18px]">Feedback</div>
       </div>
       <div
-        className="bg-gray-600 bg-opacity-50 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
+        className="bg-gray-600 bg-opacity-20 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
         onClick={() => {
           goTo("/help");
         }}
@@ -41,7 +41,7 @@ const Menu = () => {
         <div className="text text-[18px]">Help & support</div>
       </div>
       <div
-        className="bg-gray-600 bg-opacity-50 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
+        className="bg-gray-600 bg-opacity-20 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center mb-3"
         onClick={() => {
           goTo("/settings");
         }}
@@ -52,7 +52,7 @@ const Menu = () => {
         <div className="text text-[18px]">Settings & privacy</div>
       </div>
       <div
-        className="bg-gray-600 bg-opacity-50 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center"
+        className="bg-gray-600 bg-opacity-20 hover:bg-opacity-40 p-3 rounded-lg cursor-pointer shadow-3xl flex items-center"
         onClick={() => {
           accountLogout();
           goTo("/login");
