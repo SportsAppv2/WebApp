@@ -5,16 +5,10 @@ export const roomAuth = async (req, res, next) => {
     const userId = req.userId;
     const roomId = req.params.roomId;
     const room = await Room.findById(roomId).catch((err) => {
-      return res.json({
-        status: "FAILED",
-        message: err.message,
-      });
+      throw new Error("Room not found");
     });
     if (!room) {
-      return res.json({
-        status: "FAILED",
-        message: "Room not found",
-      });
+      throw new Error("Room not found");
     }
     if (room.users.userList.includes(userId)) {
       req.room = room;
@@ -22,11 +16,16 @@ export const roomAuth = async (req, res, next) => {
     } else {
       return res.json({
         status: "FAILED",
+        room: {
+          roomDetails: room.roomDetails,
+          admin: room.admin,
+          userCount: room.users.count,
+        },
         message: "User must join the room",
       });
     }
   } catch (err) {
-    res.json({
+    return res.json({
       status: "FAILED",
       message: err.message,
     });

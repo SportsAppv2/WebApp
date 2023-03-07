@@ -11,7 +11,7 @@ const MoreOptions = (props) => {
   console.log("USER ID IS ", userData.userId, props.userId);
   return (
     <div className="w-[200px] right-[10px] top-[30px] text-[14px] z-10 bg-gray-600 text-white-30 absolute rounded-sm p-2 shadow-lg">
-      {userData.userId == props.userId && (
+      {userData.user.userId == props.userId && (
         <div
           className="delete flex items-center border-b border-white-30 py-1 cursor-pointer hover:bg-gray-500"
           onClick={() => {

@@ -1,4 +1,73 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { editProfileActions } from "./editProfileSlice";
+import { modalActions } from "./modalSlice";
+
+export const fetchFollowProfile = createAsyncThunk(
+  "profile/follow",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const data = {
+      followedUserId: arg.followedUserId,
+    };
+    console.log("Data is ", data);
+    const jwtToken = localStorage.getItem("token");
+    const response = await axios
+      .post("http://localhost:5000/api/profile/follow", JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("Following user respose ", res);
+        if (res.data.status == "SUCCESS") {
+          if (res.data.profilePrivacy == "Everyone") {
+            dispatch(editProfileActions.followerIncreased(1));
+            dispatch(editProfileActions.toggleIsFollowing(true));
+          }
+          console.log("Follower increased");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
+export const fetchUnfollowProfile = createAsyncThunk(
+  "profile/unfollow",
+  async (arg, { getState, dispatch }) => {
+    const state = getState();
+    const data = {
+      followedUserId: arg.followedUserId,
+    };
+    console.log("Data is ", data);
+    const jwtToken = localStorage.getItem("token");
+    const response = await axios
+      .post(
+        "http://localhost:5000/api/profile/unfollow",
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("Following user respose ", res);
+        if (res.data.status == "SUCCESS") {
+          dispatch(editProfileActions.followerIncreased(-1));
+          dispatch(editProfileActions.toggleIsFollowing(false));
+          dispatch(modalActions.resetButtons());
+          dispatch(modalActions.toggleShowWarningModal(false));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
 
 const userProfileSlice = createSlice({
   name: "userProfile",
@@ -31,7 +100,7 @@ const userProfileSlice = createSlice({
       state.user.userName = action.payload;
     },
     userIdAdded(state, action) {
-      state.userId = action.payload;
+      state.user.userId = action.payload;
     },
     nameAdded(state, action) {
       state.user.name.firstName = action.payload.firstName;
@@ -53,6 +122,20 @@ const userProfileSlice = createSlice({
     regionAdded(state, action) {
       state.user.region = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchFollowProfile.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchFollowProfile.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchFollowProfile.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
   },
 });
 

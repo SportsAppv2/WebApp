@@ -36,7 +36,11 @@ export const findRoom = asyncHandler(async (req, res) => {
     }
     return res.json({
       status: "SUCCESS",
-      data: room,
+      data: {
+        roomDetails: room.roomDetails,
+        admin: room.admin,
+        userCount: room.users.count,
+      },
     });
   } catch (err) {
     res.json({

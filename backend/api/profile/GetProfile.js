@@ -15,6 +15,7 @@ export const getProfile = asyncHandler(async (req, res) => {
     return res.json({
       status: "SUCCESS",
       data: {
+        myUserId: req.userId,
         userId: profileData.userId,
         name: profileData.name,
         userName: profileData.userName,
@@ -23,6 +24,7 @@ export const getProfile = asyncHandler(async (req, res) => {
         profileView: profileData.profileView,
         follower: profileData.follower,
         following: profileData.following,
+        isFollowing: profileData.follower.followerList.includes(req.userId),
         tags: profileData.tags,
       },
     });

@@ -6,7 +6,7 @@ const WarningModal = (props) => {
   const dispatch = useDispatch();
   const modalData = useSelector((state) => state.modal);
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen z-20 mt-[150px]">
+    <div className="fixed top-0 left-0 w-screen h-screen z-20 mt-[150px] text-left">
       <div className="bg-black z-20 mx-auto w-[550px]  bg-[#1e1e1e] text-[24px] py-2 px-3 rounded-lg text-gray-200">
         <div className="heading pb-3">{props.heading}</div>
         <div className="line h-[1px] bg-gray-100"></div>
