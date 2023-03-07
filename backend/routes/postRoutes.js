@@ -9,7 +9,12 @@ import { deletePost } from "../api/post/DeletePost.js";
 import { dislikeComment } from "../api/post/DislikeComment.js";
 import { dislikePost } from "../api/post/DislikePost.js";
 import { getComments } from "../api/post/GetComments.js";
-import { getPosts, getPostsOwn, getProfilePost } from "../api/post/GetPosts.js";
+import {
+  getPost,
+  getPosts,
+  getPostsOwn,
+  getProfilePost,
+} from "../api/post/GetPosts.js";
 import { likeComment } from "../api/post/LikeComment.js";
 import { likePost } from "../api/post/LikePost.js";
 import { isAccountSetupDone } from "../middleware/accountSetupVerify.js";
@@ -22,6 +27,7 @@ router.route("/post/create").post(createPost);
 router.route("/post/:id").delete(deletePost);
 router.route("/post/like").post(likePost);
 router.route("/post/dislike").post(dislikePost);
+router.route("/post/:postId").get(getPost); //Get details of a particular post
 router.route("/post/get/").get(getPostsOwn);
 router.route("/post/get/:userName").get(getProfilePost);
 // router.route("/post/save").post(savePost);

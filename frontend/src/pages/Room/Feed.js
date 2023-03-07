@@ -13,6 +13,12 @@ const Feed = (props) => {
   const roomData = useSelector((state) => state.room);
   const postData = useSelector((state) => state.roomposts);
   useEffect(() => {
+    if (postData.refreshFeed == false) {
+      // scrollToY(postData.scroll.feedScroll);
+      console.log("sex");
+      dispatch(roomPostsActions.toggleScrollNow(true));
+      return;
+    }
     dispatch(roomPostsActions.resetPosts());
     if (props.feedType == "roomFeed") {
       dispatch(
@@ -82,6 +88,7 @@ const Feed = (props) => {
           return (
             <SingleFeed
               key={post._id}
+              roomName={roomData.currentRoom.roomName}
               postId={post._id}
               dp={post.creator.profilePic}
               name={post.creator.firstName + " " + post.creator.lastName}

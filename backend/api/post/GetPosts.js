@@ -2,8 +2,10 @@
 
 import express from "express";
 import asyncHandler from "express-async-handler";
+import { Error } from "mongoose";
 import Post from "../../models/Posts.js";
 import Room from "../../models/Room.js";
+import User from "../../models/User.js";
 import Profile from "../../models/UserProfile.js";
 
 const router = express.Router();
@@ -216,6 +218,59 @@ export const getProfilePost = asyncHandler(async (req, res) => {
       page,
       limit,
       totalPages,
+    });
+  } catch (err) {
+    return res.json({
+      status: "FAILED",
+      message: err.message,
+    });
+  }
+});
+
+export const getPost = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.userId;
+    const postId = req.params.postId;
+    const post = await Post.findById(postId).catch((err) => {
+      throw new Error(err.message);
+    });
+    const user = await Profile.findOne({ userId: post.creator.id }).catch(
+      (err) => {
+        throw new Error(err.message);
+      }
+    );
+    const room = await Room.findById(post.roomId).catch((err) => {
+      throw new Error(err.message);
+    });
+    console.log("USER IS ", user);
+    return res.json({
+      status: "SUCCESS",
+      data: {
+        postId: post._id,
+        roomName: room.roomDetails.roomName,
+        roomId: room._id,
+        creator: {
+          id: user.userId,
+          name: user.name,
+          userName: user.userName,
+          profilePic: user.profileView.profilePic,
+        },
+        stats: {
+          upvotes: { count: post.stats.upvotes.count },
+          downvotes: { count: post.stats.downvotes.count },
+          createdAt: post.stats.createdAt,
+        },
+        content: {
+          text: post.content.text,
+          image: post.content.image,
+          video: "",
+        },
+        comments: {
+          count: post.comments.count,
+        },
+        liked: post.stats.upvotes.users.includes(userId),
+        disliked: post.stats.downvotes.users.includes(userId),
+      },
     });
   } catch (err) {
     return res.json({

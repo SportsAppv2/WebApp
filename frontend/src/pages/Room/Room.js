@@ -8,6 +8,7 @@ import { fetchPosts, roomPostsActions } from "../../store/roomPostsSlice";
 import { getRoomDetails, roomActions } from "../../store/roomSlice";
 import RoomNotFound from "./RoomNotFound";
 import RoomNotJoined from "./RoomNotJoined";
+import PostEnlarged from "../../components/Room/PostEnlarged";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,8 @@ const Room = () => {
     const node = scrollableDiv.current;
     if (node) {
       const { scrollTop, clientHeight, scrollHeight } = node;
+      // console.log(scrollTop);
+      dispatch(roomPostsActions.setOverallScroll(scrollTop));
       if (scrollTop + clientHeight >= scrollHeight - 500) {
         dispatch(roomPostsActions.togglePageEndReached(true));
       }
@@ -48,6 +51,16 @@ const Room = () => {
       console.log("ROOM not FOUND ", roomData);
     }
   }, []);
+  useEffect(() => {
+    console.log("HIII", postData);
+    if (postData.refreshFeed == false && postData.scrollNow == true) {
+      dispatch(roomPostsActions.toggleScrollNow(false));
+      var s = scrollableDiv.current;
+      s.scrollTop = s.scrollTop + postData.scroll.feedScroll;
+      console.log(s.scrollTop);
+      // console.log("Scroll ");
+    }
+  }, [postData.scrollNow]);
   return (
     <>
       {roomData.roomNotFound ? (
@@ -68,6 +81,11 @@ const Room = () => {
               path="/tournament/*"
               element={<Tournament />}
               key="route-tournament-page"
+            />
+            <Route
+              path="/post/:postId"
+              element={<PostEnlarged />}
+              key="route-postEnlarged-page"
             />
             <Route path="/*" element={<Body />} key="route-room-page" />
           </Routes>

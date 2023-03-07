@@ -110,7 +110,46 @@ export const fetchDeletePost = createAsyncThunk(
       });
   }
 );
-
+export const fetchPost = createAsyncThunk(
+  "post/get",
+  async (arg, { getState, dispatch }) => {
+    console.log("INSIDE FETCH POST");
+    const state = getState();
+    const response = await axios
+      .get(`http://localhost:5000/api/home/post/${arg.postId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res.data.status == "SUCCESS") {
+          const post = res.data.data;
+          const obj = {
+            key: post.postId,
+            roomName: post.roomName,
+            roomId: post.roomId,
+            postId: post.postId,
+            dp: post.creator.profilePic,
+            name:
+              post.creator.name.firstName + " " + post.creator.name.lastName,
+            userName: post.creator.userName,
+            userId: post.creator.id,
+            time: post.stats.createdAt,
+            textContent: post.content.text,
+            upvotes: post.stats.upvotes.count,
+            downvotes: post.stats.downvotes.count,
+            totalComments: post.comments.count,
+            imageUrl: post.content.image,
+            videoUrl: post.content.video,
+            liked: post.liked,
+            disliked: post.disliked,
+          };
+          dispatch(roomPostsActions.setEnlargedPost(obj));
+        }
+      })
+      .catch((err) => console.log(err.message));
+  }
+);
 const roomPostsSlice = createSlice({
   name: "roomposts",
   initialState: {
@@ -120,6 +159,14 @@ const roomPostsSlice = createSlice({
     isLoading: false,
     hasMoreItems: true,
     reachedPageEnd: false,
+    postEnlarged: false,
+    refreshFeed: true,
+    scrollNow: false,
+    scroll: {
+      feedScroll: 0,
+      overallScroll: 0,
+    },
+    enlargedPost: {},
   },
   reducers: {
     resetPosts(state) {
@@ -152,6 +199,25 @@ const roomPostsSlice = createSlice({
     },
     togglePageEndReached(state, action) {
       state.reachedPageEnd = action.payload;
+    },
+    togglePostEnlarged(state, action) {
+      console.log(action.payload);
+      state.postEnlarged = action.payload;
+    },
+    toggleRefreshFeed(state, action) {
+      state.refreshFeed = action.payload;
+    },
+    setOverallScroll(state, action) {
+      state.scroll.overallScroll = action.payload;
+    },
+    setFeedScroll(state, action) {
+      state.scroll.feedScroll = action.payload;
+    },
+    toggleScrollNow(state, action) {
+      state.scrollNow = action.payload;
+    },
+    setEnlargedPost(state, action) {
+      state.enlargedPost = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -200,6 +266,18 @@ const roomPostsSlice = createSlice({
       console.log("Stopped loading. Success");
     });
     builder.addCase(fetchDeletePost.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Failed");
+    });
+    builder.addCase(fetchPost.pending, (state, action) => {
+      state.isLoading = true;
+      console.log("Loading...");
+    });
+    builder.addCase(fetchPost.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log("Stopped loading. Success");
+    });
+    builder.addCase(fetchPost.rejected, (state, action) => {
       state.isLoading = false;
       console.log("Stopped loading. Failed");
     });

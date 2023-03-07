@@ -11,12 +11,14 @@ import { BiCommentDetail, BiBookmark, BiDotsVertical } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { timeFormatter } from "../../helpers/timeFormatter";
+import { roomPostsActions } from "../../store/roomPostsSlice";
 import { roomActions } from "../../store/roomSlice";
 import CommentBlock from "./CommentBlock";
 import MoreOptions from "./MoreOptions";
 
 const SingleFeed = (props) => {
   const data = useSelector((state) => state.room);
+  const postData = useSelector((state) => state.roomposts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const votes = useRef("");
@@ -138,7 +140,18 @@ const SingleFeed = (props) => {
               {timeFormatter(props.time)}
             </div>
           </div>
-          <div className="text-[18px]">
+          <div
+            className="text-[18px] cursor-pointer"
+            onClick={() => {
+              dispatch(
+                roomPostsActions.setFeedScroll(postData.scroll.overallScroll)
+              );
+              dispatch(roomPostsActions.togglePostEnlarged(true));
+              console.log("Clicked ", props);
+              dispatch(roomPostsActions.setEnlargedPost(props));
+              navigate(`post/${props.postId}`);
+            }}
+          >
             <div className="contentText">{props.textContent}</div>
             <div className="contentImg">
               <img src="" alt="" />{" "}
