@@ -7,8 +7,8 @@ const RoomNotFound = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className="text-white-30 text-[28px]">
-      <div className="w-full h-full items-center">
+    <div className="text-white-30 text-[28px] flex-grow-[1] place-self-center">
+      <div className="mainContainer text-center">
         <div className="">Oops. Page is not available at the moment. 😥</div>
         <div className="text-center">
           <button

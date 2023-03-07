@@ -7,6 +7,7 @@ import Body from "./Body";
 import { fetchPosts, roomPostsActions } from "../../store/roomPostsSlice";
 import { getRoomDetails, roomActions } from "../../store/roomSlice";
 import RoomNotFound from "./RoomNotFound";
+import RoomNotJoined from "./RoomNotJoined";
 
 const Room = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,8 @@ const Room = () => {
     <>
       {roomData.roomNotFound ? (
         <RoomNotFound />
+      ) : roomData.roomNotJoined ? (
+        <RoomNotJoined />
       ) : (
         <div
           className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll"

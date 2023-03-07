@@ -83,14 +83,21 @@ export const getRoomDetails = createAsyncThunk(
       })
       .then((res) => {
         if (res.data.status == "SUCCESS") {
-          dispatch(roomActions.toggleRoomNotFound(false));
+          dispatch(roomActions.resetRoomStatus());
           dispatch(roomActions.updateCurrentRoom(res.data.data));
-        }
-        if (
+        } else if (
           res.data.status == "FAILED" &&
           res.data.message == "Room not found"
         ) {
+          dispatch(roomActions.resetRoomStatus());
           dispatch(roomActions.toggleRoomNotFound(true));
+        } else if (
+          res.data.status == "FAILED" &&
+          res.data.message == "User must join the room"
+        ) {
+          dispatch(roomActions.resetRoomStatus());
+          dispatch(roomActions.toggleRoomNotJoined(true));
+          dispatch(roomActions.updateSearchedRoom(res.data.room));
         }
       })
       .catch((err) => console.log(err.message));
@@ -159,6 +166,7 @@ const roomSlice = createSlice({
     fetchedRooms: [],
     roomLeft: false,
     roomNotFound: false,
+    roomNotJoined: false,
   },
   reducers: {
     feedTypeChanged(state, action) {
@@ -213,6 +221,13 @@ const roomSlice = createSlice({
     toggleRoomNotFound(state, action) {
       state.roomNotFound = action.payload;
     },
+    toggleRoomNotJoined(state, action) {
+      state.roomNotJoined = action.payload;
+    },
+    resetRoomStatus(state) {
+      state.roomNotFound = false;
+      state.roomNotJoined = false;
+    },
     updateCurrentRoom(state, action) {
       state.currentRoom.roomName = action.payload.roomDetails.roomName;
       state.currentRoom.roomPic = action.payload.roomDetails.roomPic;
@@ -230,8 +245,9 @@ const roomSlice = createSlice({
       state.searchedRoom.roomPic = action.payload.roomDetails.roomPic;
       state.searchedRoom.roomSummary = action.payload.roomDetails.roomSummary;
       state.searchedRoom.isVerified = action.payload.roomDetails.isVerified;
-      state.searchedRoom.userCount = action.payload.users.count;
+      state.searchedRoom.isPrivate = action.payload.roomDetails.isPrivateRoom;
       state.searchedRoom.sports = action.payload.roomDetails.sportsName;
+      state.searchedRoom.userCount = action.payload.userCount;
     },
     updateCurrentRoomId(state, action) {
       if (state.currentRoomId != action.payload) {
