@@ -21,6 +21,7 @@ import { roomPostsActions } from "../../store/roomPostsSlice";
 import { useParams } from "react-router-dom";
 import { modalActions } from "../../store/modalSlice";
 import WarningModal from "../../components/Helpers/WarningModal";
+import Follow from "../../components/Profile/Follow";
 
 const Profile = () => {
   const data = useSelector((state) => state.userProfile); //login owner user profile
@@ -109,21 +110,23 @@ const Profile = () => {
                     <div className="text-white-100 mx-2">
                       {userProfileData.follower.count}
                     </div>
-                    <div className="text-gray-600 mr-2">Followers</div>
+                    <div className="text-gray-600 mr-2 hover:underline cursor-pointer"
+                    onClick={() => {dispatch(userProfileActions.openShowFollow())}}>Followers</div>
                   </div>
                   <div className="flex">
                     <div className="text-white-100 ml-2">
                       {userProfileData.following.count}
                     </div>
-                    <div className="text-gray-600 mx-2">Following</div>
+                    <div className="text-gray-600 mx-2 hover:underline cursor-pointer"
+                    onClick={() => {dispatch(userProfileActions.openShowFollow())}}>Following</div>
                   </div>
                 </div>
-                <div className="followBtn mt-3 text-right">
+                <div className="followBtn mt-5 text-center">
                   {data.user.userId == userId ? (
                     ""
                   ) : userProfileData.isFollowing ? (
                     <button
-                      className="bg-[#66667aba] hover:bg-[#8e8ecfba] border-2 border-blue-70 text-white-30 px-5 py-[2px] text-[22px] rounded-lg"
+                      className="bg-[#5D5FEF] bg-opacity-20 hover:bg-opacity-50 border-2 border-blue-100 text-white-30 px-5 py-[2px] text-[18px] rounded-lg"
                       onClick={() => {
                         console.log("Should unfollow the user now");
                         dispatch(modalActions.toggleShowWarningModal(true));
@@ -133,7 +136,7 @@ const Profile = () => {
                     </button>
                   ) : (
                     <button
-                      className="bg-[#66667aba] hover:bg-[#8e8ecfba] border-2 border-blue-70 text-white-30 px-5 py-[2px] text-[22px] rounded-lg"
+                      className="bg-[#5D5FEF] bg-opacity-20 hover:bg-opacity-50 border-2 border-blue-100 text-white-30 px-5 py-[2px] text-[18px] rounded-lg"
                       onClick={() => {
                         dispatch(
                           fetchFollowProfile({ followedUserId: userId })
@@ -174,6 +177,7 @@ const Profile = () => {
         </div>
         <RightBar />
       </div>
+      {data.showFollow && <Follow /> }
     </div>
   );
 };

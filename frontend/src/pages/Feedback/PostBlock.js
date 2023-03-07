@@ -22,7 +22,7 @@ const PostBlock = () => {
                             {data.anonymity ? "Anonymous User" : "Baibhav Saikia"}
                         </div>
                         <div className='text-gray-600 mr-14 font-medium'>
-                            {data.anonymity ? "" : "hawk123"}
+                            {data.anonymity ? "" : "@hawk123"}
                         </div>
                     </div>
                     <div className='text-[#5D5FEF] italic hover:underline cursor-pointer'

@@ -15,7 +15,7 @@ const FeedHeader = () => {
   return (
     <div className="flex justify-center mt-8">
       <div
-        className="bar flex h-[50px] bg-[#8b8b8d33] rounded-[100px]"
+        className="bar flex bg-[#1b1a1a] rounded-[100px]"
         ref={selector}
       >
         <div

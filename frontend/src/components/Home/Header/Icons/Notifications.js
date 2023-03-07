@@ -20,7 +20,7 @@ const Notifications = () => {
   return (
     <div>
       <div
-        className="absolute top-[80px] right-[100px] max-h-[450px] h-fit bg-gray-600 z-[999] text-white-100 w-[450px] overflow-y-scroll p-5"
+        className="absolute top-[80px] right-[100px] max-h-[450px] h-fit bg-[#1b1a1a] rounded-2xl z-[999] text-white-100 w-[450px] overflow-y-scroll p-5"
         ref={notif}
       >
         <div

@@ -94,6 +94,7 @@ const userProfileSlice = createSlice({
       },
     },
     showEditProfile: false,
+    showFollow: false,
   },
   reducers: {
     userNameAdded(state, action) {
@@ -122,6 +123,9 @@ const userProfileSlice = createSlice({
     regionAdded(state, action) {
       state.user.region = action.payload;
     },
+    openShowFollow(state, action) {
+      state.showFollow = !state.showFollow;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFollowProfile.pending, (state, action) => {
