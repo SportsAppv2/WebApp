@@ -9,11 +9,20 @@ const Schedule = () => {
     const data = useSelector((state) => state.tournament)
     const dispatch = useDispatch();
     console.log(data);
+    const newMatch = () => {
+        if(data.matchValues.singleMatch2 == false && data.noOfMatches != 0) {
+            alert("First submit the details of the match you have created");
+        }else {
+            dispatch(tournamentActions.addNoOfMatches());
+            dispatch(tournamentActions.resetSingleMatch2());
+        }
+    }
+
     return (
         <div className='bg-[#000000] h-screen w-[100%] flex mb-[80px]'>
             <div className='w-[900px]'>
                 <div className='text-white-100 flex items-center rounded-lg ml-5 mt-5 sticky top-2 left-2 bg-[#1b1a1a] cursor-pointer hover:bg-[#28282a] w-fit p-2 px-5'
-                onClick={() => {dispatch(tournamentActions.addNoOfMatches())}}>
+                onClick={() => {newMatch()}}>
                     <div className='mr-2'>
                         Create a match
                     </div>

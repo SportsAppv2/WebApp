@@ -11,6 +11,7 @@ import Participants from './Participants';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Format from './Format';
 import Schedule from './Schedule';
+import Results from './Results';
 
 const TournamentDashboard = () => {
     const data = useSelector((state) => state.tournament);
@@ -70,7 +71,7 @@ const TournamentDashboard = () => {
                     <Route path="/participants/" element={<Participants />} key="route-participants-page" />
                     <Route path="/format" element={<Format/>} key="route-format-page" />
                     <Route path="/schedule" element={<Schedule />} key="route-schedule-page" />
-                    <Route path="/results" element={<Participants />} key="route-results-page" />
+                    <Route path="/results" element={<Results />} key="route-results-page" />
                     <Route path="/settings" element={<Participants />} key="route-settings-page" />
                 </Routes>
             </div>

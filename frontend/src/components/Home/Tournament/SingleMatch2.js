@@ -7,8 +7,12 @@ const SingleMatch2 = (props) => {
     const data = useSelector((state) => state.tournament);
     const dispatch = useDispatch();
     const editInfo = () => {
-        dispatch(tournamentActions.closeSingleMatch2({key: props.uniqueKey}));
-        dispatch(tournamentActions.setMatchValues({key: props.uniqueKey}));
+        if(data.matchValues.singleMatch2 == false) {
+            alert("First edit the details of the match you have created");
+        }else {
+            dispatch(tournamentActions.closeSingleMatch2({key: props.uniqueKey}));
+            dispatch(tournamentActions.setMatchValues({key: props.uniqueKey}));
+        }
     }
     return (
         <div className='w-[400px] p-2 rounded-xl my-5 ml-5 h-fit text-white-100 bg-[#1b1a1a]'>
