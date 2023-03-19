@@ -89,6 +89,7 @@ export const getPostsOwn = asyncHandler(async (req, res) => {
       skip,
       skip + limit
     );
+    // console.log("POST IDS are ", postIds);
     const posts = [];
     for (const postId of postIds) {
       try {

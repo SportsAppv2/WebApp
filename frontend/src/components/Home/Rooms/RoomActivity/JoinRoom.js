@@ -13,9 +13,7 @@ const JoinRoom = () => {
   const toggle = () => {
     dispatch(homeActions.pageChanged(2));
   };
-  useEffect(() => {
-    console.log(roomData);
-  }, [roomData]);
+
   return (
     <div>
       <Header

@@ -149,7 +149,8 @@ const SingleFeed = (props) => {
               dispatch(roomPostsActions.togglePostEnlarged(true));
               console.log("Clicked ", props);
               dispatch(roomPostsActions.setEnlargedPost(props));
-              navigate(`post/${props.postId}`);
+              // navigate(`post/${props.postId}`);
+              navigate(`/home/room/${props.roomId}/post/${props.postId}`);
             }}
           >
             <div className="contentText">{props.textContent}</div>

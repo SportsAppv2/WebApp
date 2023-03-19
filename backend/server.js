@@ -7,6 +7,7 @@ import UserRoutes from "./routes/userRoutes.js";
 import ProfileRoutes from "./routes/profileRoutes.js";
 import RoomRoutes from "./routes/roomRoutes.js";
 import NotificationRoutes from "./routes/notificationRoutes.js";
+import GeneralRoutes from "./routes/sportRoutes.js";
 import Profile from "./models/UserProfile.js";
 
 dotenv.config({ path: "../.env" });
@@ -26,6 +27,7 @@ app.use("/api/home", postRoutes);
 app.use("/api/profile", ProfileRoutes);
 app.use("/api/room", RoomRoutes);
 app.use("/api/notification", NotificationRoutes);
+app.use("/api/general", GeneralRoutes);
 
 //SERVER part
 const PORT = process.env.PORT || 5000;

@@ -90,6 +90,7 @@ const Feed = (props) => {
               key={post._id}
               roomName={roomData.currentRoom.roomName}
               postId={post._id}
+              roomId={post.roomId}
               dp={post.creator.profilePic}
               name={post.creator.firstName + " " + post.creator.lastName}
               userName={post.creator.userName}

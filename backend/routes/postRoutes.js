@@ -27,8 +27,8 @@ router.route("/post/create").post(createPost);
 router.route("/post/:id").delete(deletePost);
 router.route("/post/like").post(likePost);
 router.route("/post/dislike").post(dislikePost);
+router.route("/post/get").get(getPostsOwn);
 router.route("/post/:postId").get(getPost); //Get details of a particular post
-router.route("/post/get/").get(getPostsOwn);
 router.route("/post/get/:userName").get(getProfilePost);
 // router.route("/post/save").post(savePost);
 router.route("/comment/create").post(createComment);
