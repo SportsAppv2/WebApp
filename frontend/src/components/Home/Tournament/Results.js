@@ -6,10 +6,11 @@ import SetScore from './SetScore';
 const Results = () => {
     const data = useSelector(state => state.tournament);
     const dispatch = useDispatch();
+    console.log(data);
     return (
         <div>
             {Array.from(data.matches).map((item, index) => {
-                return <div className='w-[400px] p-2 rounded-xl my-5 ml-5 h-fit text-white-100 bg-[#1b1a1a]'>
+                return <div className='w-[400px] p-2 rounded-xl my-5 ml-5 h-fit text-white-100 bg-[#1b1a1a] relative'>
                 <div className='text-[#5D5FEF] font-medium flex items-center mx-5 justify-between'>
                     <div>
                         {data.matches[index].date}, {data.matches[index].startTime} - {data.matches[index].endTime}
@@ -50,12 +51,18 @@ const Results = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex items-center justify-center py-3'>
+                <div className='text-white-100 flex items-center justify-between mx-[80px]'>
                     <div>
-                        {data.setScore && <SetScore />}
+                        {data.scores.player1}
                     </div>
+                    <div>
+                        {data.scores.player2}
+                    </div>
+                </div>
+                {data.matches[index].setScore && <SetScore index={index}/>}
+                <div className='flex items-center justify-center py-3'>
                     <button className='px-3 bg-[transparent] border-2 border-[#5D5FEF] text-[#e4a9a9] hover:bg-blue-100 hover:text-[#000] rounded-md py-1 text-[18px] transition-all'
-                    onClick={() => {dispatch(tournamentActions.toggleSetScore())}}>
+                    onClick={() => {dispatch(tournamentActions.toggleSetScore({index: index}))}}>
                         Score
                     </button>
                 </div>
