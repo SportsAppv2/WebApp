@@ -39,10 +39,10 @@ const Follow = () => {
                         </div>
                         <div>
                             <div>
-                                Yushie
+                                Zidane
                             </div>
                             <div>
-                                @sexygirl
+                                @rmazid
                             </div>
                         </div>
                         <button className='bg-[transparent] border-2 border-[#b43f3f] text-[#e4a9a9] hover:bg-[#a74d4d] hover:text-[#000] rounded-md py-1 px-5 text-[18px] transition-all ml-20'>
