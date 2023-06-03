@@ -30,6 +30,8 @@ const PostEnlarged = () => {
   const [moreOptions, setMoreOptions] = useState(false);
   const [vote, setVote] = useState("");
   const [voteCount, setVoteCount] = useState(props.upvotes - props.downvotes);
+  const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
+  console.log("BASE URL from process.env is ", BASE_URL);
   //   const postId = props.postId;
   const jwtToken = localStorage.getItem("token");
   useEffect(() => {
@@ -57,7 +59,7 @@ const PostEnlarged = () => {
       postId: props.postId,
     };
     const response = await axios
-      .post("http://localhost:5000/api/home/post/like/", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/home/post/like/`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -91,16 +93,12 @@ const PostEnlarged = () => {
       postId: props.postId,
     };
     const response = await axios
-      .post(
-        "http://localhost:5000/api/home/post/dislike/",
-        JSON.stringify(data),
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${BASE_URL}/api/home/post/dislike/`, JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res.data);
         if (res.data.status == "SUCCESS") {
