@@ -13,8 +13,9 @@ export const fetchData = createAsyncThunk(
     // const navigate = useNavigate();
     console.log("useNavigate() initialised");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/user/login", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/user/login`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },

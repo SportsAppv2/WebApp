@@ -21,8 +21,9 @@ export const fetchCreateRoom = createAsyncThunk(
       data.roomDetails.sportsName,
       data.roomDetails.roomSummary
     );
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/room/create", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/create`, JSON.stringify(data), {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",

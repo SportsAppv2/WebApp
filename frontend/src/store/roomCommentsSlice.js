@@ -5,9 +5,10 @@ export const fetchComments = createAsyncThunk(
   "comments/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .get(
-        `http://localhost:5000/api/home/rooms/${arg.postId}/comments/${
+        `${BASE_URL}/api/home/rooms/${arg.postId}/comments/${
           arg.commentId ? arg.commentId + "/" : ""
         }?page=${arg.pageNumber}&limit=${arg.commentLimit}`,
         {
@@ -37,9 +38,10 @@ export const fetchCreateComment = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/home/comment/create",
+        `${BASE_URL}/api/home/comment/create`,
         JSON.stringify(data),
         {
           headers: {

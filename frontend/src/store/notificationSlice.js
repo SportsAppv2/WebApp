@@ -6,8 +6,9 @@ export const fetchFollowReq = createAsyncThunk(
   async (arg, { getState, dispatch }) => {
     const state = getState();
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get("http://localhost:5000/api/profile/followrequest", {
+      .get(`${BASE_URL}/api/profile/followrequest`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -27,8 +28,9 @@ export const fetchRoomJoinReq = createAsyncThunk(
   async (arg, { getState, dispatch }) => {
     const state = getState();
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get("http://localhost:5000/api/room/roomreq/all", {
+      .get(`${BASE_URL}/api/room/roomreq/all`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -48,8 +50,9 @@ export const fetchEngagementReq = createAsyncThunk(
   async (arg, { getState, dispatch }) => {
     const state = getState();
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get("http://localhost:5000/api/notification/fetch", {
+      .get(`${BASE_URL}/api/notification/fetch`, {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -75,9 +78,10 @@ export const fetchAcceptFollow = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/profile/acceptrequest",
+        `${BASE_URL}/api/profile/acceptrequest`,
         JSON.stringify(data),
         {
           headers: {
@@ -103,9 +107,10 @@ export const fetchDeclineFollow = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/profile/declinerequest",
+        `${BASE_URL}/api/profile/declinerequest`,
         JSON.stringify(data),
         {
           headers: {
@@ -133,8 +138,9 @@ export const fetchAcceptRoomJoin = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/room/accept", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/accept`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -159,8 +165,9 @@ export const fetchRejectRoomJoin = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/room/reject", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/reject`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",

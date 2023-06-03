@@ -58,6 +58,7 @@ const PostEnlarged = () => {
     const data = {
       postId: props.postId,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(`${BASE_URL}/api/home/post/like/`, JSON.stringify(data), {
         headers: {
@@ -92,6 +93,7 @@ const PostEnlarged = () => {
     const data = {
       postId: props.postId,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(`${BASE_URL}/api/home/post/dislike/`, JSON.stringify(data), {
         headers: {

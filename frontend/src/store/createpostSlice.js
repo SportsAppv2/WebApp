@@ -19,9 +19,10 @@ export const fetchCreatePost = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/home/post/create",
+        `${BASE_URL}/api/home/post/create`,
         JSON.stringify(data),
         {
           headers: {

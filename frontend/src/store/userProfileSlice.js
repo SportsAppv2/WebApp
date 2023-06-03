@@ -12,8 +12,9 @@ export const fetchFollowProfile = createAsyncThunk(
     };
     console.log("Data is ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/profile/follow", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/profile/follow`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -43,9 +44,10 @@ export const fetchUnfollowProfile = createAsyncThunk(
     };
     console.log("Data is ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/profile/unfollow",
+        `${BASE_URL}/api/profile/unfollow`,
         JSON.stringify(data),
         {
           headers: {

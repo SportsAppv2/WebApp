@@ -6,8 +6,9 @@ export const fetchUserDataInitial = createAsyncThunk(
   "user/data",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get("http://localhost:5000/api/profile/initalfetch", {
+      .get(`${BASE_URL}/api/profile/initalfetch`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -22,13 +23,15 @@ export const fetchUserDataInitial = createAsyncThunk(
     return response.data;
   }
 );
+
 export const fetchUserProfile = createAsyncThunk(
   "get/profile/user",
   async (arg, { getState, dispatch }) => {
-    console.log(`http://localhost:5000/api/profile/${arg.user}`);
+    console.log(`${BASE_URL}/api/profile/${arg.user}`);
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`http://localhost:5000/api/profile/${arg.user}`, {
+      .get(`${BASE_URL}/api/profile/${arg.user}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -46,6 +49,7 @@ export const fetchUserProfile = createAsyncThunk(
     return response.data;
   }
 );
+
 export const fetchUpdateProfile = createAsyncThunk(
   "user/data/update",
   async (arg, { getState, dispatch }) => {
@@ -63,8 +67,9 @@ export const fetchUpdateProfile = createAsyncThunk(
     };
     console.log("About to update this data ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/profile/edit", data, {
+      .post(`${BASE_URL}/api/profile/edit`, data, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

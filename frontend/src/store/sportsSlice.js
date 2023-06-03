@@ -5,8 +5,9 @@ export const fetchAvailableSports = createAsyncThunk(
   "sportsList/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get("http://localhost:5000/api/sport/getSports", {
+      .get(`${BASE_URL}/api/sport/getSports`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

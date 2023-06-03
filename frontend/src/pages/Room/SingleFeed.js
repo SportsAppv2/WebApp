@@ -48,8 +48,9 @@ const SingleFeed = (props) => {
     const data = {
       postId: props.postId,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/home/post/like/", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/home/post/like/`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -82,9 +83,10 @@ const SingleFeed = (props) => {
     const data = {
       postId: props.postId,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        "http://localhost:5000/api/home/post/dislike/",
+        `${BASE_URL}/api/home/post/dislike/`,
         JSON.stringify(data),
         {
           headers: {

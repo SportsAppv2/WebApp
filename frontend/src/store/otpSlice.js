@@ -10,8 +10,9 @@ export const fetchResendOtp = createAsyncThunk(
       userId: state.otp.userId,
     };
     console.log("Resending OTP data", data);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/user/resendotp/", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/user/resendotp/`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,8 +35,9 @@ export const fetchVerifyOtp = createAsyncThunk(
       otp: state.otp.otp,
     };
     console.log("Verifying OTP data", data);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/user/verifyotp/", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/user/verifyotp/`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },

@@ -19,8 +19,9 @@ export const fetchSignup = createAsyncThunk(
         state.signup.dateOfBirth.year +
         "-",
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post("http://localhost:5000/api/user/signup", JSON.stringify(data), {
+      .post(`${BASE_URL}/api/user/signup`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
