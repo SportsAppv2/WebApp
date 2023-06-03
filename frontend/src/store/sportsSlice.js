@@ -6,7 +6,7 @@ export const fetchAvailableSports = createAsyncThunk(
   async (arg, { getState, dispatch }) => {
     const state = getState();
     const response = await axios
-      .get("http://localhost:5000/api/general/getSports", {
+      .get("http://localhost:5000/api/sport/getSports", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
