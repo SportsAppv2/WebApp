@@ -44,8 +44,12 @@ const tournamentSlice = createSlice({
             startTime: "",
             endTime: "",
             singleMatch2: false,
+            setScore: false,
         },
-        setScore: false,
+        scores: {
+            player1 : "",
+            player2 : "",
+        }
     },
     reducers: {
         titleAdded(state, action) {
@@ -187,8 +191,12 @@ const tournamentSlice = createSlice({
         resetSingleMatch2 (state) {
             state.matchValues.singleMatch2 = false;
         },
-        toggleSetScore (state) {
-            state.setScore = !state.setScore;
+        toggleSetScore (state , action) {
+            state.matches[action.payload.index].setScore = !state.matches[action.payload.index].setScore;
+        },
+        setScores (state, action) {
+            state.scores.player1 = action.payload.p1;
+            state.scores.player2 = action.payload.p2;
         }
     }
 })

@@ -21,7 +21,7 @@ const SignupBlock = () => {
     const retypePassword = data.retypePassword;
     if(password!=retypePassword){
       dispatch(signupActions.invalidEntry(true));
-      dispatch(signupActions.setErrorMessage("Fuck you"));
+      dispatch(signupActions.setErrorMessage("Passwords doesn't match"));
       return false;
     }
     return true
