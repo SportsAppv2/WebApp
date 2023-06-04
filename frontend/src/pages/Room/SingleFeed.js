@@ -15,6 +15,7 @@ import { roomPostsActions } from "../../store/roomPostsSlice";
 import { roomActions } from "../../store/roomSlice";
 import CommentBlock from "./CommentBlock";
 import MoreOptions from "./MoreOptions";
+import { BASE_URL_backend } from "../../helpers/links";
 
 const SingleFeed = (props) => {
   const data = useSelector((state) => state.room);
@@ -48,9 +49,8 @@ const SingleFeed = (props) => {
     const data = {
       postId: props.postId,
     };
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL}/api/home/post/like/`, JSON.stringify(data), {
+      .post(`${BASE_URL_backend}/api/home/post/like/`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -83,10 +83,9 @@ const SingleFeed = (props) => {
     const data = {
       postId: props.postId,
     };
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        `${BASE_URL}/api/home/post/dislike/`,
+        `${BASE_URL_backend}/api/home/post/dislike/`,
         JSON.stringify(data),
         {
           headers: {

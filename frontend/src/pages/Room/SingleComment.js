@@ -14,6 +14,7 @@ import { timeFormatter } from "../../helpers/timeFormatter";
 import { replyActions } from "../../store/replySlice";
 import CommentBlock from "./CommentBlock";
 import ReplyBlock from "./ReplyBlock";
+import { BASE_URL_backend } from "../../helpers/links";
 
 const SingleComment = (props) => {
   const [showComments, setShowComments] = useState(false);
@@ -42,10 +43,9 @@ const SingleComment = (props) => {
     const data = {
       commentId: props.commentId,
     };
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        `${BASE_URL}/api/home/comment/like/`,
+        `${BASE_URL_backend}/api/home/comment/like/`,
         JSON.stringify(data),
         {
           headers: {
@@ -81,10 +81,9 @@ const SingleComment = (props) => {
     const data = {
       commentId: props.commentId,
     };
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        `${BASE_URL}/api/home/comment/dislike/`,
+        `${BASE_URL_backend}/api/home/comment/dislike/`,
         JSON.stringify(data),
         {
           headers: {

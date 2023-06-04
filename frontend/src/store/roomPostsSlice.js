@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userProfileActions } from "./userProfileSlice";
+import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchPosts = createAsyncThunk(
   "posts/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .get(
-        `${BASE_URL}/api/home/rooms/${arg.roomId}/posts?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
+        `${BASE_URL_backend}/api/home/rooms/${arg.roomId}/posts?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -36,10 +36,9 @@ export const fetchOwnPosts = createAsyncThunk(
   "posts/getown",
   async (arg, { getState, dispatch }) => {
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .get(
-        `${BASE_URL}/api/home/post/get?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
+        `${BASE_URL_backend}/api/home/post/get?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -66,10 +65,9 @@ export const fetchProfilePosts = createAsyncThunk(
   "posts/profile",
   async (arg, { getState, dispatch }) => {
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .get(
-        `${BASE_URL}/api/home/post/get/${arg.userName}?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
+        `${BASE_URL_backend}/api/home/post/get/${arg.userName}?page=${state.roomposts.currentPage}&limit=${arg.postLimit}`,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -96,9 +94,8 @@ export const fetchDeletePost = createAsyncThunk(
   "post/delete",
   async (arg, { getState, dispatch }) => {
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .delete(`${BASE_URL}/api/home/post/${arg.postId}`, {
+      .delete(`${BASE_URL_backend}/api/home/post/${arg.postId}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -119,9 +116,8 @@ export const fetchPost = createAsyncThunk(
   async (arg, { getState, dispatch }) => {
     console.log("INSIDE FETCH POST");
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`${BASE_URL}/api/home/post/${arg.postId}`, {
+      .get(`${BASE_URL_backend}/api/home/post/${arg.postId}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

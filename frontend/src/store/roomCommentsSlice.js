@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchComments = createAsyncThunk(
   "comments/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .get(
-        `${BASE_URL}/api/home/rooms/${arg.postId}/comments/${
+        `${BASE_URL_backend}/api/home/rooms/${arg.postId}/comments/${
           arg.commentId ? arg.commentId + "/" : ""
         }?page=${arg.pageNumber}&limit=${arg.commentLimit}`,
         {
@@ -38,10 +38,9 @@ export const fetchCreateComment = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
       .post(
-        `${BASE_URL}/api/home/comment/create`,
+        `${BASE_URL_backend}/api/home/comment/create`,
         JSON.stringify(data),
         {
           headers: {

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchData = createAsyncThunk(
   "login/check",
@@ -13,9 +14,8 @@ export const fetchData = createAsyncThunk(
     // const navigate = useNavigate();
     console.log("useNavigate() initialised");
     console.log(state);
-    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL}/api/user/login`, JSON.stringify(data), {
+      .post(`${BASE_URL_backend}/api/user/login`, JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
