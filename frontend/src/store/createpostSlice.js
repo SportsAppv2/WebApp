@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { roomPostsActions } from "./roomPostsSlice";
 import { roomActions } from "./roomSlice";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchCreatePost = createAsyncThunk(
   "post/create",
@@ -20,13 +19,18 @@ export const fetchCreatePost = createAsyncThunk(
     };
     const jwtToken = localStorage.getItem("token");
     console.log(state);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/home/post/create`, JSON.stringify(data), {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        `${BASE_URL}/api/home/post/create`,
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
         if (res.data.status == "SUCCESS") {

@@ -3,17 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchComments, roomComments } from "../../store/roomCommentsSlice";
 import SingleComment from "./SingleComment";
-import { BASE_URL_backend } from "../../helpers/links";
 
 const Comments = (props) => {
   const commentSliceData = useSelector((state) => state.roomcomments);
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const [commentsData, setcommentsData] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
   const fetchComments = async () => {
     await axios
       .get(
-        `${BASE_URL_backend}/api/home/rooms/${props.postId}/comments/${
+        `${BASE_URL}/api/home/rooms/${props.postId}/comments/${
           props.commentId ? props.commentId + "/" : ""
         }?page=${pageNumber}&limit=${10}`,
         {

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { homeActions } from "./homeSlice";
 import { fetchRooms, roomActions } from "./roomSlice";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchCreateRoom = createAsyncThunk(
   "rooms/create",
@@ -22,8 +21,9 @@ export const fetchCreateRoom = createAsyncThunk(
       data.roomDetails.sportsName,
       data.roomDetails.roomSummary
     );
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/room/create`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/create`, JSON.stringify(data), {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",

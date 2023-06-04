@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { editProfileActions } from "./editProfileSlice";
 import { modalActions } from "./modalSlice";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchFollowProfile = createAsyncThunk(
   "profile/follow",
@@ -13,8 +12,9 @@ export const fetchFollowProfile = createAsyncThunk(
     };
     console.log("Data is ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/profile/follow`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/profile/follow`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
@@ -44,13 +44,18 @@ export const fetchUnfollowProfile = createAsyncThunk(
     };
     console.log("Data is ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/profile/unfollow`, JSON.stringify(data), {
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-          "Content-Type": "application/json",
-        },
-      })
+      .post(
+        `${BASE_URL}/api/profile/unfollow`,
+        JSON.stringify(data),
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         console.log("Following user respose ", res);
         if (res.data.status == "SUCCESS") {
@@ -122,7 +127,7 @@ const userProfileSlice = createSlice({
     },
     openShowFollow(state, action) {
       state.showFollow = !state.showFollow;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchFollowProfile.pending, (state, action) => {

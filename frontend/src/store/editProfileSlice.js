@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userProfileActions } from "./userProfileSlice";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchUserDataInitial = createAsyncThunk(
   "user/data",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`${BASE_URL_backend}/api/profile/initalfetch`, {
+      .get(`${BASE_URL}/api/profile/initalfetch`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -27,10 +27,11 @@ export const fetchUserDataInitial = createAsyncThunk(
 export const fetchUserProfile = createAsyncThunk(
   "get/profile/user",
   async (arg, { getState, dispatch }) => {
-    console.log(`${BASE_URL_backend}/api/profile/${arg.user}`);
+    console.log(`${BASE_URL}/api/profile/${arg.user}`);
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`${BASE_URL_backend}/api/profile/${arg.user}`, {
+      .get(`${BASE_URL}/api/profile/${arg.user}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -66,8 +67,9 @@ export const fetchUpdateProfile = createAsyncThunk(
     };
     console.log("About to update this data ", data);
     const jwtToken = localStorage.getItem("token");
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/profile/edit`, data, {
+      .post(`${BASE_URL}/api/profile/edit`, data, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { modalActions } from "./modalSlice";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchRooms = createAsyncThunk(
   "rooms/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`${BASE_URL_backend}/api/room/`, {
+      .get(`${BASE_URL}/api/room/`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -29,8 +29,9 @@ export const fetchFindRoom = createAsyncThunk(
       joiningCode: state.room.roomCode,
       roomName: state.room.roomName,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/room/find`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/find`, JSON.stringify(data), {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",
@@ -55,8 +56,9 @@ export const fetchJoinRoom = createAsyncThunk(
       joiningCode: state.room.roomCode,
       roomName: state.room.roomName,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/room/join`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/join`, JSON.stringify(data), {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",
@@ -76,8 +78,9 @@ export const getRoomDetails = createAsyncThunk(
   "room/get",
   async (arg, { getState, dispatch }) => {
     const state = getState();
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .get(`${BASE_URL_backend}/api/room/details/${arg.roomId}`, {
+      .get(`${BASE_URL}/api/room/details/${arg.roomId}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -111,8 +114,9 @@ export const leaveRoom = createAsyncThunk(
     const data = {
       roomId: arg.roomId,
     };
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/room/leave`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/room/leave`, JSON.stringify(data), {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "application/json",

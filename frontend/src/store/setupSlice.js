@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { BASE_URL_backend } from "../helpers/links";
 
 export const fetchCreateProfile = createAsyncThunk(
   "setup/check",
@@ -17,8 +16,9 @@ export const fetchCreateProfile = createAsyncThunk(
     const jwtToken = localStorage.getItem("token");
     console.log(data);
     console.log(jwtToken);
+    const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(`${BASE_URL_backend}/api/profile/post`, JSON.stringify(data), {
+      .post(`${BASE_URL}/api/profile/post`, JSON.stringify(data), {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
           "Content-Type": "application/json",
