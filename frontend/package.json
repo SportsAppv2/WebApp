@@ -2,6 +2,7 @@
   "name": "sports-app",
   "version": "0.1.0",
   "private": true,
+  "type":"module",
   "dependencies": {
     "@joeattardi/emoji-button": "^4.6.4",
     "@reduxjs/toolkit": "^1.9.1",
