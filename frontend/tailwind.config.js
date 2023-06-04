@@ -9,6 +9,12 @@ module.exports = {
     },
     colors: {
       // Configure your color palette here
+      landing: {
+        primary: "#191825",
+        secondary: "#865DFF",
+        third: "#E384FF",
+        fourth: "#E384FF",
+      },
       gray: {
         600: "#606064",
         500: "#8B8B8D",

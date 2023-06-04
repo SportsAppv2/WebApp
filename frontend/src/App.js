@@ -14,11 +14,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/landing"
-          element={<LandingPage />}
-          key="route-landing-page"
-        />
+        <Route path="/" element={<LandingPage />} key="route-landing-page" />
         <Route path="/login" element={<Login />} key="route-login-page" />
         <Route path="/signup" element={<Signup />} key="route-signup-page" />
         <Route path="/setup" element={<Setup />} key="route-setup-page" />
