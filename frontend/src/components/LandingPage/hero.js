@@ -2,9 +2,9 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-120px)] pb-[120px]">
+    <div className="flex items-center justify-center h-[calc(100vh-120px)] pb-[120px] px-[50px] ">
       <div className="headerContents">
-        <div className="flex flex-col items-center big text-[84px] font-extrabold bg-gradient-to-r from-[#7879F1] to-[#A5A6F6] text-[transparent] bg-clip-text leading-[110px]">
+        <div className="flex flex-col items-center big text-[84px] font-extrabold bg-gradient-to-r from-[#7879F1] to-[#A5A6F6] text-[transparent] bg-clip-text leading-[110px] italic">
           <div className="">Connect</div>
           <div className="">Compete</div>
           <div className="">Celebrate</div>

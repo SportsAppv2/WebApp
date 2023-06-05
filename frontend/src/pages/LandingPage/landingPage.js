@@ -8,7 +8,7 @@ import "typeface-roboto";
 
 const landingPage = () => {
   return (
-    <div className="bg-landing-primary px-[50px] min-h-screen">
+    <div className="bg-landing-primary min-h-screen">
       <Header />
       <Hero />
       <Features />
