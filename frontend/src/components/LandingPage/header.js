@@ -5,6 +5,7 @@ import SignupBtn from "./essentials/signupBtn";
 
 const Header = () => {
   const options = [
+    { id: "news", name: "News", linkTo: "/news" },
     { id: "rooms", name: "Rooms", linkTo: "/rooms" },
     { id: "tournaments", name: "Tournaments", linkTo: "/tournaments" },
     { id: "shop", name: "Shop", linkTo: "/shop" },
