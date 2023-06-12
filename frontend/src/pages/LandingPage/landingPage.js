@@ -7,6 +7,7 @@ import Footer from "../../components/LandingPage/footer";
 import "typeface-roboto";
 import { Route, Routes } from "react-router-dom";
 import PageInProgress from "../General/PageInProgress";
+import Rooms from "./Rooms";
 
 const landingPage = () => {
   return (
@@ -35,7 +36,7 @@ const landingPage = () => {
       />
       <Route
         path="/rooms"
-        element={<PageInProgress />}
+        element={<Rooms /> }
         key="route-body-page-2"
       />
       <Route
