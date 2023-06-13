@@ -1,13 +1,12 @@
 import React from 'react';
-import Main from '../../components/LandingPage/rooms/Main.js';
-import Body from '../../components/LandingPage/rooms/Body.js';
-import Footer from '../../components/LandingPage/footer.js';
+import image from '../../assets/landing/5.jpg'
 import Header from '../../components/LandingPage/header.js';
-import image from '../../assets/landing/1.jpg'
+import Main from '../../components/LandingPage/shop/Main.js';
+import Body from '../../components/LandingPage/shop/Body.js';
 import MoreAboutUs from '../../components/LandingPage/moreAboutUs.js';
+import Footer from '../../components/LandingPage/footer.js';
 
-
-const Rooms = () => {
+const Shop = () => {
     return (
         <div className='bg-landing-primary min-h-screen'>
             <img src={image} alt="" className='w-full h-screen opacity-10'/>
@@ -22,4 +21,4 @@ const Rooms = () => {
     );
 };
 
-export default Rooms;
+export default Shop;

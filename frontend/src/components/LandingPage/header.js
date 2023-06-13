@@ -17,7 +17,8 @@ const Header = () => {
           <div className="img items-center">
             <img src={logo} alt="logo" className="w-[52px] h-auto" />
           </div>
-          <div className="text text-[30px] font-bold italic flex items-center">
+          <div className="text text-[30px] font-bold italic flex items-center"
+          onClick={() => { window.location.href = '/'; }}>
             SportsHub
           </div>
         </div>
