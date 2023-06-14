@@ -13,16 +13,16 @@ const LeftBar = () => {
           </div>
         </div>
         <div className="menu text-white-100 text-[18px]">
-          <div className="p-4 border-gray-600 border-2 bg-[#8B8B8D]/30 cursor-pointer">
+          <div className="p-4 border-[#A5A6F6] border-[1px] bg-[#8B8B8D]/20  cursor-pointer">
             User Profile
           </div>
-          <div className="p-4 border-gray-600 border-2 hover:bg-[#8B8B8D]/30 cursor-pointer">
+          <div className="p-4 border-[#A5A6F6] border-[1px] hover:bg-[#8B8B8D]/20 cursor-pointer">
             My Interests
           </div>
-          <div className="p-4 border-gray-600 border-2 hover:bg-[#8B8B8D]/30 cursor-pointer">
+          <div className="p-4 border-[#A5A6F6] border-[1px] hover:bg-[#8B8B8D]/20 cursor-pointer">
             My Orders
           </div>
-          <div className="p-4 border-gray-600 border-2 hover:bg-[#8B8B8D]/30 cursor-pointer">
+          <div className="p-4 border-[#A5A6F6] border-[1px] hover:bg-[#8B8B8D]/20 cursor-pointer">
             Settings
           </div>
         </div>

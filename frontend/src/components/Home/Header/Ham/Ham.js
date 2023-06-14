@@ -9,7 +9,7 @@ const Ham = () => {
   const data = useSelector((state) => state.header);
   const dispatch = useDispatch();
   return (
-    <div className="mx-[10px]">
+    <div className="mx-[10px] text-[#A5A6F6]">
       <RxHamburgerMenu className="text-[30px] mt-[0px] icon" onClick={() => {dispatch(headerActions.toggleMenu())}}/>
       {data.showMenu && <Menu />}
     </div>

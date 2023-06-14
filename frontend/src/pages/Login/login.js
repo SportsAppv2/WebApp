@@ -18,7 +18,7 @@ const Login = () => {
     }
   }, [data.authorized, data.setupProfile]);
   return (
-    <div className="bg-[#1A1C20] h-screen">
+    <div className="bg-landing-primary h-screen">
       <Body />
     </div>
   );

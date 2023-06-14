@@ -16,7 +16,7 @@ const Home = () => {
     <>
       <div className="flex flex-col h-screen overflow-hidden">
         <Header />
-        <div className="flex flex-grow h-full bg-[#000000]">
+        <div className="flex flex-grow h-full bg-[black]">
           <Rooms />
           <Routes>
             <Route

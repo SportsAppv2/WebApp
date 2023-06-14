@@ -21,7 +21,7 @@ const Rooms = () => {
   }, []);
   return (
     <>
-      <div className="bg-[#8B8B8D]/50 w-[110px]">
+      <div className="bg-[#8B8B8D]/10 w-[110px] text-[#A5A6F6]">
         <div className="availableRooms mt-4">
           {roomData.fetchedRooms.map((item) => {
             // console.log("Room should be created about ", item);
@@ -52,7 +52,7 @@ const Rooms = () => {
         </div>
         <div className="addRoom my-4">
           <IoIosAddCircleOutline
-            className="icon text-[40px] m-auto"
+            className="icon text-[40px] m-auto transform hover:scale-110"
             onClick={() => {
               toggle();
             }}

@@ -3,7 +3,7 @@ import AuthBlock from "../authModels/AuthBlock";
 import TextBox from "../TextBox/TextBox";
 import FacebookLogo from "../../../assets/iconFb1.svg";
 import GoogleLogo from "../../../assets/iconGoogle1.svg";
-import logo from "../../../assets/iconLogo.svg";
+import logo from "../../../assets/landing/logo.svg";
 import Date from "../DropdownBlocks/Date";
 import Month from "../DropdownBlocks/Month";
 import Year from "../DropdownBlocks/Year";
@@ -27,18 +27,15 @@ const SignupBlock = () => {
     return true
   }
   return (
-    <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-lg drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
+    <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-xl drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
       <div className="mx-4 md:mx-14">
-        <div className="flex">
-          <div className="logoIcon h-auto mr-2 ml-auto">
-            <img
-              src={logo}
-              className="h-[24px] w-[24px] md:h-[32px] md:w-[32px]"
-              alt="Logo"
-            />
+        <div className="icon text-[#A5A6F6] flex gap-5 justify-center">
+          <div className="img items-center">
+            <img src={logo} alt="logo" className="w-[52px] h-auto" />
           </div>
-          <div className="logoText h-auto ml-0 mr-auto text-[24px] md:text-[22px]">
-            Sports Hub
+          <div className="text text-[30px] font-bold italic flex items-center"
+          onClick={() => { window.location.href = '/'; }}>
+            SportsHub
           </div>
         </div>
         {data.invalid ? 
