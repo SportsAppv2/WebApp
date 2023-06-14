@@ -70,7 +70,7 @@ const Profile = () => {
         ref={scrollableDiv}
       >
         <LeftBar />
-        <div className="body w-[70%] h-fit p-4 border-gray-600 border-x-[1px]">
+        <div className="body w-[70%] h-fit p-4 border-[#A5A6F6] min-h-[calc(100vh-70px)] border-x-[1px]">
           <div className="content">
             <div className="relative">
               <div className="cover h-[200px]">

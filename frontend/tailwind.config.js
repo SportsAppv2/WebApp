@@ -3,6 +3,41 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        'fade-in-left': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(-100%)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateX(0)',
+          },
+        },
+        'fade-in-right': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(100%)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateX(0)',
+          },
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        'fade-in-left': 'fade-in-left 2s',
+        'fade-in-right': 'fade-in-right 2s',
+        'fade-in': 'fade-in 8s',
+      },
       size: {
         setupInputWidth: "250px",
       },

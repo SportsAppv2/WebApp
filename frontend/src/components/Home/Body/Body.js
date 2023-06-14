@@ -42,7 +42,7 @@ const Body = () => {
     <div className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll">
       <div className="h-fit flex">
         {data.news.length > 0 && (
-          <div className="content w-[80%] py-11 border-gray-600 border-r-[1px]">
+          <div className="content w-[80%] py-11 border-[#A5A6F6] border-r-[1px]">
             <FeedHeader sticky="true" />
             <div className="flex m-11 h-[270px]">
               <NewsCard1
@@ -50,10 +50,10 @@ const Body = () => {
                 img={Array.from(data.news)[0].urlToImage}
                 url={Array.from(data.news)[0].url}
               />
-              <div className="w-[1px] mx-8 h-full bg-gray-600"></div>
+              <div className="w-[1px] mx-8 h-full bg-[#A5A6F6]"></div>
               <TopHeadlines />
             </div>
-            <div className="h-[1px] bg-gray-600 w-[90%] ml-14"></div>
+            <div className="h-[1px] bg-[#A5A6F6] w-[90%] ml-14"></div>
             {data.news.slice(6).map((item, idx) => {
               return (
                 <NewsCard2

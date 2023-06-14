@@ -15,19 +15,19 @@ const Icons = () => {
   const navigate = useNavigate();
   console.log(data);
   return (
-    <div className="flex">
+    <div className="flex text-[#A5A6F6]">
       <div className="bookmark iconDiv">
-        <BsBookmarkFill className="icon text-[26px] mt-[5px]" />
+        <BsBookmarkFill className="icon text-[22px] mt-[5px]" />
       </div>
       <div className="mail iconDiv">
-        <GrMail className="icon text-[32px]" />
+        <GrMail className="icon text-[28px]" />
       </div>
       <div className="notification iconDiv" onClick={()=>{dispatch(headerActions.toggleNotifications())}}>
-        <AiFillBell className="icon text-[30px] mt-[2px]" />
+        <AiFillBell className="icon text-[26px] mt-[2px]" />
       </div>
       <div className="notification iconDiv">
         <FaUserAlt
-          className="icon text-[25px] mt-[3px]"
+          className="icon text-[21px] mt-[3px]"
           onClick={() => {
             navigate("/profile");
           }}

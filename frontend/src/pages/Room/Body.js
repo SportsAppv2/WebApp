@@ -23,7 +23,7 @@ const Body = () => {
         <UploadPost />
         {modalState && <NewModal />}
       </div>
-      <div className="h-100% bg-gray-600 w-[1px]"></div>
+      <div className="min-h-[calc(100vh-70px)] bg-[#A5A6F6] w-[1px]"></div>
       <div className="sidebar text-white-100 w-[15%] p-6">xxx</div>
     </div>
   );

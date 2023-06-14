@@ -16,7 +16,7 @@ const Setup = () => {
     }
   }, [data.setupComplete]);
   return (
-    <div className="bg-[#1A1C20] w-screen h-screen md:absolute flex items-center">
+    <div className="bg-landing-primary w-screen h-screen md:absolute flex items-center">
       {/* <Header /> */}
       <Body />
     </div>

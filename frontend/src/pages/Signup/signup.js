@@ -14,7 +14,7 @@ const Signup = () => {
     }
   }, [data.signupAuthorized]);
   return (
-    <div className="bg-[#1A1C20] h-screen">
+    <div className="bg-landing-primary h-screen">
       {/* <Header /> */}
       <Body />
     </div>

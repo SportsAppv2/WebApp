@@ -29,7 +29,7 @@ const NewsCard2 = (props) => {
                     className='min-w-[100%] min-h-[100%] max-h-[100%] max-w-[100%]'/>
                 </div>
             </div>
-            <div className='w-full h-[1px] bg-gray-600'></div>
+            <div className='w-full h-[1px] bg-[#A5A6F6]'></div>
         </div>
     );
 };

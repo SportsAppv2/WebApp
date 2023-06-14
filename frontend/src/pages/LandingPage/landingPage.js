@@ -7,6 +7,10 @@ import Footer from "../../components/LandingPage/footer";
 import "typeface-roboto";
 import { Route, Routes } from "react-router-dom";
 import PageInProgress from "../General/PageInProgress";
+import Rooms from "./Rooms";
+import News from "./News";
+import Tournaments from "./Tournaments";
+import Shop from "./Shop";
 
 const landingPage = () => {
   return (
@@ -30,22 +34,22 @@ const landingPage = () => {
       />
       <Route
         path="/news"
-        element={<PageInProgress />}
+        element={<News />}
         key="route-body-page-1"
       />
       <Route
         path="/rooms"
-        element={<PageInProgress />}
+        element={<Rooms /> }
         key="route-body-page-2"
       />
       <Route
         path="/tournaments"
-        element={<PageInProgress />}
+        element={<Tournaments />}
         key="route-body-page-3"
       />
       <Route
         path="/shop"
-        element={<PageInProgress />}
+        element={<Shop />}
         key="route-body-page-4"
       />
     </Routes>
