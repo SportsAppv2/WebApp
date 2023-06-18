@@ -23,7 +23,7 @@ const SinglePost = () => {
                 <div className="flex justify-between">
                     <div className="flex">
                     <div className="font-bold">Adam Smith </div>
-                    <div className="italic mx-2 text-gray-600">@hornyguy</div>
+                    <div className="italic mx-2 text-gray-600">@adam</div>
                     </div>
                     <div className="font-thin text-[16px] text-gray-600">Time</div>
                 </div>
@@ -56,7 +56,7 @@ const SinglePost = () => {
                 </div>
                 </div>
             </div>
-            <hr className="bg-gray-600 border-none h-[1px] w-[85%]"/>
+            <hr className="bg-landing-secondary border-none h-[1px] ml-[70px] w-[85%]"/>
         </div>
     );
 };

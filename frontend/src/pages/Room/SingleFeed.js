@@ -235,7 +235,7 @@ const SingleFeed = (props) => {
           dp={props.dp}
         />
       )}
-      <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[70px]" />
+      <hr className="bg-landing-secondary border-none h-[1px] w-[75%] ml-[70px]" />
     </div>
   );
 };

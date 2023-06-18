@@ -12,7 +12,7 @@ const Feedback = () => {
       <div className="bg-[#000000] overflow-y-scroll">
         <div className="content flex">
           <LeftBar />
-          <div className="h-100% w-[1px] bg-gray-600"></div>
+          <div className="h-100% w-[1px] bg-landing-secondary"></div>
           <div className="w-full p-5 my-5">
             <div className="text-white-100 flex items-center justify-between mx-5">
               <div className="text-[30px] font-medium">Feedback & Queries</div>

@@ -206,7 +206,7 @@ const SingleComment = (props) => {
           dp={props.ownDp}
         />
       )}
-      <hr className="bg-gray-600 border-none h-[1px] w-[75%] ml-[75px]" />
+      <hr className="bg-landing-secondary border-none h-[1px] w-[75%] ml-[75px]" />
     </div>
   );
 };
