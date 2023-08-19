@@ -39,7 +39,7 @@ const Body = () => {
   console.log(data);
 
   return (
-    <div className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll">
+    <div className="bg-gradient-to-br from-[#383636] to-[#272626] w-[-webkit-fill-available] overflow-y-scroll">
       <div className="h-fit flex">
         {data.news.length > 0 && (
           <div className="content w-[80%] py-11 border-[#A5A6F6] border-r-[1px]">

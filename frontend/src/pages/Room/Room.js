@@ -69,7 +69,7 @@ const Room = () => {
         <RoomNotJoined />
       ) : (
         <div
-          className="bg-[black] w-[-webkit-fill-available] overflow-y-scroll"
+          className="bg-gradient-to-br from-[#383636] to-[#272626] w-[-webkit-fill-available] overflow-y-scroll"
           ref={scrollableDiv}
           id="scrollable-div"
           onScroll={() => {

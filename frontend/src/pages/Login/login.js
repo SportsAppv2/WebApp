@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const data = useSelector((state) => state.login);
   const navigate = useNavigate();
-  console.log(data);
+  console.log({ dataPrint: data });
   useEffect(() => {
     if (data.authorized) {
       console.log("Should Route to a new page now");

@@ -11,7 +11,7 @@ const RoomDetails = () => {
   const searchedRoomData = useSelector((state) => state.room.searchedRoom);
   return (
     <div>
-      <div className="h-fit w-[580px] bg-[#000000] text-gray-100 m-auto mt-[80px] rounded-3xl relative p-5">
+      <div className="h-fit w-[580px] text-gray-100 m-auto mt-[80px] rounded-3xl relative p-5">
         <div className="container px-5">
           <div className="roomName text-[24px] font-medium flex justify-center">
             {searchedRoomData.roomName}

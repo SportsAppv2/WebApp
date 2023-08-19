@@ -4,7 +4,7 @@ import Comments from "./Comments";
 
 const CommentBlock = (props) => {
   return (
-    <div className="bg-[#000000] h-fit ml-[70px] mr-8 mb-5 pb-14">
+    <div className="bg-gradient-to-br from-[#383636] to-[#272626] h-fit ml-[70px] mr-8 mb-5">
       <ReplyBlock
         postId={props.postId}
         commentId={props.commentId}

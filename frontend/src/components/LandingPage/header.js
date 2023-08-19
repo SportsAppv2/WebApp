@@ -17,8 +17,12 @@ const Header = () => {
           <div className="img items-center">
             <img src={logo} alt="logo" className="w-[52px] h-auto" />
           </div>
-          <div className="text text-[30px] font-bold italic flex items-center"
-          onClick={() => { window.location.href = '/'; }}>
+          <div
+            className="text text-[30px] font-bold italic flex items-center"
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
             SportsHub
           </div>
         </div>
@@ -33,7 +37,12 @@ const Header = () => {
             ))}
           </div>
           <div className="btns">
-            <SignupBtn />
+            {/* <SignupBtn /> */}
+            <Link to={"/login"}>
+              <div className="bg-gray-200 motion-safe:animate-pulse rounded-3xl shadow-lg font-semibold text-[24px] px-5 py-1 hover:bg-gray-300 transition-all cursor-pointer">
+                Log in
+              </div>
+            </Link>
           </div>
         </div>
       </div>

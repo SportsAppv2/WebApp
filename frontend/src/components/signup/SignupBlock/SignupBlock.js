@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthBlock from "../authModels/AuthBlock";
 import TextBox from "../TextBox/TextBox";
 import FacebookLogo from "../../../assets/iconFb1.svg";
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSignup, signupActions } from "../../../store/signupSlice";
 import { useNavigate } from "react-router-dom";
 import GoogleSignUp from "./googleSignUp";
+import { fetchData, loginActions } from "../../../store/loginSlice";
 
 const SignupBlock = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,19 @@ const SignupBlock = () => {
       return false;
     }
     return true;
+  };
+  useEffect(() => {
+    if (data.authorized) {
+      console.log("Should Route to a new page now");
+      navigate("/home");
+    } else if (data.setupProfile) {
+      navigate("/setup");
+    }
+  }, [data.authorized, data.setupProfile]);
+  const handleTesterLogin = () => {
+    dispatch(loginActions.emailAdded("dhritimandas@gmail.com"));
+    dispatch(loginActions.passwordAdded("123123123"));
+    dispatch(fetchData());
   };
   return (
     <div className="bg-[black] w-[80vw] h-fit md:w-[500px] rounded-xl drop-shadow-xl border-2 md:border-0 border-gray-500 text-white-100 m-auto p-6">
@@ -50,7 +64,17 @@ const SignupBlock = () => {
         ) : (
           ""
         )}
-        <div className="head font-medium leading-tight text-4xl text-center mt-4">
+        <div className="flex justify-center mt-3">
+          <div
+            className="text-center border-[2px] border-gray-500 px-2 py-1 rounded-3xl w-[300px] cursor-pointer hover:bg-landing-primary"
+            onClick={() => {
+              handleTesterLogin();
+            }}
+          >
+            Log in directly as a tester
+          </div>
+        </div>
+        <div className="head font-medium leading-tight text-4xl text-center mt-2">
           Sign up
         </div>
         <div className="otherLoginLogos w-fit m-auto pt-2 mt-2">

@@ -22,13 +22,17 @@ const Header = () => {
   return (
     <div className="w-full bg-landing-primary h-[70px] flex items-center justify-between px-10 py-5">
       <div className="icon text-[#A5A6F6] flex gap-5">
-          <div className="img items-center">
-            <img src={logo} alt="logo" className="w-[48px] h-auto" />
-          </div>
-          <div className="text text-[26px] font-bold italic flex items-center"
-          onClick={() => { navigate("/home")}}>
-            SportsHub
-          </div>
+        <div className="img items-center">
+          <img src={logo} alt="logo" className="w-[48px] h-auto" />
+        </div>
+        <div
+          className="text text-[26px] font-bold italic flex items-center"
+          onClick={() => {
+            navigate("/home");
+          }}
+        >
+          SportsHub
+        </div>
       </div>
       <div className="rightItems flex">
         <Searchbar />

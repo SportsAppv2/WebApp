@@ -5,16 +5,19 @@ import { MdFeedback, MdLogout } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { headerActions } from "../../../../store/headerSlice";
+import { loginActions } from "../../../../store/loginSlice";
 
 const Menu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const goTo = (destination) => {
+    console.log({ destination });
     dispatch(headerActions.toggleMenu());
     navigate(destination);
   };
   const accountLogout = () => {
     localStorage.removeItem("token");
+    dispatch(loginActions.authChanged(false));
   };
   return (
     <div className="absolute top-[80px] right-[20px] max-h-[450px] h-fit font-medium bg-[#1b1a1a] z-[999] text-white-100 w-[350px] overflow-y-scroll p-3 rounded-lg">

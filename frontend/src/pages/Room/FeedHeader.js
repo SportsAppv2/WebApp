@@ -16,8 +16,13 @@ const FeedHeader = (props) => {
   };
   return (
     <>
-      <div className={"w-fit m-auto mt-5 " + (props.sticky ? "sticky top-2" : "")}>
-        <div className="flex bg-[#2e2e2e] rounded-[100px]" ref={selector}>
+      <div
+        className={"w-fit m-auto mt-5 " + (props.sticky ? "sticky top-2" : "")}
+      >
+        <div
+          className="flex bg-[#2e2e2e] rounded-[100px] border-blue-80 border-[1px]"
+          ref={selector}
+        >
           <div
             className="min-w-[80px] mx-3 ml-4 hover:cursor-pointer"
             onClick={(event) => activate(event, "top")}

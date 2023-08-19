@@ -44,16 +44,12 @@ const SingleComment = (props) => {
     };
     const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(
-        `${BASE_URL}/api/home/comment/like/`,
-        JSON.stringify(data),
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${BASE_URL}/api/home/comment/like/`, JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res.data);
         if (res.data.status == "SUCCESS") {
@@ -83,16 +79,12 @@ const SingleComment = (props) => {
     };
     const BASE_URL = process.env.REACT_APP_BASE_URL_backend;
     const response = await axios
-      .post(
-        `${BASE_URL}/api/home/comment/dislike/`,
-        JSON.stringify(data),
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${BASE_URL}/api/home/comment/dislike/`, JSON.stringify(data), {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res.data);
         if (res.data.status == "SUCCESS") {
@@ -206,7 +198,7 @@ const SingleComment = (props) => {
           dp={props.ownDp}
         />
       )}
-      <hr className="bg-landing-secondary border-none h-[1px] w-[75%] ml-[75px]" />
+      <hr className="bg-landing-secondary border-none h-[1px] ml-[75px]" />
     </div>
   );
 };
